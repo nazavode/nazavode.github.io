@@ -1,4 +1,4 @@
-baseurl = "http://fmontag451.github.io/"
+baseurl = "https://fmontag451.github.io/"
 title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
