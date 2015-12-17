@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>.Vimrc on /dev/null</title>
+    <link>http://fmontag451.github.io/tags/index.vimrc/</link>
+    <description>Recent content in .Vimrc on /dev/null</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Apr 2012 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://fmontag451.github.io/tags/.vimrc/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>spf13-vim 3.0 release and new website</title>
+      <link>http://fmontag451.github.io/post/spf13-vim-3-0-release-and-new-website/</link>
+      <pubDate>Fri, 06 Apr 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://fmontag451.github.io/post/spf13-vim-3-0-release-and-new-website/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

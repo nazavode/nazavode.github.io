@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://fmontag451.github.io/</loc>
+    <lastmod>2015-12-17T23:55:52+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://fmontag451.github.io/post/first/</loc>
+    <lastmod>2015-12-17T23:55:52+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://fmontag451.github.io/about/</loc>
+    <lastmod>2015-12-17T23:53:53+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://fmontag451.github.io/post/spf13-vim-3-0-release-and-new-website/</loc>
+    <lastmod>2012-04-06T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>
