@@ -27,6 +27,17 @@
   <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.defaultDescription }}{{ end }}">
   <meta name="keywords" content="{{ range $index, $element := .Keywords }}{{ if gt $index 0 }},{{ end }}{{ . }}{{ else }}{{ .Site.Params.defaultKeywords }}{{ end }}">
   {{ with .Site.Params.googleAuthorship }}<link rel="author" href="http://plus.google.com/{{ . }}">{{ end }}
+
+  <!-- Load my fonts -->
+  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Raleway']
+      }
+    });
+  </script>
+
 </head>
 <body{{ with .Site.Params.theme }} class="{{ . }}"{{ end }}>
 {{ partial "sidebar.html" . }}

@@ -41,7 +41,7 @@ paginate = 10
 
     # Displays under the author name in the sidebar, keep it short.
     # You can use markdown here.
-    tagline = "Just volatile hacks."
+    tagline = "volatile hacks by Federico Ficarelli"
 
     # Text for the top menu link, which goes the root URL for the site.
     # Default (if omitted) is "Blog".
