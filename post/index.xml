@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on /dev/null</title>
-    <link>https://fmontag451.github.io/post/</link>
+    <link>https://nazavode.github.io/post/</link>
     <description>Recent content in Posts on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 Dec 2015 23:55:52 +0100</lastBuildDate>
-    <atom:link href="https://fmontag451.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://nazavode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>First post.</title>
-      <link>https://fmontag451.github.io/blog/2015/12/first-post./</link>
+      <link>https://nazavode.github.io/blog/2015/12/first-post./</link>
       <pubDate>Thu, 17 Dec 2015 23:55:52 +0100</pubDate>
       
-      <guid>https://fmontag451.github.io/blog/2015/12/first-post./</guid>
+      <guid>https://nazavode.github.io/blog/2015/12/first-post./</guid>
       <description>&lt;p&gt;Lot of stuff.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>spf13-vim 3.0 release and new website</title>
-      <link>https://fmontag451.github.io/blog/2012/04/spf13-vim-3.0-release-and-new-website/</link>
+      <link>https://nazavode.github.io/blog/2012/04/spf13-vim-3.0-release-and-new-website/</link>
       <pubDate>Fri, 06 Apr 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://fmontag451.github.io/blog/2012/04/spf13-vim-3.0-release-and-new-website/</guid>
+      <guid>https://nazavode.github.io/blog/2012/04/spf13-vim-3.0-release-and-new-website/</guid>
       <description></description>
     </item>
     
