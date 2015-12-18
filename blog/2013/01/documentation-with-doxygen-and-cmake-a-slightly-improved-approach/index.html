@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>/dev/null &middot; Federico Ficarelli</title>
+  <title>Documentation with Doxygen and CMake: a (slightly) improved approach &middot; Federico Ficarelli</title>
 
   
   <link rel="stylesheet" href="https://nazavode.github.io/css/poole.css">
@@ -22,7 +22,7 @@
   
   
   
-  <link href="https://nazavode.github.io/index.xml" rel="alternate" type="application/rss+xml" title="/dev/null &middot; Federico Ficarelli" />
+  
 
   <meta name="description" content="Just volatile hacks.">
   <meta name="keywords" content="hacking,development,software,python,c&#43;&#43;,c99,algorithms">
@@ -78,79 +78,14 @@
 
 
 <div class="content container">
-  <div class="posts">
+  <div class="post">
+    <h1>Documentation with Doxygen and CMake: a (slightly) improved approach</h1>
+    <span class="post-date">Jan 19, 2013 &middot; 4 minute read
     
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/2015/12/move-on/">Move on</a>
-      </h1>
-      <span class="post-date">Dec 17, 2015 &middot; 1 minute read
-      </span>
-      
-      <p>Just moved from my <a href="https://devnone.wordpress.com">old blog</a> to the amazing combo
-that mixes <a href="https://pages.github.com/">GitHub Pages</a> and <a href="https://gohugo.io/">Hugo</a>.</p>
-
-<p>It looks promising.</p>
-
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/2014/02/idiomatic-c/">Idiomatic C&#43;&#43;</a>
-      </h1>
-      <span class="post-date">Feb 20, 2014 &middot; 1 minute read
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
-      </span>
-      
-      <p>A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techiques.</p>
-
-<p>Topics covered:</p>
-
-<p><strong>1. Design issues: idioms and best practices</strong></p>
-
-<ul>
-<li>Resource Aquisition Is Initialization (RAII)</li>
-<li>Ownership semantics and smart pointers</li>
-<li>Header files: dependencies and decoupling</li>
-</ul>
-
-<p><strong>2. Objects Construction/Destruction/Copying</strong></p>
-
-<ul>
-<li>Designing constructors</li>
-<li>Rule Of Three</li>
-<li>Transactional programming</li>
-</ul>
-
-<p><strong>3. Namespaces</strong></p>
-
-<ul>
-<li>ADL/Koenig Lookup</li>
-</ul>
-
-<p><strong>4. Static analyzers survey</strong></p>
-
-<p>You can find full presentation materials <a href="http://www.slideshare.net/fficarelli/idiomatic-c">uploaded on Slideshare</a>.</p>
-
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/">Documentation with Doxygen and CMake: a (slightly) improved approach</a>
-      </h1>
-      <span class="post-date">Jan 19, 2013 &middot; 4 minute read
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
-      </span>
-      
-      <p>Well, after days of hard work we ended up with our lovely code base, a portable CMake build system and we are now facing the task to generate an elegant Doxygen documentation for our anxious customer. The typical solution, widely adopted, seems to be the one and only that can be found while googling:</p>
+    <br/>
+    <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
+    </span>
+    <p>Well, after days of hard work we ended up with our lovely code base, a portable CMake build system and we are now facing the task to generate an elegant Doxygen documentation for our anxious customer. The typical solution, widely adopted, seems to be the one and only that can be found while googling:</p>
 
 <pre><code class="language-cmake">#-- Adds an Option to toggle the generation of the API documentation
 option(BUILD_DOCUMENTATION &quot;Use Doxygen to create the HTML based API documentation&quot; OFF)
@@ -243,13 +178,11 @@ ENDIF()
 <li><a href="http://www.bluequartz.net/projects/EIM_Segmentation/SoftwareDocumentation/html/usewithcmakeproject.html">Use Doxygen with a CMake Based Project</a></li>
 </ul>
 
-      
-    </div>
-    
-    
-    
   </div>
+  
 </div>
+
+
 
 
 <script src="https://nazavode.github.io/js/highlight.pack.js"></script>

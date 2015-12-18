@@ -8,7 +8,7 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/blog/2015/12/first-post./</loc>
+    <loc>https://nazavode.github.io/blog/2015/12/move-on/</loc>
     <lastmod>2015-12-17T23:55:52+01:00</lastmod>
   </url>
   
@@ -18,8 +18,13 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/blog/2012/04/spf13-vim-3.0-release-and-new-website/</loc>
-    <lastmod>2012-04-06T00:00:00+00:00</lastmod>
+    <loc>https://nazavode.github.io/blog/2014/02/idiomatic-c/</loc>
+    <lastmod>2014-02-20T22:30:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/</loc>
+    <lastmod>2013-01-19T22:30:51+01:00</lastmod>
   </url>
   
 </urlset>
