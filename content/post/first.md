@@ -5,6 +5,6 @@ title = "Move on"
 +++
 
 Just moved from my [old blog](https://devnone.wordpress.com) to the amazing combo
-that mixes GitHub Pages and Hugo.
+that mixes [GitHub Pages](https://pages.github.com/) and [Hugo](https://gohugo.io/).
 
 It looks promising.

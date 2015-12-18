@@ -1,9 +1,10 @@
 +++
-categories = []
+categories = ["Development"]
+tags = ["cmake", "doxygen"]
 date = "2013-01-19T22:30:51+01:00"
 description = ""
 keywords = []
-title = "How to generate code documentation with Doxygen and CMake: a (slightly) improved approach"
+title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
 
 +++
 

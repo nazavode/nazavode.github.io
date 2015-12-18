@@ -1,5 +1,6 @@
 +++
-categories = []
+categories = ["Development"]
+tags = ["c++", "guidelines"]
 date = "2014-02-20T22:30:51+01:00"
 description = ""
 keywords = []
