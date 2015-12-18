@@ -253,3 +253,41 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
 }
+
+/* Added themes */
+
+/* Grey */
+.theme-base-03 .sidebar {
+  background-color: #585858;
+}
+.theme-base-03 .content a,
+.theme-base-03 .related-posts li a:hover {
+  color: #585858;
+}
+
+/* Dark Grey */
+.theme-base-02 .sidebar {
+  background-color: #383838;
+}
+.theme-base-02 .content a,
+.theme-base-02 .related-posts li a:hover {
+  color: #383838;
+}
+
+/* Black */
+.theme-base-00 .sidebar {
+  background-color: #181818;
+}
+.theme-base-00 .content a,
+.theme-base-00 .related-posts li a:hover {
+  color: #181818;
+}
+
+/* Navy */
+.theme-base-sulphur-00 .sidebar {
+  background-color: #202746;
+}
+.theme-base-sulphur-00 .content a,
+.theme-base-sulphur-00 .related-posts li a:hover {
+  color: #202746;
+}
