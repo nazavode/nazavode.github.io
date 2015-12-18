@@ -45,7 +45,7 @@ paginate = 10
 
     # Text for the top menu link, which goes the root URL for the site.
     # Default (if omitted) is "Blog".
-    home = "Blog"
+    home = "posts"
 
     # Sidebar social links, these must be full URLs.
     github = "https://github.com/nazavode"

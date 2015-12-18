@@ -1,7 +1,10 @@
 +++
 date = "2015-12-17T23:55:52+01:00"
-title = "First post."
+title = "Move on"
 
 +++
 
-Lot of stuff.
+Just moved from my [old blog](https://devnone.wordpress.com) to the amazing combo
+that mixes GitHub Pages and Hugo.
+
+It looks promising.
