@@ -10,6 +10,30 @@ draft = true
 
 Visitor pattern.
 
+```python
+class Token(object):
+    """Car as cars should be made."""
+
+class Trabant(SeriousCar):
+    """German pride."""
+
+class Volga(SeriousCar):
+    """Soviet luxury car."""
+
+class FiatPanda750(SeriousCar):
+    """Italian excellence."""
+```
+
+```python
+def reverse_engineer(car):
+    if car isinstance(car, Trabant):
+        pass
+    if car isinstance(car, Trabant):
+        pass
+    if car isinstance(car, Trabant):
+        pass
+```
+
 Multiple dispatching.
 
 Visitor in Python:
@@ -18,7 +42,20 @@ Visitor in Python:
 2. dispatch table - Look at that dictionary and think about other languages: what we are doing here
   is trying to write *by hand* the [dynamic dispatch][dynamic-dispatch] mechanisms that some
   strongly typed languages know very well,
-  **that `dict` is actually playing as a [C++ virtual table][cpp-vtable].**
+  **that `dict` is actually struggling to become a [C++ virtual table][cpp-vtable].**
+
+```
+__dispatch_table__ = {
+    Volga: '',
+    Trabant: '',
+    FiatPanda750: '',
+    'SeriousCar': '',
+}
+
+def reverse_engineer(car):
+
+```
+
 3. singledispatch
 4. visitor class: singledispatch as external function
 
@@ -44,14 +81,14 @@ first dispatch argument, our own argument triggers a **double dispatch**:
 > and *then* dispatch on the second argument (through generic function
 > dispatch).
 
-**Disclaimer**: I want to stress again the fact that doing *method dispatching* must
+**Disclaimer**: I want to stress again the point that doing *method dispatching* must
 be considered a Python bad practice since it's actually an attempt to negate
 *duck typing*, the soul of the language. If you're considering this kind
 of stuff, think about it two, three, *ten times*: in the vast majority
 of situations it's just a clear evidence of bad design.
 
 Despite that, the `singledispatch` decorator is now standard and it looks
-like the *neat* way to cope with some specific situations
+like *the neat* way to cope with some specific situations
 ([AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?).
 
 [cpp-vtable]: https://en.wikipedia.org/wiki/Virtual_method_table
