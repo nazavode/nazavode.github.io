@@ -291,3 +291,12 @@ a.sidebar-nav-item:focus {
 .theme-base-sulphur-00 .related-posts li a:hover {
   color: #202746;
 }
+
+/* Light Navy */
+.theme-base-sulphur-02 .sidebar {
+  background-color: #5e6687;
+}
+.theme-base-sulphur-02 .content a,
+.theme-base-sulphur-02 .related-posts li a:hover {
+  color: #5e6687;
+}
