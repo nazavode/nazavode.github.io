@@ -8,7 +8,7 @@ title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
 
 +++
 
-Well, after days of hard work we ended up with our lovely code base, a portable CMake build system and we are now facing the task to generate an elegant Doxygen documentation for our anxious customer. The typical solution, widely adopted, seems to be the one and only that can be found while googling:
+Well, after days of hard work we ended up with our lovely crafted code base, a portable CMake build system and we are now facing the task to generate a proper Doxygen documentation for our anxious customer. The solution, widely adopted, seems to be the one and only that can be found while googling:
 
 ```cmake
 #-- Adds an Option to toggle the generation of the API documentation
@@ -29,9 +29,10 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 ```
 
-Well, even if the above solution works like a charm, it exposes a flaw that makes itself very annoying:
+Well, even if the above solution works like a charm, it exposes a flaw that makes its adoption very annoying:
 **Doxygen will be triggered every time we run make, even if nothing has changed**.
-Oh, *every time* means exactly *every time*: each make invocation (make, make install, etc...) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that `ALL` flag to `ADD_CUSTOM_TARGET` but this is the only way to have our documentation generated along with the default targets (otherwise our `BUILD_DOCUMENTATION` flag would be ignored except for an explicit make doc). This behavior is correct and the point is well highlighted in the CMake reference for [`ADD_CUSTOM_TARGET`](https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target):
+Oh, *every time* means exactly *every time*: each make invocation (make, make install, etc...) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that `ALL` flag to `ADD_CUSTOM_TARGET` but this is the only way to have our documentation generated along with the default targets (otherwise our `BUILD_DOCUMENTATION` flag would be ignored except for an explicit `make doc`).
+This behavior is correct and the point is well highlighted in the CMake reference for [`ADD_CUSTOM_TARGET`](https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target):
 
 > The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
 > try to create a file with the name of the target. Use ADD_CUSTOM_COMMAND to generate a
@@ -81,12 +82,10 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 ```
 
-The point is that we still have our doc custom target (added to default targets) that is going to be fired forever but the actual build step is "shielded" by the custom command that will check for the right dependencies. Just a couple of remarks:
+The point is that we still have our `doc` custom target (added to default targets) that is going to be fired every time but the actual build step is protected by the custom command that will check for the right dependencies. Just a couple of remarks:
 
 * the `DEPENDS` option on the custom command must list all of the targets, files and whatever your documentation depends on;
 * the `${doxyfile_in}` dependency is an overshoot but, as I say in the comment, removing it will break the dependency checking. The ideal solution would be specifying `${doxyfile}` only, letting it to trigger a lower-level custom command intended to configure and generate `${doxyfile_in}`. I'm still trying to find an elegant solution to this little aesthetic flaw.
-
-Thats all folks!
 
 ----------
 

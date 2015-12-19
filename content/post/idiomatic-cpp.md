@@ -9,7 +9,7 @@ title = "Idiomatic C++"
 +++
 
 A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techiques.
+with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.
 
 Topics covered:
 
@@ -32,4 +32,4 @@ Topics covered:
 **4\. Static analyzers survey**
 
 
-You can find full presentation materials [uploaded on Slideshare](http://www.slideshare.net/fficarelli/idiomatic-c).
+You can find full presentation materials [on Slideshare](http://www.slideshare.net/fficarelli/idiomatic-c).
