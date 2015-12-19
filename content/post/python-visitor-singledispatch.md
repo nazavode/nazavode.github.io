@@ -26,7 +26,8 @@ Overload.
 
 Inspiration from [Chris Lamb][chris-lamb-dispatchon]
 
-I know that, as discussed [here][abc-support], I can smell an anti-pattern:
+I know that, as discussed quite extensively [here][abc-support],
+the whole thing smells a lot of anti-pattern:
 
 > OO and generic functions are different development paradigms,
 > and there are limitations on mixing them. Generic functions are for
@@ -35,10 +36,23 @@ I know that, as discussed [here][abc-support], I can smell an anti-pattern:
 > expect to receive some state implicitly - in many respects, they
 > *already are* generic functions.
 
+Moreover, the real point is that if you consider `self` as an implicit
+first dispatch argument, our own argument triggers a **double dispatch**:
+
 > Thus, this is really a request for dual dispatch in disguise: you want
 > to first dispatch on the class or instance (through method dispatch)
 > and *then* dispatch on the second argument (through generic function
 > dispatch).
+
+**Disclaimer**: I want to stress again the fact that doing *method dispatching* must
+be considered a Python bad practice since it's actually an attempt to negate
+*duck typing*, the soul of the language. If you're considering this kind
+of stuff, think about it two, three, *ten times*: in the vast majority
+of situations it's just a clear evidence of bad design.
+
+Despite that, the `singledispatch` decorator is now standard and it looks
+like the *neat* way to cope with some specific situations
+([AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?).
 
 [cpp-vtable]: https://en.wikipedia.org/wiki/Virtual_method_table
 [dynamic-dispatch]: https://en.wikipedia.org/wiki/Dynamic_dispatch
