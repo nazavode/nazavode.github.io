@@ -85,13 +85,20 @@
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2015/12/move-on/">Move on</a>
       </h1>
-      <span class="post-date">Dec 17, 2015 &middot; 1 minute read
+      <span class="post-date">Dec 17, 2015 &middot; 
       </span>
       
-      <p>Just moved from my <a href="https://devnone.wordpress.com">old blog</a> to the amazing combo
-that mixes <a href="https://pages.github.com/">GitHub Pages</a> and <a href="https://gohugo.io/">Hugo</a>.</p>
+      <p>Just moved my <a href="https://devnone.wordpress.com">old blog</a> to the combo
+that mixes <a href="https://pages.github.com/">GitHub Pages</a> and the amazing <a href="https://gohugo.io/">Hugo</a>
+static site generator.</p>
 
-<p>It looks promising.</p>
+<p>The porting process is actually painless: checkout one of the beautifully crafted themes
+(I opted for <a href="https://github.com/zyro/hyde-x">hyde-x</a> that looks clean enough),
+tweak it a bit to fit your needs, convert your Wordpress posts through an
+<a href="https://domchristie.github.io/to-markdown/">html to Markdown converter</a> and push everything to the proper
+<a href="https://github.com/nazavode/nazavode.github.io">GitHub repo</a>.</p>
+
+<p>The result is pretty promising.</p>
 
       
     </div>
@@ -100,14 +107,14 @@ that mixes <a href="https://pages.github.com/">GitHub Pages</a> and <a href="htt
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2014/02/idiomatic-c/">Idiomatic C&#43;&#43;</a>
       </h1>
-      <span class="post-date">Feb 20, 2014 &middot; 1 minute read
+      <span class="post-date">Feb 20, 2014 &middot; 
       
       <br/>
       <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
       </span>
       
       <p>A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techiques.</p>
+with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.</p>
 
 <p>Topics covered:</p>
 
@@ -135,7 +142,7 @@ with examples and comments. The lecture targets performance oriented codes so em
 
 <p><strong>4. Static analyzers survey</strong></p>
 
-<p>You can find full presentation materials <a href="http://www.slideshare.net/fficarelli/idiomatic-c">uploaded on Slideshare</a>.</p>
+<p>You can find full presentation materials <a href="http://www.slideshare.net/fficarelli/idiomatic-c">on Slideshare</a>.</p>
 
       
     </div>
@@ -144,13 +151,13 @@ with examples and comments. The lecture targets performance oriented codes so em
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/">Documentation with Doxygen and CMake: a (slightly) improved approach</a>
       </h1>
-      <span class="post-date">Jan 19, 2013 &middot; 4 minute read
+      <span class="post-date">Jan 19, 2013 &middot; 
       
       <br/>
       <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
       </span>
       
-      <p>Well, after days of hard work we ended up with our lovely code base, a portable CMake build system and we are now facing the task to generate an elegant Doxygen documentation for our anxious customer. The typical solution, widely adopted, seems to be the one and only that can be found while googling:</p>
+      <p>Well, after days of hard work we ended up with our lovely crafted code base, a portable CMake build system and we are now facing the task to generate a proper Doxygen documentation for our anxious customer. The solution, widely adopted, seems to be the one and only that can be found while googling:</p>
 
 <pre><code class="language-cmake">#-- Adds an Option to toggle the generation of the API documentation
 option(BUILD_DOCUMENTATION &quot;Use Doxygen to create the HTML based API documentation&quot; OFF)
@@ -170,9 +177,10 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 </code></pre>
 
-<p>Well, even if the above solution works like a charm, it exposes a flaw that makes itself very annoying:
+<p>Well, even if the above solution works like a charm, it exposes a flaw that makes its adoption very annoying:
 <strong>Doxygen will be triggered every time we run make, even if nothing has changed</strong>.
-Oh, <em>every time</em> means exactly <em>every time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that <code>ALL</code> flag to <code>ADD_CUSTOM_TARGET</code> but this is the only way to have our documentation generated along with the default targets (otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an explicit make doc). This behavior is correct and the point is well highlighted in the CMake reference for <a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
+Oh, <em>every time</em> means exactly <em>every time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that <code>ALL</code> flag to <code>ADD_CUSTOM_TARGET</code> but this is the only way to have our documentation generated along with the default targets (otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an explicit <code>make doc</code>).
+This behavior is correct and the point is well highlighted in the CMake reference for <a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
 
 <blockquote>
 <p>The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
@@ -225,14 +233,12 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 </code></pre>
 
-<p>The point is that we still have our doc custom target (added to default targets) that is going to be fired forever but the actual build step is &ldquo;shielded&rdquo; by the custom command that will check for the right dependencies. Just a couple of remarks:</p>
+<p>The point is that we still have our <code>doc</code> custom target (added to default targets) that is going to be fired every time but the actual build step is protected by the custom command that will check for the right dependencies. Just a couple of remarks:</p>
 
 <ul>
 <li>the <code>DEPENDS</code> option on the custom command must list all of the targets, files and whatever your documentation depends on;</li>
 <li>the <code>${doxyfile_in}</code> dependency is an overshoot but, as I say in the comment, removing it will break the dependency checking. The ideal solution would be specifying <code>${doxyfile}</code> only, letting it to trigger a lower-level custom command intended to configure and generate <code>${doxyfile_in}</code>. I&rsquo;m still trying to find an elegant solution to this little aesthetic flaw.</li>
 </ul>
-
-<p>Thats all folks!</p>
 
 <hr />
 

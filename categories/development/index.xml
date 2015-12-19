@@ -16,7 +16,7 @@
       
       <guid>https://nazavode.github.io/blog/2014/02/idiomatic-c/</guid>
       <description>&lt;p&gt;A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techiques.&lt;/p&gt;
+with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.&lt;/p&gt;
 
 &lt;p&gt;Topics covered:&lt;/p&gt;
 
@@ -44,7 +44,7 @@ with examples and comments. The lecture targets performance oriented codes so em
 
 &lt;p&gt;&lt;strong&gt;4. Static analyzers survey&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;You can find full presentation materials &lt;a href=&#34;http://www.slideshare.net/fficarelli/idiomatic-c&#34;&gt;uploaded on Slideshare&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can find full presentation materials &lt;a href=&#34;http://www.slideshare.net/fficarelli/idiomatic-c&#34;&gt;on Slideshare&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
@@ -54,7 +54,7 @@ with examples and comments. The lecture targets performance oriented codes so em
       <pubDate>Sat, 19 Jan 2013 22:30:51 +0100</pubDate>
       
       <guid>https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/</guid>
-      <description>&lt;p&gt;Well, after days of hard work we ended up with our lovely code base, a portable CMake build system and we are now facing the task to generate an elegant Doxygen documentation for our anxious customer. The typical solution, widely adopted, seems to be the one and only that can be found while googling:&lt;/p&gt;
+      <description>&lt;p&gt;Well, after days of hard work we ended up with our lovely crafted code base, a portable CMake build system and we are now facing the task to generate a proper Doxygen documentation for our anxious customer. The solution, widely adopted, seems to be the one and only that can be found while googling:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;#-- Adds an Option to toggle the generation of the API documentation
 option(BUILD_DOCUMENTATION &amp;quot;Use Doxygen to create the HTML based API documentation&amp;quot; OFF)
@@ -74,9 +74,10 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Well, even if the above solution works like a charm, it exposes a flaw that makes itself very annoying:
+&lt;p&gt;Well, even if the above solution works like a charm, it exposes a flaw that makes its adoption very annoying:
 &lt;strong&gt;Doxygen will be triggered every time we run make, even if nothing has changed&lt;/strong&gt;.
-Oh, &lt;em&gt;every time&lt;/em&gt; means exactly &lt;em&gt;every time&lt;/em&gt;: each make invocation (make, make install, etc&amp;hellip;) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that &lt;code&gt;ALL&lt;/code&gt; flag to &lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt; but this is the only way to have our documentation generated along with the default targets (otherwise our &lt;code&gt;BUILD_DOCUMENTATION&lt;/code&gt; flag would be ignored except for an explicit make doc). This behavior is correct and the point is well highlighted in the CMake reference for &lt;a href=&#34;https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target&#34;&gt;&lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+Oh, &lt;em&gt;every time&lt;/em&gt; means exactly &lt;em&gt;every time&lt;/em&gt;: each make invocation (make, make install, etc&amp;hellip;) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that &lt;code&gt;ALL&lt;/code&gt; flag to &lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt; but this is the only way to have our documentation generated along with the default targets (otherwise our &lt;code&gt;BUILD_DOCUMENTATION&lt;/code&gt; flag would be ignored except for an explicit &lt;code&gt;make doc&lt;/code&gt;).
+This behavior is correct and the point is well highlighted in the CMake reference for &lt;a href=&#34;https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target&#34;&gt;&lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
@@ -129,14 +130,12 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The point is that we still have our doc custom target (added to default targets) that is going to be fired forever but the actual build step is &amp;ldquo;shielded&amp;rdquo; by the custom command that will check for the right dependencies. Just a couple of remarks:&lt;/p&gt;
+&lt;p&gt;The point is that we still have our &lt;code&gt;doc&lt;/code&gt; custom target (added to default targets) that is going to be fired every time but the actual build step is protected by the custom command that will check for the right dependencies. Just a couple of remarks:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;the &lt;code&gt;DEPENDS&lt;/code&gt; option on the custom command must list all of the targets, files and whatever your documentation depends on;&lt;/li&gt;
 &lt;li&gt;the &lt;code&gt;${doxyfile_in}&lt;/code&gt; dependency is an overshoot but, as I say in the comment, removing it will break the dependency checking. The ideal solution would be specifying &lt;code&gt;${doxyfile}&lt;/code&gt; only, letting it to trigger a lower-level custom command intended to configure and generate &lt;code&gt;${doxyfile_in}&lt;/code&gt;. I&amp;rsquo;m still trying to find an elegant solution to this little aesthetic flaw.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;Thats all folks!&lt;/p&gt;
 
 &lt;hr /&gt;
 
