@@ -15,8 +15,9 @@
       <pubDate>Thu, 20 Feb 2014 22:30:51 +0100</pubDate>
       
       <guid>https://nazavode.github.io/blog/2014/02/idiomatic-c/</guid>
-      <description>&lt;p&gt;A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.&lt;/p&gt;
+      <description>&lt;p&gt;I&amp;rsquo;ve just &lt;a href=&#34;(http://www.slideshare.net/fficarelli/idiomatic-c)&#34;&gt;uploaded&lt;/a&gt;
+a minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
+along with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.&lt;/p&gt;
 
 &lt;p&gt;Topics covered:&lt;/p&gt;
 
@@ -44,7 +45,7 @@ with examples and comments. The lecture targets performance oriented codes so em
 
 &lt;p&gt;&lt;strong&gt;4. Static analyzers survey&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;You can find full presentation materials &lt;a href=&#34;http://www.slideshare.net/fficarelli/idiomatic-c&#34;&gt;on Slideshare&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can find full presentation materials &lt;a href=&#34;(http://www.slideshare.net/fficarelli/idiomatic-c)&#34;&gt;on Slideshare&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
