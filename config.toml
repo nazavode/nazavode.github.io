@@ -13,7 +13,7 @@ disqusShortname = "nazavode"
 [permalinks]
     # Optional. Change the permalink format for the 'post' content type.
     # The format shown here is the same one Jekyll/Octopress uses by default.
-    post = "/:year/:month/:filename/"
+    post = "/blog/:year/:month/:title/"
 
 [taxonomies]
     # Optional. Use if you want tags and lists.
