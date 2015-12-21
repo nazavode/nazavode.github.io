@@ -4,6 +4,8 @@ languageCode = "en-us"
 MetaDataFormat = "toml"
 theme = "hyde-x"
 paginate = 10
+#
+disqusShortname = "nazavode"
 
 [author]
     name = "Federico Ficarelli"
@@ -11,7 +13,7 @@ paginate = 10
 [permalinks]
     # Optional. Change the permalink format for the 'post' content type.
     # The format shown here is the same one Jekyll/Octopress uses by default.
-    post = "/blog/:year/:month/:title/"
+    post = "/:year/:month/:filename/"
 
 [taxonomies]
     # Optional. Use if you want tags and lists.

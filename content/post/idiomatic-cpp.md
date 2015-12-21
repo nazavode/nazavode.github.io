@@ -1,15 +1,14 @@
 +++
+title = "Idiomatic C++"
+description = ""
 categories = ["Development"]
 tags = ["c++", "guidelines"]
 date = "2014-02-20T22:30:51+01:00"
-description = ""
-keywords = []
-title = "Idiomatic C++"
-
 +++
-I've just [uploaded][slideshare]
-a minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-along with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.
+
+I've just [uploaded][slideshare] a minimal collection of most wanted and widely accepted idioms and coding conventions
+for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
+emphasis is on performance-friendly techniques.
 
 Topics covered:
 
