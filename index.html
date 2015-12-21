@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://nazavode.github.io/css/poole-overrides.css">
   <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-overrides.css">
   <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-x.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/highlight/github.css">
+  <link rel="stylesheet" href="https://nazavode.github.io/css/highlight/default.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -39,7 +39,7 @@
   </script>
 
 </head>
-<body class="theme-base-08">
+<body class="theme-base-sulphur-00">
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
@@ -85,7 +85,7 @@
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2015/12/move-on/">Move on</a>
       </h1>
-      <span class="post-date">Dec 17, 2015 &middot; 
+      <span class="post-date">Dec 17, 2015 &middot;  &middot; <a href="https://nazavode.github.io/blog/2015/12/move-on/#disqus_thread">Comments</a>
       </span>
       
       <p>Just moved my <a href="https://devnone.wordpress.com">old blog</a> to the combo
@@ -107,15 +107,15 @@ tweak it a bit to fit your needs, convert your Wordpress posts through an
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2014/02/idiomatic-c/">Idiomatic C&#43;&#43;</a>
       </h1>
-      <span class="post-date">Feb 20, 2014 &middot; 
+      <span class="post-date">Feb 20, 2014 &middot;  &middot; <a href="https://nazavode.github.io/blog/2014/02/idiomatic-c/#disqus_thread">Comments</a>
       
       <br/>
       <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
       </span>
       
-      <p>I&rsquo;ve just <a href="(http://www.slideshare.net/fficarelli/idiomatic-c)">uploaded</a>
-a minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-along with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.</p>
+      <p>I&rsquo;ve just <a href="(http://www.slideshare.net/fficarelli/idiomatic-c)">uploaded</a> a minimal collection of most wanted and widely accepted idioms and coding conventions
+for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
+emphasis is on performance-friendly techniques.</p>
 
 <p>Topics covered:</p>
 
@@ -152,13 +152,15 @@ along with examples and comments. The lecture targets performance oriented codes
       <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/">Documentation with Doxygen and CMake: a (slightly) improved approach</a>
       </h1>
-      <span class="post-date">Jan 19, 2013 &middot; 
+      <span class="post-date">Jan 19, 2013 &middot;  &middot; <a href="https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/#disqus_thread">Comments</a>
       
       <br/>
       <a class="label" href="https://nazavode.github.io/categories/development">Development</a>
       </span>
       
-      <p>Well, after days of hard work we ended up with our lovely crafted code base, a portable CMake build system and we are now facing the task to generate a proper Doxygen documentation for our anxious customer. The solution, widely adopted, seems to be the one and only that can be found while googling:</p>
+      <p>Well, after days of hard work we ended up with our lovely crafted code base, a portable CMake build system and we are
+now facing the task to generate a proper Doxygen documentation for our anxious customer. The solution, widely adopted,
+seems to be the one and only that can be found while googling:</p>
 
 <pre><code class="language-cmake">#-- Adds an Option to toggle the generation of the API documentation
 option(BUILD_DOCUMENTATION &quot;Use Doxygen to create the HTML based API documentation&quot; OFF)
@@ -180,8 +182,12 @@ ENDIF()
 
 <p>Well, even if the above solution works like a charm, it exposes a flaw that makes its adoption very annoying:
 <strong>Doxygen will be triggered every time we run make, even if nothing has changed</strong>.
-Oh, <em>every time</em> means exactly <em>every time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that <code>ALL</code> flag to <code>ADD_CUSTOM_TARGET</code> but this is the only way to have our documentation generated along with the default targets (otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an explicit <code>make doc</code>).
-This behavior is correct and the point is well highlighted in the CMake reference for <a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
+Oh, <em>every time</em> means exactly <em>every time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell
+with the utterly verbose output from Doxygen even if that step is obviously useless. Yes, we have added that <code>ALL</code> flag
+to <code>ADD_CUSTOM_TARGET</code> but this is the only way to have our documentation generated along with the default targets
+(otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an explicit <code>make doc</code>). This behavior is correct
+and the point is well highlighted in the CMake reference for
+<a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
 
 <blockquote>
 <p>The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
@@ -193,7 +199,8 @@ file with dependencies.</p>
 The neat trick lies in the combined use of two different commands:</p>
 
 <ol>
-<li><code>ADD_CUSTOM_COMMAND</code> will take care of dependency checking, firing up Doxygen if and only if something (which the documentation depends on) has really changed since last build;</li>
+<li><code>ADD_CUSTOM_COMMAND</code> will take care of dependency checking, firing up Doxygen if and only if something (which the
+documentation depends on) has really changed since last build;</li>
 <li><code>ADD_CUSTOM_TARGET</code> will allow us to have a convenient and elegant make doc target, eventually added to default set.
 After a bit of trial-and-error, I ended up with a bunch of lines of code that seems to work as we wanted:</li>
 </ol>
@@ -234,7 +241,9 @@ IF(BUILD_DOCUMENTATION)
 ENDIF()
 </code></pre>
 
-<p>The point is that we still have our <code>doc</code> custom target (added to default targets) that is going to be fired every time but the actual build step is protected by the custom command that will check for the right dependencies. Just a couple of remarks:</p>
+<p>The point is that we still have our <code>doc</code> custom target (added to default targets) that is going to be fired every time
+but the actual build step is protected by the custom command that will check for the right dependencies. Just a couple
+of remarks:</p>
 
 <ul>
 <li>the <code>DEPENDS</code> option on the custom command must list all of the targets, files and whatever your documentation depends on;</li>
@@ -258,6 +267,16 @@ ENDIF()
   </div>
 </div>
 
+
+<script type="text/javascript">
+var disqus_shortname = "nazavode";
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
 
 <script src="https://nazavode.github.io/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>

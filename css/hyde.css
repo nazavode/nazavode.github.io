@@ -287,9 +287,15 @@ a.sidebar-nav-item:focus {
 .theme-base-sulphur-00 .sidebar {
   background-color: #202746;
 }
+/* The theme color is too dark, set lighter links in content
+but post titles should be far darker.*/
 .theme-base-sulphur-00 .content a,
 .theme-base-sulphur-00 .related-posts li a:hover {
-  color: #202746;
+  color: #5062af; /* lighter content links */
+}
+.theme-base-sulphur-00 .post-title a,
+.theme-base-sulphur-00 .post-date a {
+  color: #181818;
 }
 
 /* Light Navy */
