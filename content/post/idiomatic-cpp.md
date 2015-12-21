@@ -7,9 +7,9 @@ keywords = []
 title = "Idiomatic C++"
 
 +++
-
-A minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
-with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.
+I've just [uploaded][slideshare]
+a minimal collection of most wanted and widely accepted idioms and coding conventions for C++ development presented
+along with examples and comments. The lecture targets performance oriented codes so emphasis is on performance-friendly techniques.
 
 Topics covered:
 
@@ -32,4 +32,6 @@ Topics covered:
 **4\. Static analyzers survey**
 
 
-You can find full presentation materials [on Slideshare](http://www.slideshare.net/fficarelli/idiomatic-c).
+You can find full presentation materials [on Slideshare][slideshare].
+
+[slideshare]: (http://www.slideshare.net/fficarelli/idiomatic-c)

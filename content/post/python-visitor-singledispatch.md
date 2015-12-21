@@ -10,6 +10,12 @@ draft = true
 
 Visitor pattern.
 
+The point of the Visitor is to cope with a hierarchical structure of types defined by someone else
+that you can't (or you're not supposed to) change. Moreover, even if you *could* change
+them, you *shouldn't* because *isolating data from algorithms is always a good thing*
+and prevents you ending up with *behemoth classes* with a countless number of responsibilities
+(also the *S* in [SOLID][SOLID] is a thing you want in your design, of course).
+
 ```python
 class Token(object):
     """Car as cars should be made."""
@@ -18,7 +24,7 @@ class Trabant(SeriousCar):
     """German pride."""
 
 class Volga(SeriousCar):
-    """Soviet luxury car."""
+    """Soviet luxury."""
 
 class FiatPanda750(SeriousCar):
     """Italian excellence."""
@@ -26,11 +32,11 @@ class FiatPanda750(SeriousCar):
 
 ```python
 def reverse_engineer(car):
-    if car isinstance(car, Trabant):
+    if isinstance(car, Trabant):
         pass
-    if car isinstance(car, Trabant):
+    if isinstance(car, Trabant):
         pass
-    if car isinstance(car, Trabant):
+    if isinstance(car, Trabant):
         pass
 ```
 
@@ -42,9 +48,9 @@ Visitor in Python:
 2. dispatch table - Look at that dictionary and think about other languages: what we are doing here
   is trying to write *by hand* the [dynamic dispatch][dynamic-dispatch] mechanisms that some
   strongly typed languages know very well,
-  **that `dict` is actually struggling to become a [C++ virtual table][cpp-vtable].**
+  **that `dict` is actually trying to become a [virtual table][cpp-vtable].**
 
-```
+```python
 __dispatch_table__ = {
     Volga: '',
     Trabant: '',
@@ -87,10 +93,11 @@ be considered a Python bad practice since it's actually an attempt to negate
 of stuff, think about it two, three, *ten times*: in the vast majority
 of situations it's just a clear evidence of bad design.
 
-Despite that, the `singledispatch` decorator is now standard and it looks
-like *the neat* way to cope with some specific situations
+Despite that, the `singledispatch` decorator is now [singledispatch][standard] and it looks
+like a neat way to cope with some specific situations
 ([AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?).
 
+[SOLID]: (https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
 [cpp-vtable]: https://en.wikipedia.org/wiki/Virtual_method_table
 [dynamic-dispatch]: https://en.wikipedia.org/wiki/Dynamic_dispatch
 [visitor-pattern]: https://sourcemaking.com/design_patterns/visitor
@@ -99,5 +106,5 @@ like *the neat* way to cope with some specific situations
 [abc-support]: http://code.activestate.com/lists/python-dev/122554/
 [dict-dispatch]: http://codereview.stackexchange.com/questions/7433/dictionary-based-dispatch-in-python-with-multiple-parameters
 [chris-lamb-dispatchon]: https://chris-lamb.co.uk/posts/visitor-pattern-in-python
-
+[singledispatch]: (https://docs.python.org/3/library/functools.html#functools.singledispatch)
 [overload-github]: https://github.com/nazavode/overload
