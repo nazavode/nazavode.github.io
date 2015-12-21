@@ -36,11 +36,11 @@ disqusShortname = "nazavode"
     # Changes sidebar background and link/accent colours.
     # See below for more colour options.
     # This also works: "theme-base-08 layout-reverse", or just "layout-reverse".
-    theme = "theme-base-08"
+    theme = "theme-base-sulphur-00"
 
     # Select a syntax highight.
     # Check the static/css/highlight directory for options.
-    highlight = "github"
+    highlight = "default"
 
     # Displays under the author name in the sidebar, keep it short.
     # You can use markdown here.

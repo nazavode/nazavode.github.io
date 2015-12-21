@@ -291,10 +291,11 @@ a.sidebar-nav-item:focus {
 but post titles should be far darker.*/
 .theme-base-sulphur-00 .content a,
 .theme-base-sulphur-00 .related-posts li a:hover {
-  color: #5e6687; /* content links in light navy */
+  color: #5062af; /* lighter content links */
 }
-.theme-base-sulphur-00 .post-title a {
-  color: #202746;
+.theme-base-sulphur-00 .post-title a,
+.theme-base-sulphur-00 .post-date a {
+  color: #181818;
 }
 
 /* Light Navy */
