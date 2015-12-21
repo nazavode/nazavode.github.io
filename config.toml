@@ -5,7 +5,7 @@ MetaDataFormat = "toml"
 theme = "hyde-x"
 paginate = 10
 #
-disqusShortname = "nazavode"
+# disqusShortname = "nazavode"
 
 [author]
     name = "Federico Ficarelli"
