@@ -31,6 +31,7 @@ Topics covered:
 **4\. Static analyzers survey**
 
 
-You can find full presentation materials [on Slideshare][slideshare].
+You can find full presentation materials [on Slideshare][slideshare] (and [Speaker Deck][speakerdeck] as well).
 
 [slideshare]: (http://www.slideshare.net/fficarelli/idiomatic-c)
+[speakerdeck]: (https://speakerdeck.com/nazavode/idiomatic-c-plus-plus)

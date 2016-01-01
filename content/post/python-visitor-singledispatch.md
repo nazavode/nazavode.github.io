@@ -1,6 +1,6 @@
 +++
 title = "Visitor pattern and Python: dynamic dispatch revisited"
-description = "Implementing the Visitor pattern in Python augmenting the standard singledispatch decorator"
+description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
 categories = ["Development"]
 tags = ["python", "design patterns"]
 date = "2015-12-19T12:59:50+01:00"
@@ -19,26 +19,36 @@ code that you can't (or you're not supposed to) change. Moreover, even if you *c
 because *isolating data from algorithms is always a good thing* and prevents you ending up with *behemoth classes* with
 a countless number of operations (also the *S* in [SOLID][SOLID] is a thing *you want* in your design).
 
-Let's assume we want to
+Let's assume we have a trivial object hierarchy:
+
 ```python
-class Entity(object):
-    """Generic entity."""
+class AstNode(object):
+    pass
 
-class Node(Element):
-    """Graph node."""
+class Expression(AstNode):
+    pass
 
-class Edge(Element):
-    """Graph edge."""
+class BinOp(AstNode):
+    pass
 
-class Place(Node):
-   """Place node."""
+class Add(BinOp):
+    pass
 
-class Transition(Node):
-  pass
+class Name(AstNode):
+    pass
+
+class Num(AstNode):
+    pass
 ```
+This simple hierarchy leads to something like this when `pyreverse`-d:
+
+![hierarchy](/images/visitor-ast-hierarchy.png)
+
+*Note: since I'm currently developing a reactive port graph calculus framework, the hierarchy I'm working on is
+obviously graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
 
 ```python
-def reverse_engineer(car):
+def visit(car):
     if isinstance(car, Trabant):
         pass
     if isinstance(car, Trabant):
@@ -120,11 +130,12 @@ some specific situations ([trees](https://en.wikipedia.org/wiki/Abstract_syntax_
 
 [factory-pattern]: https://sourcemaking.com/design_patterns/factory_method
 [visitor-pattern]: https://sourcemaking.com/design_patterns/visitor
-[SOLID]: (https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
+[SOLID]: https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)
 [cpp-vtable]: https://en.wikipedia.org/wiki/Virtual_method_table
 [dynamic-dispatch]: https://en.wikipedia.org/wiki/Dynamic_dispatch
 [multiple-dispatch]: https://en.wikipedia.org/wiki/Multiple_dispatch
 [visitor-python-eckel]: http://python-3-patterns-idioms-test.readthedocs.org/en/latest/Visitor.html
+[visitor-python-ast]: https://docs.python.org/3.5/library/ast.html#ast.NodeVisitor
 [abc-support]: http://code.activestate.com/lists/python-dev/122554/
 [dict-dispatch]: http://codereview.stackexchange.com/questions/7433/dictionary-based-dispatch-in-python-with-multiple-parameters
 [chris-lamb-dispatchon]: https://chris-lamb.co.uk/posts/visitor-pattern-in-python
