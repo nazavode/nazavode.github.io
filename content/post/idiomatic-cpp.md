@@ -1,7 +1,7 @@
 +++
 title = "Idiomatic C++"
 description = ""
-categories = ["Development"]
+categories = ["Lectures"]
 tags = ["c++", "guidelines"]
 date = "2014-02-20T22:30:51+01:00"
 +++
@@ -33,5 +33,5 @@ Topics covered:
 
 You can find full presentation materials [on Slideshare][slideshare] (and [Speaker Deck][speakerdeck] as well).
 
-[slideshare]: (http://www.slideshare.net/fficarelli/idiomatic-c)
-[speakerdeck]: (https://speakerdeck.com/nazavode/idiomatic-c-plus-plus)
+[slideshare]: http://www.slideshare.net/fficarelli/idiomatic-c
+[speakerdeck]: https://speakerdeck.com/nazavode/idiomatic-c-plus-plus

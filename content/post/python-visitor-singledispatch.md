@@ -44,18 +44,90 @@ This simple hierarchy leads to something like this when `pyreverse`-d:
 
 ![hierarchy](/images/visitor-ast-hierarchy.png)
 
-*Note: since I'm currently developing a reactive port graph calculus framework, the hierarchy I'm working on is
-obviously graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
+*Note: since I'm currently spending my spare time on graph isomorphisms, the hierarchy I'm working on is obviously graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
+
+## Python and the Visitor
+
+### Explicit
 
 ```python
-def visit(car):
-    if isinstance(car, Trabant):
-        pass
-    if isinstance(car, Trabant):
-        pass
-    if isinstance(car, Trabant):
-        pass
+
+def visit(node):
+    if isinstance(node, Num):
+        return '[Num: {}]'.format(node)
+    elif isinstance(node, Name):
+        return '[Name: {}]'.format(node)
+    if isinstance(node, BinOp):
+        return '[BinOp: {} {} {}]'.format(
+            visit(node.lhs),
+            visit(node.op),
+            visit(node.rhs)
+        )
+    # continue...
 ```
+
+### Lexical
+
+```python
+
+class OpVisitor(object):
+
+    def visit(self, node):
+        visit_fun = getattr(
+            self,
+            'visit_' + node.__class__.__name__,
+            self.visit_default
+        )
+        return visit_fun(node)
+
+    def visit_Num(self, node):
+        return '[Num: {}]'.format(node)
+
+    def visit_Name(self, node):
+        return '[Name: {}]'.format(node)
+
+    def visit_BinOp(self, node):
+        return '[BinOp: {} {} {}]'.format(
+            self.visit(node.lhs),
+            self.visit(node.op),
+            self.visit(node.rhs)
+        )
+    # continue...
+```
+
+### Dispatch table
+
+```python
+
+class OpVisitor(object):
+
+    def __init__(self):
+        self._dispatch_table = {
+            Name: self.visitName,
+            Num: self.visitNum,
+            BinOp: self.visit_BinOp,
+        }
+
+    def visit(self, node):
+        visit_fun = self._dispatch_table.get(node.__class__, self.visit_default)
+        return visit_fun(node)
+
+    def visit_Num(self, node):
+        return '[Num: {}]'.format(node)
+
+    def visit_Name(self, node):
+        return '[Name: {}]'.format(node)
+
+    def visit_BinOp(self, node):
+        return '[BinOp: {} {} {}]'.format(
+            self.visit(node.lhs),
+            self.visit(node.op),
+            self.visit(node.rhs)
+        )
+    # continue...
+```
+
+### The `singledispatch` decorator
 
 Multiple dispatching.
 
@@ -82,8 +154,8 @@ def reverse_engineer(car):
 3. singledispatch
 4. visitor class: singledispatch as external function
 
-Overload.
 
+## Overload
 
 While googling around, I stumbled upon [this great post by Chris Lamb][chris-lamb-dispatchon] and I decided that his
 approach was brilliant and worth a try.
