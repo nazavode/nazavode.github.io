@@ -100,6 +100,8 @@ class OpVisitor(object):
     # continue...
 ```
 
+This solution works pretty well but it's far from perfect since it prevents any kind of subclassing of node types.
+
 ### Dispatch table
 
 Another variant, [presented by Bruce Eckel][visitor-python-eckel] in the Python flavour of his famous *Thinking
@@ -117,7 +119,8 @@ class OpVisitor(object):
         }
 
     def visit(self, node):
-        visit_fun = self._dispatch_table.get(node.__class__, self.visit_default)
+        visit_fun = \
+            self._dispatch_table.get(node.__class__, self.visit_default)
         return visit_fun(node)
 
     # the same as in the previous example...
@@ -170,7 +173,13 @@ class OpVisitor(object):
       # continue...
 ```
 
-You can find the `argdispatch` decorator [on GitHub][argdispatch-github].
+The implementation is fairly straightforward: while the actual type dispatching is still carried out by the underlying
+standard `singledispatch`, the `argdispatch` decorator produces a closure that picks the custom argument instead of the
+first one found in the function signature. This is quite powerful and its main value is that allows to ignore the
+`this` argument on bound methods, enabling its adoption in class methods, instance methods and abstract base classes as
+well.
+
+You can find the `argdispatch` implementation [on GitHub][argdispatch-github].
 
 ## Disclaimer
 
