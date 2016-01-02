@@ -1,7 +1,7 @@
 +++
 title = "Visitor pattern and Python: dynamic dispatch revisited"
 description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
-categories = ["Development"]
+categories = ["Development", "Python"]
 tags = ["python", "design patterns"]
 date = "2015-12-19T12:59:50+01:00"
 
@@ -12,6 +12,8 @@ Well, everyone knows that *GOF design patterns* are a set of agnostic concepts, 
 language. True, but they have been designed with a specific language in mind, trying to cope with some of its shortcomings.
 When you think about patterns in Python, some of them make less sense (the [Factory][factory-pattern] is actually
 idiomatic) while others turn out to be less straightforward: the *Visitor* is one of them.
+
+## The Visitor pattern
 
 The point of the [Visitor][visitor-pattern] is to cope with a hierarchical structure of types where you want all of them
 to support some new behavior. This is especially valuable when the types have been defined by someone else in a piece of
@@ -46,7 +48,7 @@ This simple hierarchy leads to something like this when `pyreverse`-d:
 
 *Note: since I'm currently spending my spare time on graph isomorphisms, the hierarchy I'm working on is obviously graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
 
-## Python and the Visitor
+## The Visitor in Python
 
 ### Explicit
 
@@ -68,17 +70,20 @@ def visit(node):
 
 ### Lexical
 
+A more somehow *refined* approach is the one adopted in the [Python `ast` module][visitor-python-ast] relying
+on lexical lookup based on actual *names* of types to be visited:
+
 ```python
 
 class OpVisitor(object):
 
     def visit(self, node):
-        visit_fun = getattr(
-            self,
-            'visit_' + node.__class__.__name__,
-            self.visit_default
-        )
-        return visit_fun(node)
+        fun_name = 'visit_' + node.__class__.__name__
+        fun = getattr(self, fun_name, self.visit_default)
+        return fun(node)
+
+    def visit_default(self, node):
+        return '[{}]'.format(node)
 
     def visit_Num(self, node):
         return '[Num: {}]'.format(node)
@@ -97,6 +102,9 @@ class OpVisitor(object):
 
 ### Dispatch table
 
+Another variant, [presented by Bruce Eckel][visitor-python-eckel] in the Python flavour of his famous *Thinking
+in* series, is based on a dictionary acting like a *dispatch table*, associating types and visitor functions:
+
 ```python
 
 class OpVisitor(object):
@@ -112,68 +120,59 @@ class OpVisitor(object):
         visit_fun = self._dispatch_table.get(node.__class__, self.visit_default)
         return visit_fun(node)
 
-    def visit_Num(self, node):
-        return '[Num: {}]'.format(node)
-
-    def visit_Name(self, node):
-        return '[Name: {}]'.format(node)
-
-    def visit_BinOp(self, node):
-        return '[BinOp: {} {} {}]'.format(
-            self.visit(node.lhs),
-            self.visit(node.op),
-            self.visit(node.rhs)
-        )
-    # continue...
+    # the same as in the previous example...
 ```
+
+Look at that dictionary and think about other languages: what we are doing here is trying to write *by hand*
+the [dynamic dispatch][dynamic-dispatch] mechanisms that some strongly typed languages know very well,
+ *that `dict` is actually trying to become a [virtual table][cpp-vtable]*.
+
 
 ### The `singledispatch` decorator
 
 Multiple dispatching.
 
-Visitor in Python:
-
-1. isinstance
-2. dispatch table - Look at that dictionary and think about other languages: what we are doing here
-  is trying to write *by hand* the [dynamic dispatch][dynamic-dispatch] mechanisms that some
-  strongly typed languages know very well,
-  **that `dict` is actually trying to become a [virtual table][cpp-vtable].**
-
-```python
-__dispatch_table__ = {
-    Volga: '',
-    Trabant: '',
-    FiatPanda750: '',
-    SeriousCar: '',
-}
-
-def reverse_engineer(car):
-
-```
 
 3. singledispatch
 4. visitor class: singledispatch as external function
 
 
-## Overload
+## Improving the `singledispatch` decorator
 
-While googling around, I stumbled upon [this great post by Chris Lamb][chris-lamb-dispatchon] and I decided that his
-approach was brilliant and worth a try.
+While googling around, I stumbled upon [this great post by Chris Lamb][chris-lamb-dispatchon] where he presents an
+interesting approach (without providing actual code). That looked brilliant, so I decided to write something similar
+by my own.
 
+Let's assume we want a decorator that allows us to specify a *custom dispatch argument*:
 
 ```python
-class GraphVisitor(object):
+class OpVisitor(object):
 
-  @argdispatch('element')
-  def visit(self, element):
-    pass
+    @argdispatch('node')
+    def visit(self, node):
+        return '[{}]'.format(node)
 
-  @visit.register(Node)
-  def _(self, element):
-    pass
+    @visit.register(Num)
+    def _(self, node):
+        return '[Num: {}]'.format(node)
+
+    @visit.register(Name)
+    def _(self, node):
+        return '[Name: {}]'.format(node)
+
+    @visit.register(BinOp)
+    def _(self, node):
+        return '[BinOp: {} {} {}]'.format(
+            self.visit(node.lhs),
+            self.visit(node.op),
+            self.visit(node.rhs)
+        )
+      # continue...
 ```
 
-You can find the `argdispatch` decorator [on GitHub][overload-github].
+You can find the `argdispatch` decorator [on GitHub][argdispatch-github].
+
+## Disclaimer
 
 I know that, as discussed quite extensively [here][abc-support], the whole thing smells a lot of anti-pattern:
 
@@ -198,7 +197,7 @@ actually an attempt to negate *duck typing*. If you're considering this kind of 
 
 Despite that, the `singledispatch` decorator is now [standard][singledispatch] and it looks like a neat way to cope with
 some specific situations ([trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?) therefore I'm giving
-[my extension][overload-github] a try keeping in mind to avoid evil (and useless) things.
+[my extension][argdispatch-github] a try keeping in mind to avoid evil (and useless) things.
 
 [factory-pattern]: https://sourcemaking.com/design_patterns/factory_method
 [visitor-pattern]: https://sourcemaking.com/design_patterns/visitor
@@ -212,4 +211,4 @@ some specific situations ([trees](https://en.wikipedia.org/wiki/Abstract_syntax_
 [dict-dispatch]: http://codereview.stackexchange.com/questions/7433/dictionary-based-dispatch-in-python-with-multiple-parameters
 [chris-lamb-dispatchon]: https://chris-lamb.co.uk/posts/visitor-pattern-in-python
 [singledispatch]: https://docs.python.org/3/library/functools.html#functools.singledispatch
-[overload-github]: https://github.com/nazavode/overload
+[argdispatch-github]: https://github.com/nazavode/argdispatch
