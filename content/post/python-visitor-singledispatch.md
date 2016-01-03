@@ -9,7 +9,8 @@ draft = true
 +++
 
 Well, everyone knows that *GOF design patterns* are a set of agnostic concepts, fairly independent from any actual
-language. True, but they have been designed with a specific language in mind, trying to cope with some of its shortcomings.
+language. True, but they have been designed with a specific language in mind, trying to cope with some of its
+shortcomings.
 When you think about patterns in Python, some of them make less sense (the [Factory][factory-pattern] is actually
 idiomatic) while others turn out to be less straightforward: the *Visitor* is one of them.
 
@@ -46,7 +47,8 @@ This simple hierarchy leads to something like this when `pyreverse`-d:
 
 ![hierarchy](/images/visitor-ast-hierarchy.png)
 
-*Note: since I'm currently spending my spare time on graph isomorphisms, the hierarchy I'm working on is obviously graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
+*Note: since I'm currently spending my spare time on graph isomorphisms, the hierarchy I'm working on is obviously
+graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
 
 ## The Visitor in Python
 
@@ -104,8 +106,9 @@ This solution works pretty well but it's far from perfect since it prevents any 
 
 ### Dispatch table
 
-Another variant, [presented by Bruce Eckel][visitor-python-eckel] in the Python flavour of his famous *Thinking
-in* series, is based on a dictionary acting like a *dispatch table*, associating types and visitor functions:
+Another widespread variant, [even adopted by Bruce Eckel][visitor-python-eckel] in the Python flavour of his famous
+*Thinking in* series, is based on a dictionary acting like a *dispatch table*, associating types and visitor functions
+directly:
 
 ```python
 
@@ -133,20 +136,30 @@ the [dynamic dispatch][dynamic-dispatch] mechanisms that some strongly typed lan
 
 ### The `singledispatch` decorator
 
-Multiple dispatching.
+```python
+class OpVisitor(object):
 
+    @singledispatch('node')
+    def visit(self, node):
+        return '[{}]'.format(node)
 
-3. singledispatch
-4. visitor class: singledispatch as external function
+    # ...
+```
 
+**Nope.** What we are getting here is type dispatching on the first argument, and for bound methods the first argument
+is `self`. No way out, we are going to dispatch on the type of `self` and I really can't figure out any usage that makes
+sense to me.
 
 ## Improving the `singledispatch` decorator
 
-While googling around, I stumbled upon [this great post by Chris Lamb][chris-lamb-dispatchon] where he presents an
-interesting approach (without providing actual code). That looked brilliant, so I decided to write something similar
-by my own.
+Apart from methods and functions, I came up with this idea that **having a dispatch decorator that allows to specify a
+single custom argument among formal parameters would have been nice**.
 
-Let's assume we want a decorator that allows us to specify a *custom dispatch argument*:
+While googling around, I stumbled upon [this great post by Chris Lamb][chris-lamb-dispatchon] where he presents an
+interesting approach (without providing actual code) that matches exactly what I was thinking about. Yep, that looked
+brilliant, so I decided to write something similar by my own.
+
+Let's assume we want to be able to write something like this:
 
 ```python
 class OpVisitor(object):
@@ -173,9 +186,18 @@ class OpVisitor(object):
       # continue...
 ```
 
+Apart from looking pretty nifty, a thing like that could be a tool available for a lot of other cases too, even for
+abstract base classes:
+
+```python
+
+# ABC
+
+```
+
 The implementation is fairly straightforward: while the actual type dispatching is still carried out by the underlying
 standard `singledispatch`, the `argdispatch` decorator produces a closure that picks the custom argument instead of the
-first one found in the function signature. This is quite powerful and its main value is that allows to ignore the
+first one found in the callable signature. This is quite powerful and its main value is that allows to ignore the
 `this` argument on bound methods, enabling its adoption in class methods, instance methods and abstract base classes as
 well.
 
