@@ -24,25 +24,8 @@ a countless number of operations (also the *S* in [SOLID][SOLID] is a thing *you
 
 Let's assume we have a trivial object hierarchy:
 
-```python
-class AstNode(object):
-    pass
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "ast.py">}}
 
-class Expression(AstNode):
-    pass
-
-class BinOp(AstNode):
-    pass
-
-class Add(BinOp):
-    pass
-
-class Name(AstNode):
-    pass
-
-class Num(AstNode):
-    pass
-```
 This simple hierarchy leads to something like this when `pyreverse`-d:
 
 ![hierarchy](/images/visitor-ast-hierarchy.png)
@@ -54,53 +37,14 @@ graph-oriented but, hey, `Node`, `Edge`, `Graph`...the concepts are the same.*
 
 ### Explicit
 
-```python
-
-def visit(node):
-    if isinstance(node, Num):
-        return '[Num: {}]'.format(node)
-    elif isinstance(node, Name):
-        return '[Name: {}]'.format(node)
-    if isinstance(node, BinOp):
-        return '[BinOp: {} {} {}]'.format(
-            visit(node.lhs),
-            visit(node.op),
-            visit(node.rhs)
-        )
-    # continue...
-```
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "visit-explicit.py">}}
 
 ### Lexical
 
 A more somehow *refined* approach is the one adopted in the [Python `ast` module][visitor-python-ast] relying
 on lexical lookup based on actual *names* of types to be visited:
 
-```python
-
-class OpVisitor(object):
-
-    def visit(self, node):
-        fun_name = 'visit_' + node.__class__.__name__
-        fun = getattr(self, fun_name, self.visit_default)
-        return fun(node)
-
-    def visit_default(self, node):
-        return '[{}]'.format(node)
-
-    def visit_Num(self, node):
-        return '[Num: {}]'.format(node)
-
-    def visit_Name(self, node):
-        return '[Name: {}]'.format(node)
-
-    def visit_BinOp(self, node):
-        return '[BinOp: {} {} {}]'.format(
-            self.visit(node.lhs),
-            self.visit(node.op),
-            self.visit(node.rhs)
-        )
-    # continue...
-```
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "visit-lexical.py">}}
 
 This solution works pretty well but it's far from perfect since it prevents any kind of subclassing of node types.
 
@@ -110,24 +54,7 @@ Another widespread variant, [even adopted by Bruce Eckel][visitor-python-eckel] 
 *Thinking in* series, is based on a dictionary acting like a *dispatch table*, associating types and visitor functions
 directly:
 
-```python
-
-class OpVisitor(object):
-
-    def __init__(self):
-        self._dispatch_table = {
-            Name: self.visitName,
-            Num: self.visitNum,
-            BinOp: self.visit_BinOp,
-        }
-
-    def visit(self, node):
-        visit_fun = \
-            self._dispatch_table.get(node.__class__, self.visit_default)
-        return visit_fun(node)
-
-    # the same as in the previous example...
-```
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "visit-dispatchtable.py">}}
 
 Look at that dictionary and think about other languages: what we are doing here is trying to write *by hand*
 the [dynamic dispatch][dynamic-dispatch] mechanisms that some strongly typed languages know very well,
@@ -136,15 +63,7 @@ the [dynamic dispatch][dynamic-dispatch] mechanisms that some strongly typed lan
 
 ### The `singledispatch` decorator
 
-```python
-class OpVisitor(object):
-
-    @singledispatch('node')
-    def visit(self, node):
-        return '[{}]'.format(node)
-
-    # ...
-```
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "visit-singledispatch.py">}}
 
 **Nope.** What we are getting here is type dispatching on the first argument, and for bound methods the first argument
 is `self`. No way out, we are going to dispatch on the type of `self` and I really can't figure out any usage that makes
@@ -161,30 +80,7 @@ brilliant, so I decided to write something similar by my own.
 
 Let's assume we want to be able to write something like this:
 
-```python
-class OpVisitor(object):
-
-    @argdispatch('node')
-    def visit(self, node):
-        return '[{}]'.format(node)
-
-    @visit.register(Num)
-    def _(self, node):
-        return '[Num: {}]'.format(node)
-
-    @visit.register(Name)
-    def _(self, node):
-        return '[Name: {}]'.format(node)
-
-    @visit.register(BinOp)
-    def _(self, node):
-        return '[BinOp: {} {} {}]'.format(
-            self.visit(node.lhs),
-            self.visit(node.op),
-            self.visit(node.rhs)
-        )
-      # continue...
-```
+{{<gist nazavode a7fd359bee09cf6d1078955cfef9d80b "visit-argdispatch.py">}}
 
 Apart from looking pretty nifty, a thing like that could be a tool available for a lot of other cases too, even for
 abstract base classes:
