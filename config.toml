@@ -3,7 +3,9 @@ title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
 theme = "hyde-x"
-paginate = 10
+paginate = 5
+pygmentscodefences = true
+pygmentsstyle = "autumn"
 #
 disqusShortname = "nazavodeio"
 
