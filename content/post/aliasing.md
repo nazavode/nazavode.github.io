@@ -237,7 +237,7 @@ void foo (float *out_vector_a, float *out_vector_b, float *in_vector, int n)
 
 Again, let's focus on the instructions carrying out the copy
 (you can find the full assembly
-[here](https://gist.github.com/nazavode/22326361646ba3cfd24cec3fd9594d49#file-example_func_compatible-s)):
+[here](https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_compatible.s)):
 
 {{< highlight objdump-nasm "hl_lines=2 5" >}}
         out_vector_a[i] = in_vector[i];
@@ -290,7 +290,7 @@ void foo (float * restrict out_vector_a, float * restrict out_vector_b,
 We've just took the same code as in the previous example and added the
 `restrict` qualifier to all pointers. Compiling it with the same `gcc` options
 as before, we end up with the following assembly (you can find the full listing
-[here](https://gist.github.com/nazavode/22326361646ba3cfd24cec3fd9594d49#file-example_func_compatible-s)):
+[here](https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_compatible.s)):
 
 {{< highlight objdump-nasm "hl_lines=2 5" >}}
         out_vector_a[i] = in_vector[i];
@@ -339,16 +339,56 @@ all’interno dello stesso blocco.
 N.B.: le regole imposte da restrict non fanno alcuna differenza fra chiamata di funzione e nested block.
 
 Esempio 1: p e q restricted
-{{<gist nazavode 22326361646ba3cfd24cec3fd9594d49 "c-example-04.c">}}
+
+```
+void bar(int * restrict p, int * restrict q, int n) {
+    while (n-- > 0)
+        *p++ = *q++;
+}
+```
 
 Esempio 2: chiamata di f
-{{<gist nazavode 22326361646ba3cfd24cec3fd9594d49 "c-example-05.c">}}
+
+```
+void callbar(void) {
+    extern int d[100];
+    bar(50, d + 50, d); // Valid!
+    bar(50, d + 1 , d); // Undefined behaviour!
+}
+```
 
 Esempio 3: restrict + read only = OK
-{{<gist nazavode 22326361646ba3cfd24cec3fd9594d49 "c-example-06.c">}}
+
+```
+void threebar(int * restrict p, int * restrict q,
+              int * restrict r, int n)
+{
+    for (int i=0; i<n; ++i)
+        p[i] = q[i] + r[i];
+}
+
+void callthreebar(int n) {
+    int a[n];
+    int b[n];
+    threebar(n, a, b, b); // Valid!
+}
+```
 
 Esempio 4: outer-to-inner rule
-{{<gist nazavode 22326361646ba3cfd24cec3fd9594d49 "c-example-07.c">}}
+
+```
+{
+  int * restrict foo;
+  int * restrict bar;
+  foo = bar; // undefined behaviour
+  {
+    int * restrict foo_inner = foo; // valid
+    int * restrict bar_inner = bar; // valid
+    foo = bar_inner; // undefined behaviour
+    bar_inner = foo_inner; // undefined behaviour
+  }
+}
+```
 
 ## What happens in other languages
 
