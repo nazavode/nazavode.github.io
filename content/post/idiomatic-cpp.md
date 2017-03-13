@@ -1,8 +1,8 @@
 +++
 title = "Idiomatic C++"
 description = ""
-categories = ["Lectures", "C++"]
-tags = ["c++", "guidelines"]
+categories = ["C++"]
+tags = ["c++", "guidelines", "idioms"]
 date = "2014-02-20T22:30:51+01:00"
 +++
 
