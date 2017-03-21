@@ -64,13 +64,13 @@ focus on the instructions that carry out the actual copies:
 
 {{< highlight objdump-nasm "hl_lines=3 7" >}}
       out_vector_a[i] = in_vector[i];
-  10:	66 0f ef c0          	pxor   xmm0,xmm0
+  10:	66 0f ef c0          	pxor     xmm0,xmm0
   14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  19:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
+  19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
       out_vector_b[i] = in_vector[i];
-  1e:	66 0f ef c0          	pxor   xmm0,xmm0
+  1e:	66 0f ef c0          	pxor     xmm0,xmm0
   22:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  27:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
+  27:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
 {{< / highlight >}}
 
 In an attempt to decode these instructions for humans, we can rewrite them
@@ -194,12 +194,12 @@ the actual copy:
 
 {{< highlight objdump-nasm "hl_lines=3" >}}
       out_vector_a[i] = in_vector[i];
-  10:   66 0f ef c0          	pxor   xmm0,xmm0
+  10:   66 0f ef c0          	pxor     xmm0,xmm0
   14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  19:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
+  19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
       out_vector_b[i] = in_vector[i];
-  1e:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
-  23:	48 83 c0 01          	add    rax,0x1
+  1e:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
+  23:	48 83 c0 01          	add      rax,0x1
 {{< / highlight >}}
 
 This time **the second load disappeared**. Again, let's try to *decode* the
@@ -273,7 +273,7 @@ referring to the same object in memory. How can we escape this ditch?
 ## The `restrict` qualifier
 
 Luckily the standard provides us a tool to tell the compiler **under our
-responsibility** that even two pointers could be legal aliases, we are actually
+responsibility** that even if two pointers could be legal aliases, we are
 guaranteeing that they aren't:
 
 ```
@@ -315,7 +315,7 @@ compiler that a restrcted pointer has no aliases at all**. Of course the
 
 In other words, a `restrict` pointer is the only legal way to access the object
 it points to in memory. This kind of *special association* is the same that for
-example links a newly allocated memory chunk to the its pointer: since it is
+example links a newly allocated memory chunk to its pointer: since it is
 brand new, no other already existing pointer can be an alias for it.
 
 > For example, a statement that assigns a value returned by `malloc` to a single
