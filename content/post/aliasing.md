@@ -333,6 +333,33 @@ behaviour but to allow additional optimizations:
 >
 > *ISO/IEC 9899:201x, Section 6.7.3*
 
+The standard is so harsh about ``restrict`` that even producing a pointer alias
+to a ``restrict`` is **undefined behaviour**:
+
+```
+int * restrict q;
+int * restrict p = q; // UNDEFINED BEHAVIOUR!!!
+```
+
+The rule limiting assignments between restricted pointers does not distinguish
+between a function call and an equivalent nested block. With one exception, only
+‘‘outer-to-inner’’ assignments between restricted pointers declared in nested
+blocks have defined behavior.
+
+```
+{
+  int * restrict foo;
+  int * restrict bar;
+  foo = bar; // undefined behaviour
+  {
+    int * restrict foo_inner = foo; // OK: outer-to-inner
+    int * restrict bar_inner = bar; // OK: outer-to-inner
+    foo = bar_inner;                // undefined behaviour
+    bar_inner = foo_inner;          // undefined behaviour
+  }
+}
+```
+
 all’interno dello stesso blocco.
   Se in blocchi diversi (nested), è possibile il caching del puntatore ma vengono imposti altri vincoli (outer-to-inner rule)!
 
@@ -374,21 +401,6 @@ void callthreebar(int n) {
 }
 ```
 
-Esempio 4: outer-to-inner rule
-
-```
-{
-  int * restrict foo;
-  int * restrict bar;
-  foo = bar; // undefined behaviour
-  {
-    int * restrict foo_inner = foo; // valid
-    int * restrict bar_inner = bar; // valid
-    foo = bar_inner; // undefined behaviour
-    bar_inner = foo_inner; // undefined behaviour
-  }
-}
-```
 
 ## What happens in other languages
 
