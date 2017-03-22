@@ -52,7 +52,7 @@ theme = "hyde-x"
 
     # Displays under the author name in the sidebar, keep it short.
     # You can use markdown here.
-    tagline = "volatile hacks by Federico Ficarelli"
+    # tagline = "volatile hacks"
 
     # Text for the top menu link, which goes the root URL for the site.
     # Default (if omitted) is "Blog".
