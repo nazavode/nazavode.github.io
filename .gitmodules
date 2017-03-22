@@ -13,3 +13,6 @@
 [submodule "themes/steam"]
 	path = themes/steam
 	url = https://github.com/digitalcraftsman/hugo-steam-theme
+[submodule "themes/hucore"]
+	path = themes/hucore
+	url = https://github.com/mgjohansen/hucore
