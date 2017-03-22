@@ -1,0 +1,18 @@
+[submodule "themes/hyde-x"]
+	path = themes/hyde-x
+	url = https://github.com/nazavode/hyde-x
+[submodule "themes/redlounge"]
+	path = themes/redlounge
+	url = https://github.com/tmaiaroto/hugo-redlounge
+[submodule "themes/hyde-y"]
+	path = themes/hyde-y
+	url = https://github.com/enten/hyde-y
+[submodule "themes/type"]
+	path = themes/type
+	url = https://github.com/digitalcraftsman/hugo-type-theme
+[submodule "themes/steam"]
+	path = themes/steam
+	url = https://github.com/digitalcraftsman/hugo-steam-theme
+[submodule "themes/hucore"]
+	path = themes/hucore
+	url = https://github.com/mgjohansen/hucore
