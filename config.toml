@@ -2,12 +2,14 @@ baseurl = "https://nazavode.github.io/"
 title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
-theme = "hyde-x"
 paginate = 5
 pygmentscodefences = true
 pygmentsstyle = "autumn"
 #
 disqusShortname = "nazavodeio"
+#
+theme = "hyde-x"
+
 
 [author]
     name = "Federico Ficarelli"
@@ -26,6 +28,10 @@ disqusShortname = "nazavodeio"
 # All parameters below here are optional and can be mixed and matched.
 #
 [params]
+    # Hide estimated reading time for posts.
+    # Default (if omitted) is false.
+    hideReadingTime = false
+    
     # If false display full article contents in blog index.
     # Otherwise show description and 'read on' link to individual blog post page.
     # Default (if omitted) is true.
