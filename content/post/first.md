@@ -1,6 +1,7 @@
 +++
-date = "2015-12-17"
 title = "Move on"
+description = "How I moved from WordPress to Hugo in an evening without looking back"
+date = "2015-12-17"
 +++
 
 Just moved my [old blog](https://devnone.wordpress.com) to the combo that mixes
@@ -14,4 +15,4 @@ through an [html to Markdown
 converter](https://domchristie.github.io/to-markdown/) and push everything to
 the proper [GitHub repo](https://github.com/nazavode/nazavode.github.io).
 
-The result is pretty promising.
+The result is very promising.

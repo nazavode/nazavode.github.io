@@ -1,11 +1,15 @@
 +++
-categories = ["C"]
-date = "2017-03-12"
-description = ""
-tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 title = "Aliasing Explained - Part II"
+description = ""
+date = "2017-03-12"
+categories = ["Dev", "Languages"]
+tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 draft = true
 +++
+
+Second episode.
+
+<!--more-->
 
 ## A more complex example
 

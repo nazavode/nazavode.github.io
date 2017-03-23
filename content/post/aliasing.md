@@ -1,9 +1,9 @@
 +++
 title = "Aliasing Explained"
-description = ""
+description = "What is aliasing and why you should care"
 date = "2017-03-11"
-categories = ["C"]
-tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
+categories = ["Dev", "Languages"]
+tags = ["c", "standard", "aliasing", "restrict", "iso", "c99", "c11", "c++", "fortran"]
 draft = true
 +++
 
@@ -11,6 +11,8 @@ Since my job involves mainly HPC stuff and *performance-obsessed code*, one of
 the first topics I had to dive into was **aliasing in the C standard**. This
 article ties to summarize all I learned while diving into this potentially
 sneaky topic.
+
+<!--more-->
 
 So what is an *alias*? Let's try to clarify this a bit:
 
@@ -174,8 +176,9 @@ pointers are how we swipe raw memory in C (for copying chunks regardless of the
 underlying object type, for example).
 
 Just a note about terminology: in the ISO C world, **strict aliasing**, **ANSI
-aliasing** and **type-based aliasing** are exactly the same thing, they all **refer
-to the same concept** (actually they are *aliases*...sorry for the pun :).
+aliasing** and **type-based aliasing** are exactly the same thing, they all
+**refer to the same concept** (actually they are *aliases*...sorry for the
+pun :).
 
 ## Let's exploit the law
 

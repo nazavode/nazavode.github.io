@@ -1,7 +1,7 @@
 +++
 title = "Idiomatic C++"
 description = ""
-categories = ["C++"]
+categories = ["Dev", "Languages"]
 tags = ["c++", "guidelines", "idioms"]
 date = "2014-02-20"
 +++
@@ -9,6 +9,8 @@ date = "2014-02-20"
 I've just [uploaded][slideshare] a minimal collection of most wanted and widely accepted idioms and coding conventions
 for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
 emphasis is on performance-friendly techniques.
+
+<!--more-->
 
 Topics covered:
 

@@ -1,15 +1,20 @@
 +++
 title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
 description = "Generating Doxygen documentation with CMake with proper targets and dependency checking."
-categories = ["CMake"]
-tags = ["cmake", "doxygen"]
 date = "2013-01-19"
+categories = ["Dev", "Tools"]
+tags = ["cmake", "doxygen", "build system"]
 +++
 
-Well, after days of hard work we ended up with our lovely crafted code base, a
+After days of hard work we ended up with our lovely crafted code base, a
 portable CMake build system and we are now facing the task to generate a proper
 Doxygen documentation for our anxious customer. The solution, widely adopted,
-seems to be the one and only that can be found while googling:
+seems to be the one and only that can be found while googling and, to me, looks
+not so neat. So I tried to come up with a different approach.
+
+<!--more-->
+
+Let's first have a look at the widespread solution:
 
 ```cmake
 #-- Adds an Option to toggle the generation of the API documentation

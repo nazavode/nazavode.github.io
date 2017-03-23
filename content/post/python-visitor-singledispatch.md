@@ -1,8 +1,8 @@
 +++
 title = "Visitor pattern and Python: dynamic dispatch revisited"
 description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
-categories = ["Python"]
-tags = ["python", "design patterns", "visitor", "type dispatching"]
+categories = ["Dev", "Languages"]
+tags = ["python", "design patterns", "visitor", "type dispatching", "singledispatch", "multimethod"]
 date = "2015-12-19"
 
 draft = true
@@ -14,6 +14,8 @@ with a specific language in mind, trying to cope with some of its shortcomings.
 When you think about patterns in Python, some of them make less sense (the
 [Factory][factory-pattern] is actually idiomatic) while others turn out to be
 less straightforward: the *Visitor* is one of them.
+
+<!--more-->
 
 ## The Visitor pattern
 
