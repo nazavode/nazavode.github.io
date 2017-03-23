@@ -145,7 +145,7 @@ can legally refer to an object*:
 >   contained union), or
 > * a **character** type.
 >
-> *(ISO/IEC 9899:201x, Section 6.5)*
+> *ISO/IEC 9899:201x, Section 6.5*
 
 Don't worry about the definition of *compatible types*, it turns out to be
 exactly what you are thinking of (except for `struct`, but we can ignore that
@@ -153,7 +153,7 @@ for now):
 
 > Two types have *compatible type* if their types are the same.
 >
-> *(ISO/IEC 9899:201x, Section 6.2.7)*
+> *ISO/IEC 9899:201x, Section 6.2.7*
 
 So, following the rules, we can have pointers that are aliases in a lot of
 different legal ways. For example, these pointers *could be* valid aliases of
