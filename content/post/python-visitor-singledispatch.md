@@ -52,7 +52,7 @@ class Num(AstNode):
 
 This simple hierarchy leads to something like this when feed through `pyreverse`:
 
-![hierarchy](/images/visitor-ast-hierarchy.png)
+![hierarchy](/img/visitor-ast-hierarchy.png)
 
 *Note: since I'm currently spending my spare time on graph isomorphisms, the
 *hierarchy I'm working on is obviously graph-oriented but, hey, `Node`, `Edge`,
