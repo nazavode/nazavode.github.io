@@ -3,13 +3,13 @@ title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
 paginate = 5
+# Pygments syntax highlighting (pygments executable must be available)
 pygmentscodefences = true
 pygmentsstyle = "autumn"
-#
+# Disqus
 disqusShortname = "nazavodeio"
-#
+# Theme
 theme = "hyde-x"
-
 
 [author]
     name = "Federico Ficarelli"
@@ -30,8 +30,8 @@ theme = "hyde-x"
 [params]
     # Hide estimated reading time for posts.
     # Default (if omitted) is false.
-    hideReadingTime = false
-    
+    hideReadingTime = true
+
     # If false display full article contents in blog index.
     # Otherwise show description and 'read on' link to individual blog post page.
     # Default (if omitted) is true.

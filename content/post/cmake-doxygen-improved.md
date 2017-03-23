@@ -3,7 +3,7 @@ title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
 description = "Generating Doxygen documentation with CMake with proper targets and dependency checking."
 categories = ["CMake"]
 tags = ["cmake", "doxygen"]
-date = "2013-01-19T22:30:51+01:00"
+date = "2013-01-19"
 +++
 
 Well, after days of hard work we ended up with our lovely crafted code base, a

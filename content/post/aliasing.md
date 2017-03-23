@@ -1,9 +1,9 @@
 +++
-categories = ["C"]
-date = "2017-03-11T00:13:08+01:00"
-description = ""
-tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 title = "Aliasing Explained"
+description = ""
+date = "2017-03-11"
+categories = ["C"]
+tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 draft = true
 +++
 
@@ -17,7 +17,7 @@ So what is an *alias*? Let's try to clarify this a bit:
 > One pointer (*lvalue expression*) is said to **alias** another pointer when
 > both refer to the **same location or object**
 
-In practice, an *alias* involves referring to the same phisical entity (an
+In practice, an *alias* involves referring to the same physical entity (an
 object stored in memory) through multiple handlers (*pointers*):
 
 ```
@@ -31,7 +31,7 @@ they are pointing to the same object (the integer `i`).
 
 Just a quick note: even if we are talking about *pointers* and C-ish stuff,
 this concept is valid for *all* programming languages: a lot of recent languages
-use pointers (Go, for example) but in C this isssue is a lot more critical since
+use pointers (Go, for example) but in C this issue is a lot more critical since
 we can do *arithmetics* with them, moving pointers around in memory as we like.
 
 
@@ -74,7 +74,7 @@ focus on the instructions that carry out the actual copies:
 {{< / highlight >}}
 
 In an attempt to decode these instructions for humans, we can rewrite them
-in a *human friendly* way: 
+in a *human friendly* way:
 
 {{< highlight text "hl_lines=3 7" >}}
       out_vector_a[i] = in_vector[i];
@@ -183,14 +183,12 @@ So, what about our previous example? We were dealing with two pointers of
 incompatible types (`int *` and `float *`), so our output arrays (`out_vector_a`
 and `out_vector_b`) and the input array (`in_vector`)  aren't legal aliases.
 Anyway the compiler treated them as they were, that is because `gcc` (and almost
-all the compilers I've dealed with) works in a conservative way and assumes that
+all the compilers I've dealt with) works in a conservative way and assumes that
 the programmer doesn't care about aliasing rules and it tries to not to insert
 *very* subtle bugs. Let's try to tell `gcc` to blindly follow the standard with
 the proper flag `-fstrict-aliasing`. This time I've left out the full assembly
-file (you can find it
-[here](https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_02.s))
-and let's have a look to the interesting lines instead, the ones carrying out
-the actual copy:
+file (you can find it [here][example_func_02.s]) and let's have a look to the
+interesting lines instead, the ones carrying out the actual copy:
 
 {{< highlight text "hl_lines=3" >}}
       out_vector_a[i] = in_vector[i];
@@ -236,8 +234,7 @@ void foo (float *out_vector_a, float *out_vector_b, float *in_vector, int n)
 ```
 
 Again, let's focus on the instructions carrying out the copy
-(you can find the full assembly
-[here](https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_compatible.s)):
+(you can find the full assembly [here][example_func_compatible.s]):
 
 {{< highlight text "hl_lines=2 5" >}}
         out_vector_a[i] = in_vector[i];
@@ -290,9 +287,9 @@ void foo (float * restrict out_vector_a, float * restrict out_vector_b,
 We've just took the same code as in the previous example and added the
 `restrict` qualifier to all pointers. Compiling it with the same `gcc` options
 as before, we end up with the following assembly (you can find the full listing
-[here](https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_compatible.s)):
+[here][example_func_compatible.s]):
 
-{{< highlight text "hl_lines=2 5" >}}
+{{< highlight text "hl_lines=2" >}}
         out_vector_a[i] = in_vector[i];
     10:	f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
     15:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
@@ -302,8 +299,9 @@ as before, we end up with the following assembly (you can find the full listing
 {{< / highlight >}}
 
 Even this time we were able to let the compiler **drop the second load
-instruction**. This time we expoited **the `restrict` qualifier that tells the
-compiler that a restrcted pointer has no aliases at all**. Of course the
+instruction**, the only load from memory we have here is at instruction `10`.
+This time we exploited **the `restrict` qualifier that tells the
+compiler that a restricted pointer has no aliases at all**. Of course the
 [standard][iso-doc] states precisely the meaning of the `restrict` qualifier:
 
 > An object that is accessed through a `restrict`-qualified pointer has a
@@ -323,7 +321,7 @@ brand new, no other already existing pointer can be an alias for it.
 >
 > *ISO/IEC 9899:201x, Section 6.7.3*
 
-Please note that `restrict` hasn't been designed as a mean to change the code's
+Note that `restrict` hasn't been designed as a mean to change the code's
 behaviour but to allow additional optimizations:
 
 > The intended use of the `restrict` qualifier [...] is to **promote optimization**,
@@ -333,9 +331,11 @@ behaviour but to allow additional optimizations:
 >
 > *ISO/IEC 9899:201x, Section 6.7.3*
 
-### Assignments between ``restrict`` pointers
+In fact, compilers are allowed to completely ignore
 
-The standard is so harsh about ``restrict`` that even producing a pointer
+### Assignments between `restrict` pointers
+
+The standard is so harsh about `restrict` that even producing a pointer
 alias to a restricted one (inside the same block) is **undefined behaviour**:
 
 ```
@@ -406,60 +406,60 @@ the language definition itself. But what happens in some *classic* languages?
 
 ### Aliasing in `C++`
 
-Per il C++, le regole di aliasing del C99 sono estese dai tipi compatibili ai tipi dinamici compatibili.
+Of course `C++` is a different language than `C`, but it inherited a lot of
+rules from the latter. Aliasing is no exception, the rules are the same with
+some additions: the concept of *compatible types* is extended to *compatible
+dynamic types*:
 
-Aliasing between dynamic types:
-
-```c++
+{{< highlight cpp "hl_lines=4" >}}
 class A{ A A::operator +(const A& a) const; };
 class B : A {};
 
-void f (A* ip1, B* ip2) {  // <-- LEGAL ALIASING!!!
+void f (A* ip1, B* ip2) {
   int i;
   for (i = 0; i < 9; ++i) {
     ip1[i + 1] = ip2[i] + ip2[i + 1];
   }
 }
-```
+{{< / highlight >}}
 
-In caso di tipi di uso generico, il C++ si avvale della template metaprogramming: per il compilatore due istanze di uno stesso tipo template sono due tipi completamente scorrelati.
+In this case, the function parameters `ip1` and `ip2` are legal aliases of each
+other since class `B` is a subclass of `A`.
 
-```c++
-typedef struct {
-  void *Data;
-} Node;
+Anyway, in `C++` we have templates: two types generated from the same template
+while using different template parameters are considered non-compatible types:
 
-Node a, b;
-a.Data = (void *) &intVar;
-b.Data = (void *) &floatVar;
+{{< highlight cpp "hl_lines=4" >}}
+template <typename T> class A{ T A::operator +(const T& a) const; };
 
-template <typename T> class Node {
-  public:
-    T* Data;     
-};
+void f (A* ip1, B* ip2) {
+  int i;
+  for (i = 0; i < 9; ++i) {
+    ip1[i + 1] = ip2[i] + ip2[i + 1];
+  }
+}
+{{< / highlight >}}
 
-Node<int> a;
-Node<float> b;
-a.Data = &intVar;
-b.Data = &floatVar
-```
+In this case, the function parameters `ip1` and `ip2` are considered
+non-compatible, so the compiler treats them as if they reference non-aliased
+objects.
 
 ### Aliasing in `FORTRAN`
 
 People doing numerical stuff do love `FORTRAN`, and for good reasons: it is
 carefully cut for their needs, designed from the ground up for number crunching
 codes. And people doing numerical stuff do love saying that `FORTRAN` is faster
-than any othe language they ever tried (or just read about, usually they think
+than any other language they ever tried (or just read about, usually they think
 is enough). Well, this is obviously not true, especially when comparing
 `FORTRAN` and `C`. There is a caveat though: if you don't know the `C` language,
 during casual use it's likely that compiled `FORTRAN` will produce faster
-assembly code. Ther is a reason of course: regarding aliasing, the designers
+assembly code. There's a reason of course: regarding aliasing, the designers
 took the easy way **forbidding it at all**. **Aliasing in `FORTRAN` is strictly
 forbidden**, except for read-only references.
 
 So, a function like the following:
 
-```fortran
+{{< highlight fortran >}}
 SUBROUTINE f (A, B)
   INTEGER, DIMENSION(*), INTENT(INOUT) :: A
   INTEGER, DIMENSION(*), INTENT(OUT)   :: B
@@ -470,15 +470,15 @@ SUBROUTINE f (A, B)
     B(I) = A(I) ** 2
   ENDDO
 END SUBROUTINE
-```
+{{< / highlight >}}
 
 ...cannot be called in this way:
 
-```fortran
+{{< highlight fortran >}}
 INTEGER, DIMENSION(100) :: Arr
 
 CALL f(Arr, Arr)  ! <-- UNDEFINED BEHAVIOUR!!!
-```
+{{< / highlight >}}
 
 The fact that we are passing the *same* reference to both the parameters yields
 an **undefined behaviour** with its load of potentially mind crushing bugs.
@@ -488,5 +488,8 @@ an **undefined behaviour** with its load of potentially mind crushing bugs.
 Resources:
 
 * [ISO/IEC 9899:201x][iso-doc]
+* [All examples, including build and objdump scripts](https://gist.github.com/nazavode/22326361646ba3cfd24cec3fd9594d49)
 
 [iso-doc]: http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf
+[example_func_02.s]: https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_02.s
+[example_func_compatible.s]: https://gist.githubusercontent.com/nazavode/22326361646ba3cfd24cec3fd9594d49/raw/a65080776ef619009a0dff9374d593661eb63563/example_func_compatible.s

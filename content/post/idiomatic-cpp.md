@@ -3,7 +3,7 @@ title = "Idiomatic C++"
 description = ""
 categories = ["C++"]
 tags = ["c++", "guidelines", "idioms"]
-date = "2014-02-20T22:30:51+01:00"
+date = "2014-02-20"
 +++
 
 I've just [uploaded][slideshare] a minimal collection of most wanted and widely accepted idioms and coding conventions

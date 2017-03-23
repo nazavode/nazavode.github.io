@@ -3,7 +3,7 @@ title = "Visitor pattern and Python: dynamic dispatch revisited"
 description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
 categories = ["Python"]
 tags = ["python", "design patterns", "visitor", "type dispatching"]
-date = "2015-12-19T12:59:50+01:00"
+date = "2015-12-19"
 
 draft = true
 +++

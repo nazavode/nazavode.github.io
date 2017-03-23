@@ -1,6 +1,6 @@
 +++
 categories = ["C"]
-date = "2017-03-12T00:13:08+01:00"
+date = "2017-03-12"
 description = ""
 tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 title = "Aliasing Explained - Part II"
