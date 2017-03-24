@@ -70,28 +70,28 @@ Don't let this pile of assembly code scare you, just get the big picture and
 focus on the instructions that carry out the actual copies:
 
 {{< highlight text "hl_lines=3 7" >}}
-      out_vector_a[i] = in_vector[i];
-  10:	66 0f ef c0          	pxor     xmm0,xmm0
-  14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
-      out_vector_b[i] = in_vector[i];
-  1e:	66 0f ef c0          	pxor     xmm0,xmm0
-  22:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  27:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
+    out_vector_a[i] = in_vector[i];
+10:	66 0f ef c0          	pxor     xmm0,xmm0
+14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
+19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
+    out_vector_b[i] = in_vector[i];
+1e:	66 0f ef c0          	pxor     xmm0,xmm0
+22:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
+27:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
 {{< / highlight >}}
 
 In an attempt to render these instructions in a *human friendly* way, we can
 rewrite them in our natural language:
 
 {{< highlight text "hl_lines=3 7" >}}
-      out_vector_a[i] = in_vector[i];
-  10:	cleanup vector register xmm0
-  14:	cast int -> float and load memory location in_vector[i] into xmm0
-  19:	store xmm0 into memory location out_vector_a[i]
-      out_vector_b[i] = in_vector[i];
-  1e:	cleanup vector register xmm0
-  22:	cast int -> float and load memory location in_vector[i] into xmm0
-  27:	store xmm0 into memory location out_vector_b[i]
+    out_vector_a[i] = in_vector[i];
+10:	cleanup vector register xmm0
+14:	cast int -> float and load memory location in_vector[i] into xmm0
+19:	store xmm0 into memory location out_vector_a[i]
+    out_vector_b[i] = in_vector[i];
+1e:	cleanup vector register xmm0
+22:	cast int -> float and load memory location in_vector[i] into xmm0
+27:	store xmm0 into memory location out_vector_b[i]
 {{< / highlight >}}
 
 There are no doubts about the first three instructions (`10`, `14` and `19`), we
@@ -203,26 +203,26 @@ file (you can find it [here][example_func_02.s]), have a look to the
 interesting lines instead, the ones carrying out the actual copy:
 
 {{< highlight text "hl_lines=3" >}}
-      out_vector_a[i] = in_vector[i];
-  10:   66 0f ef c0          	pxor     xmm0,xmm0
-  14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
-  19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
-      out_vector_b[i] = in_vector[i];
-  1e:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
-  23:	48 83 c0 01          	add      rax,0x1
+    out_vector_a[i] = in_vector[i];
+10:   66 0f ef c0          	pxor     xmm0,xmm0
+14:	f3 0f 2a 04 82       	cvtsi2ss xmm0,DWORD PTR [rdx+rax*4]
+19:	f3 0f 11 04 87       	movss    DWORD PTR [rdi+rax*4],xmm0
+    out_vector_b[i] = in_vector[i];
+1e:	f3 0f 11 04 86       	movss    DWORD PTR [rsi+rax*4],xmm0
+23:	48 83 c0 01          	add      rax,0x1
 {{< / highlight >}}
 
 This time **the second load disappeared**. Again, let's try to decode the
 meaning of the assembly:
 
 {{< highlight text "hl_lines=3" >}}
-      out_vector_a[i] = in_vector[i];
-  10:	cleanup vector register xmm0
-  14:	cast int -> float and load memory location in_vector[i] into xmm0
-  19:	store xmm0 into memory location out_vector_a[i]
-      out_vector_b[i] = in_vector[i];
-  1e:	store xmm0 into memory location out_vector_b[i]
-  23:	increment loop counter
+    out_vector_a[i] = in_vector[i];
+10:	cleanup vector register xmm0
+14:	cast int -> float and load memory location in_vector[i] into xmm0
+19:	store xmm0 into memory location out_vector_a[i]
+    out_vector_b[i] = in_vector[i];
+1e:	store xmm0 into memory location out_vector_b[i]
+23:	increment loop counter
 {{< / highlight >}}
 
 This is nice: under our own guarantee that **we know what we are doing**, the
@@ -249,13 +249,13 @@ Again, let's focus on the instructions carrying out the copy
 (you can find the full assembly [here][example_func_compatible.s]):
 
 {{< highlight text "hl_lines=2 5" >}}
-        out_vector_a[i] = in_vector[i];
-    10:	f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
-    15:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
-        out_vector_b[i] = in_vector[i];
-    1a: f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
-    1f:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
-    24:	48 83 c0 01          	add    rax,0x1
+    out_vector_a[i] = in_vector[i];
+10:	f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
+15:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
+    out_vector_b[i] = in_vector[i];
+1a: f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
+1f:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
+24:	48 83 c0 01          	add    rax,0x1
 {{< / highlight >}}
 
 Apart from tiny differences due to the fact that we are dealing with `float`
@@ -263,13 +263,13 @@ only (no more casts, the instruction that loads from memory is now `movss`),
 we have fallen into the same *double load* situation:
 
 {{< highlight text "hl_lines=2 5" >}}
-        out_vector_a[i] = in_vector[i];
-    10:	    load memory location in_vector[i] into vector register xmm0
-    15:	    store xmm0 into memory location out_vector_a[i]
-        out_vector_b[i] = in_vector[i];
-    1a:	    load memory location in_vector[i] into vector register xmm0
-    1f:     store xmm0 into memory location out_vector_b[i]
-    24:     increment loop counter
+    out_vector_a[i] = in_vector[i];
+10:	    load memory location in_vector[i] into vector register xmm0
+15:	    store xmm0 into memory location out_vector_a[i]
+    out_vector_b[i] = in_vector[i];
+1a:	    load memory location in_vector[i] into vector register xmm0
+1f:     store xmm0 into memory location out_vector_b[i]
+24:     increment loop counter
 {{< / highlight >}}
 
 Even if we ask the compiler to exploit the standard aliasing rules, the use of
@@ -302,12 +302,12 @@ as before, we end up with the following assembly (you can find the full listing
 [here][example_func_compatible.s]):
 
 {{< highlight text "hl_lines=2" >}}
-        out_vector_a[i] = in_vector[i];
-    10:	f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
-    15:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
-        out_vector_b[i] = in_vector[i];
-    1a:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
-    2f:	48 83 c0 01          	add    rax,0x1
+    out_vector_a[i] = in_vector[i];
+10:	f3 0f 10 04 82       	movss  xmm0,DWORD PTR [rdx+rax*4]
+15:	f3 0f 11 04 87       	movss  DWORD PTR [rdi+rax*4],xmm0
+    out_vector_b[i] = in_vector[i];
+1a:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
+2f:	48 83 c0 01          	add    rax,0x1
 {{< / highlight >}}
 
 Even this time we were able to let the compiler **drop the second load
