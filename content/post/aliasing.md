@@ -1,5 +1,5 @@
 +++
-title = "Aliasing Explained"
+title = "Aliasing Explained (Part 1)"
 description = "What is aliasing and why you should care"
 date = "2017-03-11"
 categories = ["Dev", "Languages"]
@@ -44,6 +44,13 @@ Got it, this is *the* question. Why should I care about aliasing at all?
 
 The short answer is: if you are writing code that isn't supposed to be pushed to
 its limits in terms of performance, *you can ignore aliasing at all and be happy*.
+
+Long answer: while working on code among whose targets had *performance*, I
+found myself several times blaming the compiler for not having recognized
+*obvious* optimizations thus generating what I thought was crappy assembly code,
+translated in a way that was *too pedantic* for a modern piece of software.
+After diving into the obscure topic of *aliasing*, it obviously turned out that
+the problem was me ignoring a quite large slice of the C language.
 
 Let's start with a trivial example:
 
@@ -189,7 +196,7 @@ aliasing** and **type-based aliasing** are exactly the same thing, they all
 refer to the **same concept** (actually they are *aliases*...sorry for the
 pun :).
 
-## Let's exploit the law
+## Exploiting the law
 
 So, what about our previous example? We were dealing with two pointers of
 incompatible types (`int *` and `float *`), so our output arrays (`out_vector_a`
@@ -197,9 +204,9 @@ and `out_vector_b`) and the input array (`in_vector`)  aren't legal aliases.
 Anyway the compiler treated them as they were, that is because `gcc` (and almost
 all the compilers I've dealt with) works in a conservative way and assumes that
 the programmer doesn't care about aliasing rules and it tries to not to insert
-*very* subtle bugs. Let's try to tell `gcc` to blindly follow the standard with
+*very* subtle bugs. Let's try to tell `gcc` to abide by the standard with
 a proper flag (`-fstrict-aliasing`). This time I've left out the full assembly
-file (you can find it [here][example_func_02.s]), have a look to the
+file (find it [here][example_func_02.s]), give a look to the
 interesting lines instead, the ones carrying out the actual copy:
 
 {{< highlight text "hl_lines=3" >}}

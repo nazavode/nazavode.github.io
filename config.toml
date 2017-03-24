@@ -6,8 +6,6 @@ paginate = 5
 # Pygments syntax highlighting (pygments executable must be available)
 pygmentscodefences = true
 pygmentsstyle = "autumn"
-# Disqus
-disqusShortname = "nazavodeio"
 # Theme
 theme = "hyde-x"
 
@@ -17,7 +15,8 @@ theme = "hyde-x"
 [permalinks]
     # Optional. Change the permalink format for the 'post' content type.
     # The format shown here is the same one Jekyll/Octopress uses by default.
-    post = "/post/:title/"
+    post = "/:year/:month/:filename/"
+
 
 [taxonomies]
     # Optional. Use if you want tags and lists.
@@ -63,6 +62,7 @@ theme = "hyde-x"
     linkedin = "https://it.linkedin.com/in/fficarelli"
     googleplus = "https://plus.google.com/+FedericoFicarelli"
     twitter = "https://twitter.com/fficarelli"
+    disqus = "nazavodeio"
 
     # Other social-like sidebar links
     rss = false  # switch to true to enable RSS icon link
