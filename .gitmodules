@@ -1,6 +1,7 @@
 [submodule "themes/hyde-x"]
 	path = themes/hyde-x
 	url = https://github.com/nazavode/hyde-x
+	branch = master
 [submodule "themes/redlounge"]
 	path = themes/redlounge
 	url = https://github.com/tmaiaroto/hugo-redlounge
