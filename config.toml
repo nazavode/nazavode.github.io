@@ -47,7 +47,7 @@ theme = "hyde-x"
 
     # Select a syntax highight.
     # Check the static/css/highlight directory for options.
-    highlight = "default"
+    # highlight = "default"
 
     # Displays under the author name in the sidebar, keep it short.
     # You can use markdown here.
