@@ -42,17 +42,17 @@ we can do *arithmetics* with them, moving pointers around in memory as we like.
 
 Got it, this is *the* question. Why should I care about aliasing at all?
 
-The short answer is: if you are writing code that isn't supposed to be pushed to
+*Short answer*: if you are writing code that isn't supposed to be pushed to
 its limits in terms of performance, *you can ignore aliasing at all and be happy*.
 
-Long answer: while working on code among whose targets had *performance*, I
+*Long answer*: while working on code among whose targets had *performance*, I
 found myself several times blaming the compiler for not having recognized
 *obvious* optimizations thus generating what I thought was crappy assembly code,
 translated in a way that was *too pedantic* for a modern piece of software.
 After diving into the obscure topic of *aliasing*, it obviously turned out that
 the problem was me ignoring a quite large slice of the C language.
 
-Let's start with a trivial example:
+So, if you want to dive into this, let's start with a trivial example:
 
 {{< highlight c >}}
 void foo (float * out_vector_a, float *out_vector_b, int *in_vector, int n)
@@ -88,7 +88,7 @@ focus on the instructions that carry out the actual copies:
 {{< / highlight >}}
 
 In an attempt to render these instructions in a *human friendly* way, we can
-rewrite them in our natural language:
+decode them:
 
 {{< highlight text "hl_lines=3 7" >}}
     out_vector_a[i] = in_vector[i];
@@ -155,8 +155,8 @@ can legally refer to an object*:
 > *ISO/IEC 9899:201x, Section 6.5*
 
 Don't worry about the definition of *compatible types*, it turns out to be
-exactly what you are thinking of (except for `struct`, but we can ignore that
-for now):
+exactly what you are thinking of (except for `struct` and `union`, but we can
+ignore that for now):
 
 > Two types have *compatible type* if their types are the same.
 >
@@ -236,8 +236,7 @@ This is nice: under our own guarantee that **we know what we are doing**, the
 compiler loads the memory location once and for the second array it just
 retrieves the same value from the *buffer* register.
 
-**We've just doubled the memory bandwidth potentially usable by our copy
-function.**
+**We've just doubled the memory bandwidth available for our copy function.**
 
 But what happens when the types of our output arrays an input array are
 compatible? Let's give it a try:
@@ -252,8 +251,8 @@ void foo (float *out_vector_a, float *out_vector_b, float *in_vector, int n)
 }
 {{< / highlight >}}
 
-Again, let's focus on the instructions carrying out the copy
-(you can find the full assembly [here][example_func_compatible.s]):
+Again, just focus on the instructions carrying out the copy
+(full assembly [here][example_func_compatible.s]):
 
 {{< highlight text "hl_lines=2 5" >}}
     out_vector_a[i] = in_vector[i];
@@ -279,7 +278,7 @@ we have fallen into the same *double load* situation:
 24:     increment loop counter
 {{< / highlight >}}
 
-Even if we ask the compiler to exploit the standard aliasing rules, the use of
+Even if we ask the compiler to follow the standard aliasing rules, the use of
 *compatible types* leads to the come back of the extra instruction. What we are
 seeing here is that for the standard rules, both output arrays and input array
 are pointers of type `float` (compatible by definition since it's exactly the
@@ -319,7 +318,7 @@ as before, we end up with the following assembly (you can find the full listing
 
 Even this time we were able to let the compiler **drop the second load
 instruction**, the only load from memory we have here is at instruction `10`.
-This time we exploited **the `restrict` qualifier that tells the
+This time we used **the `restrict` qualifier to tell the
 compiler that a restricted pointer has no aliases at all**. Of course the
 [standard][iso-doc] states precisely the meaning of the `restrict` qualifier:
 
@@ -385,18 +384,38 @@ between restricted pointers declared in nested blocks have defined behavior:
 Let's consider the following function definition:
 
 {{< highlight c >}}
-void bar(int * restrict p, int * restrict q, int n) {
-    while (n-- > 0)
+void bar(int * restrict p, int * restrict q, int n)
+{
+    while (n-- > 0) {
         *p++ = *q++;
+    }
 }
 
-
-void callbar(void) {
+void callbar(void)
+{
     extern int d[100];
     bar(50, d + 50, d); // Valid!
     bar(50, d + 1 , d); // Undefined behaviour!
 }
 {{< / highlight >}}
+
+In this case we are seeing two different situations:
+
+1. during the first call, even if the memory belongs to the same `d` array, the two
+   pointers are swiping two completely disjoint areas, `d[50] .. d[99]` through
+   `p` and `d[0] .. d[49]` through `q`. Note that, due to the fact that
+   `restrict` ensures unique accesses to *objects* (the `int` elements in this
+   case), each array element is going to be accessed through one and only one
+   pointer: this code is perfectly legal leading to a defined behaviour;
+2. during the second call, `p` accesses `int` objects in the range
+   `d[1] .. d[50]` while `q` in the range `d[0] .. d[49]`: all the `d` array
+   elements (except for `d[0]` and `d[50]`) are going to be accessed through
+   both pointers. This call breaks the `restrict` contract leading to undefined
+   behaviour.
+
+**If inside a block an object is going to be accessed at any point in time
+through a restricted pointer, then that pointer becomes the only one allowed to
+access that particular object.**
 
 {{< highlight c "hl_lines=12" >}}
 void foo(int* restrict p, int* restrict q, int* restrict r, int n)
