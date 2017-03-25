@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cmake on /dev/null</title>
-    <link>https://nazavode.github.io/tags/cmake/index.xml</link>
-    <description>Recent content in Cmake on /dev/null</description>
+    <title>Build System on /dev/null</title>
+    <link>https://nazavode.github.io/tags/build-system/index.xml</link>
+    <description>Recent content in Build System on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://nazavode.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://nazavode.github.io/tags/build-system/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Documentation with Doxygen and CMake: a (slightly) improved approach</title>

@@ -2,29 +2,99 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://nazavode.github.io/</loc>
-    <lastmod>2015-12-17T23:55:52+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/2015/12/move-on/</loc>
-    <lastmod>2015-12-17T23:55:52+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/about/</loc>
     <lastmod>2015-12-17T23:53:53+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/blog/2014/02/idiomatic-c/</loc>
-    <lastmod>2014-02-20T22:30:51+01:00</lastmod>
+    <loc>https://nazavode.github.io/2015/12/first/</loc>
+    <lastmod>2015-12-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/blog/2013/01/documentation-with-doxygen-and-cmake-a-slightly-improved-approach/</loc>
-    <lastmod>2013-01-19T22:30:51+01:00</lastmod>
+    <loc>https://nazavode.github.io/2014/02/idiomatic-cpp/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/2013/01/cmake-doxygen-improved/</loc>
+    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/</loc>
+    <lastmod>2015-12-17T23:53:53+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/build-system/</loc>
+    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/c&#43;&#43;/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/cmake/</loc>
+    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/categories/dev/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/doxygen/</loc>
+    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/guidelines/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/idioms/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/categories/languages/</loc>
+    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/post/</loc>
+    <lastmod>2015-12-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/categories/tools/</loc>
+    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

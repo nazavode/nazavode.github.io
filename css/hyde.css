@@ -31,9 +31,10 @@
  * Update the foundational and global aspects of the page.
  */
 
- html {
-   font-family: "Raleway", sans-serif;
- }
+html {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 300;
+}
 @media (min-width: 48em) {
   html {
     font-size: 16px;
@@ -45,6 +46,9 @@
   }
 }
 
+pre {
+  tab-size:4;
+}
 
 /*
  * Sidebar
@@ -127,8 +131,8 @@ a.sidebar-nav-item:focus {
  */
 
 .content {
-  padding-top:    4rem;
-  padding-bottom: 4rem;
+  padding-top:    2rem;
+  padding-bottom: 2rem;
 }
 
 @media (min-width: 48em) {
@@ -141,8 +145,9 @@ a.sidebar-nav-item:focus {
 
 @media (min-width: 64em) {
   .content {
-    margin-left: 22rem;
-    margin-right: 4rem;
+    max-width: 44rem;
+    margin-left: 20rem;
+    margin-right: 2rem;
   }
 }
 
@@ -253,6 +258,7 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
 }
+
 
 /* Added themes */
 
