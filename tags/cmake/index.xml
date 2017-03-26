@@ -10,10 +10,10 @@
     
     <item>
       <title>Documentation with Doxygen and CMake: a (slightly) improved approach</title>
-      <link>https://nazavode.github.io/2013/01/cmake-doxygen-improved/</link>
+      <link>https://nazavode.github.io/blog/cmake-doxygen-improved/</link>
       <pubDate>Sat, 19 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://nazavode.github.io/2013/01/cmake-doxygen-improved/</guid>
+      <guid>https://nazavode.github.io/blog/cmake-doxygen-improved/</guid>
       <description>&lt;p&gt;After days of hard work we ended up with our lovely crafted code base, a
 portable CMake build system and we are now facing the task to generate a proper
 Doxygen documentation for our anxious customer. The solution, widely adopted,

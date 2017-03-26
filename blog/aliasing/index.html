@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.19" />
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title>/dev/null &middot; Federico Ficarelli</title>
+  <title>Aliasing Explained (Part 1) &middot; Federico Ficarelli</title>
 
   
   <link rel="stylesheet" href="https://nazavode.github.io/css/poole.css">
@@ -24,9 +23,9 @@
   
   
   
-  <link href="https://nazavode.github.io/index.xml" rel="alternate" type="application/rss+xml" title="/dev/null &middot; Federico Ficarelli" />
+  
 
-  <meta name="description" content="Just volatile hacks.">
+  <meta name="description" content="What is aliasing and why you should care">
   <meta name="keywords" content="hacking,development,software,python,c&#43;&#43;,c99,algorithms">
   
 
@@ -83,20 +82,14 @@
 
 
 <div class="content container">
-  <div class="posts">
+  <div class="post">
+    <h1 class="post-title">Aliasing Explained (Part 1)</h1>
+    <span class="post-date">Mar 26, 2017 &middot; <a href="https://nazavode.github.io/blog/aliasing/#disqus_thread">Comments</a>
     
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/aliasing/">Aliasing Explained (Part 1)</a>
-      </h1>
-      <span class="post-date">Mar 26, 2017 &middot; <a href="https://nazavode.github.io/blog/aliasing/#disqus_thread">Comments</a>
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/languages">Languages</a><a class="label" href="https://nazavode.github.io/categories/c">C</a>
-      </span>
-      
-      <p>Since my job involves a lot of HPC stuff and performance-obsessed code, one of
+    <br/>
+    <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/languages">Languages</a><a class="label" href="https://nazavode.github.io/categories/c">C</a>
+    </span>
+    <p>Since my job involves a lot of HPC stuff and performance-obsessed code, one of
 the first topics I had to dive into was <strong>aliasing in the C standard</strong>. I
 found out that it is a subtle topic, quite obscure and very often
 overlooked even by the most experienced programmers. This post is an attempt
@@ -657,211 +650,8 @@ hierarchies</em> and <em>memory windows</em> in the next post (coming soon).</p>
 <li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf">ISO/IEC 9899:201x</a></li>
 <li><a href="https://gist.github.com/nazavode/22326361646ba3cfd24cec3fd9594d49">All examples, including build and objdump scripts</a></li>
 </ul>
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/first/">Move on</a>
-      </h1>
-      <span class="post-date">Dec 17, 2015 &middot; <a href="https://nazavode.github.io/blog/first/#disqus_thread">Comments</a>
-      </span>
-      
-      <p>Just moved my <a href="https://devnone.wordpress.com">old blog</a> to the combo that mixes
-<a href="https://pages.github.com/">GitHub Pages</a> and the amazing
-<a href="https://gohugo.io/">Hugo</a> static site generator.</p>
-
-<p>The porting process is actually painless: checkout one of the beautifully
-crafted themes (I opted for <a href="https://github.com/zyro/hyde-x">hyde-x</a> that looks
-clean enough), tweak it a bit to fit your needs, convert your Wordpress posts
-through an <a href="https://domchristie.github.io/to-markdown/">html to Markdown
-converter</a> and push everything to
-the proper <a href="https://github.com/nazavode/nazavode.github.io">GitHub repo</a>.</p>
-
-<p>The result is very promising.</p>
-
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/idiomatic-cpp/">Idiomatic C&#43;&#43;</a>
-      </h1>
-      <span class="post-date">Feb 20, 2014 &middot; <a href="https://nazavode.github.io/blog/idiomatic-cpp/#disqus_thread">Comments</a>
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/languages">Languages</a><a class="label" href="https://nazavode.github.io/categories/c&#43;&#43;">C&#43;&#43;</a>
-      </span>
-      
-      <p>I&rsquo;ve just <a href="http://www.slideshare.net/fficarelli/idiomatic-c">uploaded</a> a minimal collection of most wanted and widely accepted idioms and coding conventions
-for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
-emphasis is on performance-friendly techniques.</p>
-
-<p></p>
-
-<p>Topics covered:</p>
-
-<p><strong>1. Design issues: idioms and best practices</strong></p>
-
-<ul>
-<li>Resource Aquisition Is Initialization (RAII)</li>
-<li>Ownership semantics and smart pointers</li>
-<li>Header files: dependencies and decoupling</li>
-</ul>
-
-<p><strong>2. Objects Construction/Destruction/Copying</strong></p>
-
-<ul>
-<li>Designing constructors</li>
-<li>Rule Of Three</li>
-<li>Transactional programming</li>
-</ul>
-
-<p><strong>3. Namespaces</strong></p>
-
-<ul>
-<li>ADL/Koenig Lookup</li>
-</ul>
-
-<p><strong>4. Static analyzers survey</strong></p>
-
-<p>You can find full presentation materials <a href="http://www.slideshare.net/fficarelli/idiomatic-c">on Slideshare</a> (and <a href="https://speakerdeck.com/nazavode/idiomatic-c-plus-plus">Speaker Deck</a> as well).</p>
-      
-    </div>
-    
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/cmake-doxygen-improved/">Documentation with Doxygen and CMake: a (slightly) improved approach</a>
-      </h1>
-      <span class="post-date">Jan 19, 2013 &middot; <a href="https://nazavode.github.io/blog/cmake-doxygen-improved/#disqus_thread">Comments</a>
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/tools">Tools</a>
-      </span>
-      
-      <p>After days of hard work we ended up with our lovely crafted code base, a
-portable CMake build system and we are now facing the task to generate a proper
-Doxygen documentation for our anxious customer. The solution, widely adopted,
-seems to be the one and only that can be found while googling and, to me, looks
-not so neat. So I tried to come up with a different approach.</p>
-
-<p></p>
-
-<p>Let&rsquo;s first have a look at the widespread solution:</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #aaaaaa; font-style: italic">#-- Adds an Option to toggle the generation of the API documentation</span>
-<span style="color: #00aaaa">option</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span> <span style="color: #aa5500">&quot;Use Doxygen to create the HTML based API documentation&quot;</span> <span style="color: #aa5500">OFF</span>)
-<span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>)
-  <span style="color: #00aaaa">FIND_PACKAGE</span>(<span style="color: #aa5500">Doxygen</span>)
-  <span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">NOT</span> <span style="color: #aa5500">DOXYGEN_FOUND</span>)
-    <span style="color: #00aaaa">message</span>(<span style="color: #aa5500">FATAL_ERROR</span> <span style="color: #aa5500">&quot;Doxygen is needed to build the documentation&quot;</span>)
-  <span style="color: #00aaaa">ENDIF</span>()
-  <span style="color: #aaaaaa; font-style: italic">#-- Configure the Template Doxyfile for our specific project</span>
-  <span style="color: #00aaaa">configure_file</span>(<span style="color: #aa5500">Doxyfile.in</span> ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span> <span style="color: #aa5500">@ONLY</span> <span style="color: #aa5500">IMMEDIATE</span>)
-  <span style="color: #aaaaaa; font-style: italic">#-- Add a custom target to run Doxygen when ever the project is built</span>
-  <span style="color: #00aaaa">add_custom_target</span> (<span style="color: #aa5500">Docs</span> <span style="color: #aa5500">ALL</span>
-    <span style="color: #aa5500">COMMAND</span> ${<span style="color: #aa0000">DOXYGEN_EXECUTABLE</span>} ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>
-    <span style="color: #aa5500">SOURCES</span> ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>)
-  <span style="color: #aaaaaa; font-style: italic"># IF you do NOT want the documentation to be generated EVERY time you build the project</span>
-  <span style="color: #aaaaaa; font-style: italic"># then leave out the &#39;ALL&#39; keyword from the above command.</span>
-<span style="color: #00aaaa">ENDIF</span>()
-</pre></div>
-
-<p>Well, even if the above solution works like a charm, it exposes a flaw that
-makes its adoption very annoying: <strong>Doxygen will be triggered every time we run
-make, even if nothing has changed</strong>. Oh, <em>every time</em> means exactly <em>every
-time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell
-with the utterly verbose output from Doxygen even if that step is obviously
-useless. Yes, we have added that <code>ALL</code> flag to <code>ADD_CUSTOM_TARGET</code> but this is
-the only way to have our documentation generated along with the default targets
-(otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an
-explicit <code>make doc</code>). This behavior is correct and the point is well highlighted
-in the CMake reference for
-<a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
-
-<blockquote>
-<p>The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
-try to create a file with the name of the target. Use ADD_CUSTOM_COMMAND to generate a
-file with dependencies.</p>
-</blockquote>
-
-<p>So, it seems that we are using the wrong tool. <strong>How can we add a Doxygen target
-with a real dependency checking?</strong> The neat trick lies in the combined use of
-two different commands:</p>
-
-<ol>
-<li><code>ADD_CUSTOM_COMMAND</code> will take care of dependency checking, firing up Doxygen
-if and only if something (which the documentation depends on) has really changed
-since last build;</li>
-<li><code>ADD_CUSTOM_TARGET</code> will allow us to have a convenient and
-elegant make doc target, eventually added to default set. After a bit of
-trial-and-error, I ended up with a bunch of lines of code that seems to work as
-we wanted:</li>
-</ol>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #00aaaa">option</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>
-    <span style="color: #aa5500">&quot;Create and install the HTML based API documentation (requires Doxygen)&quot;</span> <span style="color: #aa5500">OFF</span>)
-<span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>)
-  <span style="color: #00aaaa">FIND_PACKAGE</span>(<span style="color: #aa5500">Doxygen</span>)
-  <span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">NOT</span> <span style="color: #aa5500">DOXYGEN_FOUND</span>)
-    <span style="color: #00aaaa">MESSAGE</span>(<span style="color: #aa5500">FATAL_ERROR</span> <span style="color: #aa5500">&quot;Doxygen is needed to build the documentation.&quot;</span>)
-  <span style="color: #00aaaa">ENDIF</span>()
-
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxyfile_in</span>          ${<span style="color: #aa0000">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color: #aa5500">/Doxyfile.in</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxyfile</span>             ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_html_index_file</span> ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color: #aa5500">/html/index.html</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_output_root</span>     ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_input</span>           ${<span style="color: #aa0000">PROJECT_SOURCE_DIR</span>}<span style="color: #aa5500">/src</span>) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_extra_files</span>     ${<span style="color: #aa0000">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color: #aa5500">/mainpage.dox</span>) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-
-  <span style="color: #00aaaa">CONFIGURE_FILE</span>( ${<span style="color: #aa0000">doxyfile_in</span>} ${<span style="color: #aa0000">doxyfile</span>} <span style="color: #aa5500">@ONLY</span> )
-
-  <span style="color: #00aaaa">ADD_CUSTOM_COMMAND</span>(
-    <span style="color: #aa5500">OUTPUT</span> ${<span style="color: #aa0000">doxy_html_index_file</span>}
-    <span style="color: #aa5500">COMMAND</span> ${<span style="color: #aa0000">DOXYGEN_EXECUTABLE</span>} ${<span style="color: #aa0000">doxyfile</span>}
-    <span style="color: #aaaaaa; font-style: italic"># The following should be ${doxyfile} only but it</span>
-    <span style="color: #aaaaaa; font-style: italic"># will break the dependency.</span>
-    <span style="color: #aaaaaa; font-style: italic"># The optimal solution would be creating a</span>
-    <span style="color: #aaaaaa; font-style: italic"># custom_command for ${doxyfile} generation</span>
-    <span style="color: #aaaaaa; font-style: italic"># but I still have to figure out how...</span>
-    <span style="color: #aa5500">MAIN_DEPENDENCY</span> ${<span style="color: #aa0000">doxyfile</span>} ${<span style="color: #aa0000">doxyfile_in</span>}
-    <span style="color: #aa5500">DEPENDS</span> <span style="color: #aa5500">project_targets</span> ${<span style="color: #aa0000">doxy_extra_files</span>}
-    <span style="color: #aa5500">COMMENT</span> <span style="color: #aa5500">&quot;Generating HTML documentation&quot;</span>
-  )
-
-  <span style="color: #00aaaa">ADD_CUSTOM_TARGET</span>( <span style="color: #aa5500">doc</span> <span style="color: #aa5500">ALL</span> <span style="color: #aa5500">DEPENDS</span> ${<span style="color: #aa0000">doxy_html_index_file</span>} )
-
-  <span style="color: #00aaaa">INSTALL</span>( <span style="color: #aa5500">DIRECTORY</span> ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color: #aa5500">/html</span> <span style="color: #aa5500">DESTINATION</span> <span style="color: #aa5500">share/doc</span> )
-<span style="color: #00aaaa">ENDIF</span>()
-</pre></div>
-
-<p>The point is that we still have our <code>doc</code> custom target (added to default
-targets) that is going to be fired every time but the actual build step is
-protected by the custom command that will check for the right dependencies. Just
-a couple of remarks:</p>
-
-<ul>
-<li>the <code>DEPENDS</code> option on the custom command must list all of the targets, files
-and whatever your documentation depends on;</li>
-<li>the <code>${doxyfile_in}</code> dependency is an overshoot but, as I say in the comment,
-removing it will break the dependency checking. The ideal solution would be
-specifying <code>${doxyfile}</code> only, letting it to trigger a lower-level custom
-command intended to configure and generate <code>${doxyfile_in}</code>. I&rsquo;m still trying to
-find an elegant solution to this little aesthetic flaw.</li>
-</ul>
-
-<hr />
-
-<p>Resources:</p>
-
-<ul>
-<li><a href="http://www.cmake.org/cmake/help/v2.8.10/cmake.html">CMake Reference Manual</a></li>
-<li><a href="http://www.bluequartz.net/projects/EIM_Segmentation/SoftwareDocumentation/html/usewithcmakeproject.html">Use Doxygen with a CMake Based Project</a></li>
-</ul>
-      
-    </div>
-    
-    
-    
   </div>
+  <div id="disqus_thread"></div>
 </div>
 
 
@@ -874,6 +664,19 @@ var disqus_shortname = "nazavodeio";
     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 }());
 </script>
+
+
+
+<script type="text/javascript">
+    var disqus_shortname = "nazavodeio";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
 </body>
