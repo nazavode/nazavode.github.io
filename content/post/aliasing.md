@@ -1,10 +1,9 @@
 +++
 title = "Aliasing Explained (Part 1)"
 description = "What is aliasing and why you should care"
-date = "2017-03-11"
-categories = ["Dev", "Languages"]
+date = "2017-03-26"
+categories = ["Dev", "Languages", "C"]
 tags = ["c", "standard", "aliasing", "restrict", "iso", "c99", "c11", "c++", "fortran"]
-draft = true
 +++
 
 Since my job involves a lot of HPC stuff and performance-obsessed code, one of
@@ -88,7 +87,7 @@ focus on the instructions that carry out the actual copies:
 {{< / highlight >}}
 
 In an attempt to render these instructions in a *human friendly* way, we can
-decode them:
+decode them like this:
 
 {{< highlight text "hl_lines=3 7" >}}
     out_vector_a[i] = in_vector[i];
@@ -316,7 +315,7 @@ as before, we end up with the following assembly (you can find the full listing
 2f:	48 83 c0 01          	add    rax,0x1
 {{< / highlight >}}
 
-Even this time we were able to let the compiler **drop the second load
+Even this time we are able to let the compiler **drop the second load
 instruction**, the only load from memory we have here is at instruction `10`.
 This time we used **the `restrict` qualifier to tell the
 compiler that a restricted pointer has no aliases at all**. Of course the
@@ -350,6 +349,90 @@ to completely ignore it):
 >
 > *ISO/IEC 9899:201x, Section 6.7.3*
 
+### Restricted ownership *(there can be only one)*
+
+Let's consider the following function definition:
+
+{{< highlight c >}}
+void bar(int * restrict p, int * restrict q, int n)
+{
+    while (n-- > 0) {
+        *p++ = *q++;
+    }
+}
+
+void callbar(void)
+{
+    extern int d[100];
+    bar(50, d + 50, d); // Valid!
+    bar(50, d + 1 , d); // Undefined behaviour!
+}
+{{< / highlight >}}
+
+In this case we are seeing two different situations:
+
+1. during the first call, even if the memory belongs to the same `d` array, the
+   two pointers are swiping two completely disjoint areas, `d[50] .. d[99]`
+   through `p` and `d[0] .. d[49]` through `q`. Due to the fact that
+   `restrict` ensures unique accesses to *objects* (the underlying `int` elements
+   in this case), each array element is going to be accessed through one and only
+   one pointer: this code is perfectly legal leading to a defined behaviour;
+2. during the second call, `p` accesses `int` objects in the range
+   `d[1] .. d[50]` while `q` in the range `d[0] .. d[49]`: all the `d` array
+   elements (except for `d[0]` and `d[50]`) are going to be accessed through
+   both pointers. This call breaks the `restrict` contract leading to undefined
+   behaviour.
+
+This example highlights the fact that *`restrict` compliance of accesses donesn't
+care about timing*. For instance, `bar` iterations during the latter call access
+`d` in the sequence:
+
+0. `p = d[1]`, `q = d[0];`
+1. `p = d[2]`, `q = d[1];`
+2. `p = d[3]`, `q = d[2];`
+3. ...and so on...
+
+The two restricted pointers never access the same element at the same time but,
+despite this, we end up with an undefined behaviour anyway: it's like a *first
+touch ownership claim*, the first pointer that touches an element estabilish
+the kind of *special association* with the object the standard document talks
+about.
+
+*If inside a block an object is going to be accessed at any point in time
+through a restricted pointer, then that pointer becomes the one and only allowed
+to access that particular object.*
+
+There is an exception to this rule though, and it's about *read-only accesses*.
+Take a look to this example:
+
+{{< highlight c "hl_lines=12" >}}
+void foo(int* restrict p, int* restrict q, int* restrict r, int n)
+{
+    for (int i = 0; i < n; ++i) {
+        p[i] = q[i] + r[i];
+    }
+}
+
+void callfoo(int n)
+{
+    int a[n];
+    int b[n];
+    foo(a, b, b, n);  // Valid!
+}
+{{< / highlight >}}
+
+In this case, we are accessing elements of array `b` through two restricted
+pointers (arguments `q` and `r`) at the same time but, unlike in the previous
+example, now we are doing read-only accesses since we are writing elements
+belonging to the (non overlapping) array `a` only: in this situation, what we are
+getting is a completely *well defined behaviour*. So, we can now reformulate the
+restricted ownership rule we saw in the previous example taking into account
+this aspect as well:
+
+**If inside a block an object is going to be written at any point in time
+through a restricted pointer, then that pointer becomes the one and only allowed
+to access (both reading and writing) that particular object.**
+
 ### Assignments between `restrict` pointers
 
 The standard is so harsh about `restrict` that even producing a pointer
@@ -379,107 +462,40 @@ between restricted pointers declared in nested blocks have defined behavior:
 }
 {{< / highlight >}}
 
-
-
-Let's consider the following function definition:
-
-{{< highlight c >}}
-void bar(int * restrict p, int * restrict q, int n)
-{
-    while (n-- > 0) {
-        *p++ = *q++;
-    }
-}
-
-void callbar(void)
-{
-    extern int d[100];
-    bar(50, d + 50, d); // Valid!
-    bar(50, d + 1 , d); // Undefined behaviour!
-}
-{{< / highlight >}}
-
-In this case we are seeing two different situations:
-
-1. during the first call, even if the memory belongs to the same `d` array, the two
-   pointers are swiping two completely disjoint areas, `d[50] .. d[99]` through
-   `p` and `d[0] .. d[49]` through `q`. Note that, due to the fact that
-   `restrict` ensures unique accesses to *objects* (the `int` elements in this
-   case), each array element is going to be accessed through one and only one
-   pointer: this code is perfectly legal leading to a defined behaviour;
-2. during the second call, `p` accesses `int` objects in the range
-   `d[1] .. d[50]` while `q` in the range `d[0] .. d[49]`: all the `d` array
-   elements (except for `d[0]` and `d[50]`) are going to be accessed through
-   both pointers. This call breaks the `restrict` contract leading to undefined
-   behaviour.
-
-**If inside a block an object is going to be accessed at any point in time
-through a restricted pointer, then that pointer becomes the only one allowed to
-access that particular object.**
-
-{{< highlight c "hl_lines=12" >}}
-void foo(int* restrict p, int* restrict q, int* restrict r, int n)
-{
-    for (int i = 0; i < n; ++i) {
-        p[i] = q[i] + r[i];
-    }
-}
-
-void callfoo(int n)
-{
-    int a[n];
-    int b[n];
-    foo(n, a, b, b);  // Valid!
-}
-{{< / highlight >}}
-
 ## What happens in other languages
 
 Since we are talking about *references* and *objects in memory*, aliasing is a
 concept common to all programming languages. In the modern ones, this issue is
-ignored (preventing any optimization, obviously) or just carefully handled by
-the language definition itself (Rust for example does it in a brilliant way).
+often ignored (preventing any optimization, obviously) or just carefully handled
+by the language definition itself (Rust for example does it in a brilliant way).
 But what happens in some *classic* languages?
 
 ### Aliasing in `C++`
 
 Of course `C++` is a different language than `C`, but it inherited a lot of
 rules from the latter. Aliasing is no exception, the rules are the same with
-some additions: the concept of *compatible types* is extended to *compatible
-dynamic types*.
+some additions: the concept of *compatible types* is extended to **compatible
+dynamic types**.
 
 {{< highlight cpp "hl_lines=4" >}}
-class A{ A A::operator +(const A& a) const; };
+class A{ A operator +(const A& a) const; };
 class B : A {};
 
-void f (A* ip1, B* ip2) {
-  int i;
-  for (i = 0; i < 9; ++i) {
-    ip1[i + 1] = ip2[i] + ip2[i + 1];
+void foo (A* ip1, B* ip2, int n) {
+  for (int i = 0; i < n; ++i) {
+    ip1[i+1] = ip2[i] + ip2[i+1];
   }
 }
 {{< / highlight >}}
+
+Disclaimer: I know that this example is actually crap, remember that in *modern*
+`C++`, direct use of raw pointers is
+[considered a bad practice](https://herbsutter.com/elements-of-modern-c-style/).
 
 In this case, the function parameters `ip1` and `ip2` are legal aliases of each
-other since class `B` is a subclass of `A`.
-
-Anyway, in `C++` we have templates: two types generated from the same template
-while using different template parameters are considered non-compatible types:
-
-{{< highlight cpp "hl_lines=4" >}}
-template <typename T> class A{ T A::operator +(const T& a) const; };
-
-void f (A* ip1, B* ip2) {
-  int i;
-  for (i = 0; i < 9; ++i) {
-    ip1[i + 1] = ip2[i] + ip2[i + 1];
-  }
-}
-{{< / highlight >}}
-
-In this case, the function parameters `ip1` and `ip2` are considered
-non-compatible, so the compiler treats them as if they reference non-aliased
-objects.
+other since class `B` is a subclass of `A`. Anyway, in `C++` we have templates:
+two types generated from the same template while using different template
+parameters are considered non-compatible types.
 
 ### Aliasing in `FORTRAN`
 
@@ -519,6 +535,11 @@ CALL f(Arr, Arr)  ! <-- UNDEFINED BEHAVIOUR!!!
 
 The fact that we are passing the *same* reference to both the parameters yields
 an **undefined behaviour** with its load of potentially mind crushing bugs.
+
+## To be continued...
+
+We will dive deeper in more *outer-to-inner* rule corollaries, *pointer
+hierarchies* and *memory windows* in the next post (coming soon).
 
 ----------
 

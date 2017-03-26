@@ -1,5 +1,5 @@
 +++
-title = "Visitor pattern and Python: dynamic dispatch revisited"
+title = "Visitor pattern in Python"
 description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
 categories = ["Dev", "Languages"]
 tags = ["python", "design patterns", "visitor", "type dispatching", "singledispatch", "multimethod"]
@@ -20,13 +20,13 @@ less straightforward: the *Visitor* is one of them.
 ## The Visitor pattern
 
 The point of the [Visitor][visitor-pattern] is to cope with a hierarchical
-structure of types where you want all of them to support some new behavior. This
+structure of types where you want all of them to support some new behaviour. This
 is especially valuable when the types have been defined by someone else in a
 piece of code that you can't (or you're not supposed to) change. Moreover, even
 if you *could* change it, you *shouldn't* just because *isolating data from
 algorithms is always a good thing* and prevents you ending up with *behemoth
-classes* with a countless number of operations (also the *S* in [SOLID][SOLID]
-is a thing *you want* in your design).
+classes* with a countless number of operations (of course the *S* in [SOLID][SOLID]
+is a thing *you want* in your design, right?).
 
 Let's assume we have a trivial object hierarchy:
 
@@ -201,11 +201,11 @@ class OpVisitor(object):
 Apart from looking pretty nifty, a thing like that could be a tool available for
 a lot of other cases too, even for abstract base classes:
 
-```python
+{{< highlight python >}}
 
 # ABC
 
-```
+{{< / highlight >}}
 
 The implementation is fairly straightforward: while the actual type dispatching
 is still carried out by the underlying standard `singledispatch`, the
@@ -243,11 +243,11 @@ typing*. If you're considering this kind of approach, think about it two, three,
 *ten times*: in the vast majority of situations it's just a clear evidence of
 bad design.
 
-Despite that, the `singledispatch` decorator is now [standard][singledispatch]
+Despite this, the `singledispatch` decorator is now [standard][singledispatch]
 and it looks like a neat way to cope with some specific situations
 ([trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?) therefore
-I'm giving [my extension][argdispatch-github] a try keeping in mind to avoid
-evil (and useless) things.
+I'm giving [my decorator][argdispatch-github] a try keeping in mind to avoid
+evil (and useless) scenarios.
 
 [factory-pattern]: https://sourcemaking.com/design_patterns/factory_method
 [visitor-pattern]: https://sourcemaking.com/design_patterns/visitor

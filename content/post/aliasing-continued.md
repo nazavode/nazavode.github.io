@@ -2,7 +2,7 @@
 title = "Aliasing Explained - Part II"
 description = ""
 date = "2017-03-12"
-categories = ["Dev", "Languages"]
+categories = ["Dev", "Languages", "C"]
 tags = ["c", "standard", "aliasing", "iso", "c99", "c11"]
 draft = true
 +++
