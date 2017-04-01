@@ -1,5 +1,5 @@
 +++
-title = "Visitor pattern in Python"
+title = "The Visitor Pattern in Python"
 description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
 categories = ["Dev", "Languages"]
 tags = ["python", "design patterns", "visitor", "type dispatching", "singledispatch", "multimethod"]
@@ -8,25 +8,26 @@ date = "2015-12-19"
 draft = true
 +++
 
-Well, everyone knows that *GOF design patterns* are a set of agnostic concepts,
-fairly independent from any actual language. True, but they have been designed
-with a specific language in mind, trying to cope with some of its shortcomings.
-When you think about patterns in Python, some of them make less sense (the
-[Factory][factory-pattern] is actually idiomatic) while others turn out to be
-less straightforward: the *Visitor* is one of them.
+Everyone knows that *GOF design patterns* are a set of agnostic concepts, fairly
+independent from any actual language. That is true, but more and more you use
+them, it becomes clearer and clearer that they have been designed with a
+specific language in mind, in an attempt to cope with some of its blundering
+freedoms shortcomings. When you think about patterns in Python, some of them
+make less sense (the [Factory][factory-pattern] is actually idiomatic) while
+others turn out to be less straightforward: the *Visitor* is one of them.
 
 <!--more-->
 
 ## The Visitor pattern
 
-The point of the [Visitor][visitor-pattern] is to cope with a hierarchical
-structure of types where you want all of them to support some new behaviour. This
-is especially valuable when the types have been defined by someone else in a
-piece of code that you can't (or you're not supposed to) change. Moreover, even
-if you *could* change it, you *shouldn't* just because *isolating data from
+The point of the [Visitor][visitor-pattern] is to tackle any hierarchical
+structure of types where you want all of them to support some new behaviour.
+This is especially valuable when the types have been defined by someone else in
+a piece of code that you can't (or you're not supposed to) change. Moreover,
+even if you *could* change it, you *shouldn't* just because *isolating data from
 algorithms is always a good thing* and prevents you ending up with *behemoth
-classes* with a countless number of operations (of course the *S* in [SOLID][SOLID]
-is a thing *you want* in your design, right?).
+classes* with endless interfaces (of course the *S* in [SOLID][SOLID] is a thing
+*you want* in your design, right?).
 
 Let's assume we have a trivial object hierarchy:
 
@@ -109,8 +110,13 @@ class OpVisitor(object):
     # continue...
 {{< / highlight >}}
 
-This solution works pretty well but it's far from perfect since it prevents any
-kind of subclassing of node types.
+I don't want to judge ho much *pythonic* this solution is (quite a lot, I
+guess...), it works pretty well but when it comes to subclassing (of node types
+in our case), it escalates quickly:
+
+{{< highlight python >}}
+# TODO...
+{{< / highlight >}}
 
 ### Dispatch table
 
@@ -166,9 +172,9 @@ Apart from methods and functions, I came up with this idea that **having a
 dispatch decorator that allows to specify a single custom argument among formal
 parameters would have been nice**.
 
-While googling around, I stumbled upon [this great post by Chris
-Lamb][chris-lamb-dispatchon] where he presents an interesting approach (without
-providing actual code) that matches exactly what I was thinking about. Yep, that
+While googling around, I stumbled upon [this great post][chris-lamb-dispatchon]
+where he presents an interesting approach (without
+providing actual code) that matches exactly what I was thinking. Yep, that
 looked brilliant, so I decided to write something similar by my own.
 
 Let's assume we want to be able to write something like this:
