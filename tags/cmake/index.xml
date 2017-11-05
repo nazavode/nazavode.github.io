@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cmake on /dev/null</title>
-    <link>https://nazavode.github.io/tags/cmake/index.xml</link>
+    <link>https://nazavode.github.io/tags/cmake/</link>
     <description>Recent content in Cmake on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://nazavode.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Jan 2013 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nazavode.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Documentation with Doxygen and CMake: a (slightly) improved approach</title>
@@ -20,117 +23,7 @@ Doxygen documentation for our anxious customer. The solution, widely adopted,
 seems to be the one and only that can be found while googling and, to me, looks
 not so neat. So I tried to come up with a different approach.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s first have a look at the widespread solution:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;#-- Adds an Option to toggle the generation of the API documentation&lt;/span&gt;
-&lt;span style=&#34;color: #00aaaa&#34;&gt;option&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;BUILD_DOCUMENTATION&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;&amp;quot;Use Doxygen to create the HTML based API documentation&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;OFF&lt;/span&gt;)
-&lt;span style=&#34;color: #00aaaa&#34;&gt;IF&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;BUILD_DOCUMENTATION&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;FIND_PACKAGE&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;Doxygen&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;IF&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;DOXYGEN_FOUND&lt;/span&gt;)
-    &lt;span style=&#34;color: #00aaaa&#34;&gt;message&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;FATAL_ERROR&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;&amp;quot;Doxygen is needed to build the documentation&amp;quot;&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;ENDIF&lt;/span&gt;()
-  &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;#-- Configure the Template Doxyfile for our specific project&lt;/span&gt;
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;configure_file&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;Doxyfile.in&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;PROJECT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/Doxyfile&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;@ONLY&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;IMMEDIATE&lt;/span&gt;)
-  &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;#-- Add a custom target to run Doxygen when ever the project is built&lt;/span&gt;
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;add_custom_target&lt;/span&gt; (&lt;span style=&#34;color: #aa5500&#34;&gt;Docs&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;ALL&lt;/span&gt;
-    &lt;span style=&#34;color: #aa5500&#34;&gt;COMMAND&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;DOXYGEN_EXECUTABLE&lt;/span&gt;} ${&lt;span style=&#34;color: #aa0000&#34;&gt;PROJECT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/Doxyfile&lt;/span&gt;
-    &lt;span style=&#34;color: #aa5500&#34;&gt;SOURCES&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;PROJECT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/Doxyfile&lt;/span&gt;)
-  &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# IF you do NOT want the documentation to be generated EVERY time you build the project&lt;/span&gt;
-  &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# then leave out the &amp;#39;ALL&amp;#39; keyword from the above command.&lt;/span&gt;
-&lt;span style=&#34;color: #00aaaa&#34;&gt;ENDIF&lt;/span&gt;()
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Well, even if the above solution works like a charm, it exposes a flaw that
-makes its adoption very annoying: &lt;strong&gt;Doxygen will be triggered every time we run
-make, even if nothing has changed&lt;/strong&gt;. Oh, &lt;em&gt;every time&lt;/em&gt; means exactly &lt;em&gt;every
-time&lt;/em&gt;: each make invocation (make, make install, etc&amp;hellip;) will flood your shell
-with the utterly verbose output from Doxygen even if that step is obviously
-useless. Yes, we have added that &lt;code&gt;ALL&lt;/code&gt; flag to &lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt; but this is
-the only way to have our documentation generated along with the default targets
-(otherwise our &lt;code&gt;BUILD_DOCUMENTATION&lt;/code&gt; flag would be ignored except for an
-explicit &lt;code&gt;make doc&lt;/code&gt;). This behavior is correct and the point is well highlighted
-in the CMake reference for
-&lt;a href=&#34;https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target&#34;&gt;&lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
-try to create a file with the name of the target. Use ADD_CUSTOM_COMMAND to generate a
-file with dependencies.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;So, it seems that we are using the wrong tool. &lt;strong&gt;How can we add a Doxygen target
-with a real dependency checking?&lt;/strong&gt; The neat trick lies in the combined use of
-two different commands:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;ADD_CUSTOM_COMMAND&lt;/code&gt; will take care of dependency checking, firing up Doxygen
-if and only if something (which the documentation depends on) has really changed
-since last build;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ADD_CUSTOM_TARGET&lt;/code&gt; will allow us to have a convenient and
-elegant make doc target, eventually added to default set. After a bit of
-trial-and-error, I ended up with a bunch of lines of code that seems to work as
-we wanted:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34; style=&#34;background: #ffffff&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #00aaaa&#34;&gt;option&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;BUILD_DOCUMENTATION&lt;/span&gt;
-    &lt;span style=&#34;color: #aa5500&#34;&gt;&amp;quot;Create and install the HTML based API documentation (requires Doxygen)&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;OFF&lt;/span&gt;)
-&lt;span style=&#34;color: #00aaaa&#34;&gt;IF&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;BUILD_DOCUMENTATION&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;FIND_PACKAGE&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;Doxygen&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;IF&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;DOXYGEN_FOUND&lt;/span&gt;)
-    &lt;span style=&#34;color: #00aaaa&#34;&gt;MESSAGE&lt;/span&gt;(&lt;span style=&#34;color: #aa5500&#34;&gt;FATAL_ERROR&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;&amp;quot;Doxygen is needed to build the documentation.&amp;quot;&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;ENDIF&lt;/span&gt;()
-
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxyfile_in&lt;/span&gt;          ${&lt;span style=&#34;color: #aa0000&#34;&gt;CMAKE_CURRENT_SOURCE_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/Doxyfile.in&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxyfile&lt;/span&gt;             ${&lt;span style=&#34;color: #aa0000&#34;&gt;PROJECT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/Doxyfile&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxy_html_index_file&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;CMAKE_CURRENT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/html/index.html&lt;/span&gt;)
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxy_output_root&lt;/span&gt;     ${&lt;span style=&#34;color: #aa0000&#34;&gt;CMAKE_CURRENT_BINARY_DIR&lt;/span&gt;}) &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# Pasted into Doxyfile.in&lt;/span&gt;
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxy_input&lt;/span&gt;           ${&lt;span style=&#34;color: #aa0000&#34;&gt;PROJECT_SOURCE_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/src&lt;/span&gt;) &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# Pasted into Doxyfile.in&lt;/span&gt;
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;SET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doxy_extra_files&lt;/span&gt;     ${&lt;span style=&#34;color: #aa0000&#34;&gt;CMAKE_CURRENT_SOURCE_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/mainpage.dox&lt;/span&gt;) &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# Pasted into Doxyfile.in&lt;/span&gt;
-
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;CONFIGURE_FILE&lt;/span&gt;( ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxyfile_in&lt;/span&gt;} ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxyfile&lt;/span&gt;} &lt;span style=&#34;color: #aa5500&#34;&gt;@ONLY&lt;/span&gt; )
-
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;ADD_CUSTOM_COMMAND&lt;/span&gt;(
-    &lt;span style=&#34;color: #aa5500&#34;&gt;OUTPUT&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxy_html_index_file&lt;/span&gt;}
-    &lt;span style=&#34;color: #aa5500&#34;&gt;COMMAND&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;DOXYGEN_EXECUTABLE&lt;/span&gt;} ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxyfile&lt;/span&gt;}
-    &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# The following should be ${doxyfile} only but it&lt;/span&gt;
-    &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# will break the dependency.&lt;/span&gt;
-    &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# The optimal solution would be creating a&lt;/span&gt;
-    &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# custom_command for ${doxyfile} generation&lt;/span&gt;
-    &lt;span style=&#34;color: #aaaaaa; font-style: italic&#34;&gt;# but I still have to figure out how...&lt;/span&gt;
-    &lt;span style=&#34;color: #aa5500&#34;&gt;MAIN_DEPENDENCY&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxyfile&lt;/span&gt;} ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxyfile_in&lt;/span&gt;}
-    &lt;span style=&#34;color: #aa5500&#34;&gt;DEPENDS&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;project_targets&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxy_extra_files&lt;/span&gt;}
-    &lt;span style=&#34;color: #aa5500&#34;&gt;COMMENT&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;&amp;quot;Generating HTML documentation&amp;quot;&lt;/span&gt;
-  )
-
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;ADD_CUSTOM_TARGET&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;doc&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;ALL&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;DEPENDS&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;doxy_html_index_file&lt;/span&gt;} )
-
-  &lt;span style=&#34;color: #00aaaa&#34;&gt;INSTALL&lt;/span&gt;( &lt;span style=&#34;color: #aa5500&#34;&gt;DIRECTORY&lt;/span&gt; ${&lt;span style=&#34;color: #aa0000&#34;&gt;CMAKE_CURRENT_BINARY_DIR&lt;/span&gt;}&lt;span style=&#34;color: #aa5500&#34;&gt;/html&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;DESTINATION&lt;/span&gt; &lt;span style=&#34;color: #aa5500&#34;&gt;share/doc&lt;/span&gt; )
-&lt;span style=&#34;color: #00aaaa&#34;&gt;ENDIF&lt;/span&gt;()
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The point is that we still have our &lt;code&gt;doc&lt;/code&gt; custom target (added to default
-targets) that is going to be fired every time but the actual build step is
-protected by the custom command that will check for the right dependencies. Just
-a couple of remarks:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;the &lt;code&gt;DEPENDS&lt;/code&gt; option on the custom command must list all of the targets, files
-and whatever your documentation depends on;&lt;/li&gt;
-&lt;li&gt;the &lt;code&gt;${doxyfile_in}&lt;/code&gt; dependency is an overshoot but, as I say in the comment,
-removing it will break the dependency checking. The ideal solution would be
-specifying &lt;code&gt;${doxyfile}&lt;/code&gt; only, letting it to trigger a lower-level custom
-command intended to configure and generate &lt;code&gt;${doxyfile_in}&lt;/code&gt;. I&amp;rsquo;m still trying to
-find an elegant solution to this little aesthetic flaw.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Resources:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.cmake.org/cmake/help/v2.8.10/cmake.html&#34;&gt;CMake Reference Manual&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.bluequartz.net/projects/EIM_Segmentation/SoftwareDocumentation/html/usewithcmakeproject.html&#34;&gt;Use Doxygen with a CMake Based Project&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Idioms on /dev/null</title>
-    <link>https://nazavode.github.io/tags/idioms/index.xml</link>
+    <link>https://nazavode.github.io/tags/idioms/</link>
     <description>Recent content in Idioms on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://nazavode.github.io/tags/idioms/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Feb 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nazavode.github.io/tags/idioms/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Idiomatic C&#43;&#43;</title>
@@ -18,35 +21,7 @@
 for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
 emphasis is on performance-friendly techniques.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;Topics covered:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;1. Design issues: idioms and best practices&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Resource Aquisition Is Initialization (RAII)&lt;/li&gt;
-&lt;li&gt;Ownership semantics and smart pointers&lt;/li&gt;
-&lt;li&gt;Header files: dependencies and decoupling&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;2. Objects Construction/Destruction/Copying&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Designing constructors&lt;/li&gt;
-&lt;li&gt;Rule Of Three&lt;/li&gt;
-&lt;li&gt;Transactional programming&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;3. Namespaces&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ADL/Koenig Lookup&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;4. Static analyzers survey&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;You can find full presentation materials &lt;a href=&#34;http://www.slideshare.net/fficarelli/idiomatic-c&#34;&gt;on Slideshare&lt;/a&gt; (and &lt;a href=&#34;https://speakerdeck.com/nazavode/idiomatic-c-plus-plus&#34;&gt;Speaker Deck&lt;/a&gt; as well).&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

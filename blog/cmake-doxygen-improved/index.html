@@ -62,11 +62,11 @@
       
       
       <a href="https://it.linkedin.com/in/fficarelli"><i class="fa fa-linkedin-square fa-1x"></i></a>
-      <a href="https://plus.google.com/&#43;FedericoFicarelli"><i class="fa fa-google-plus-square fa-1x"></i></a>
+      
       
       <a href="https://twitter.com/fficarelli"><i class="fa fa-twitter-square fa-1x"></i></a>
       
-      
+      <a href="https://nazavode.github.io/index.xml" type="application/rss+xml"><i class="fa fa-rss-square fa-1x"></i></a>
       </li>
     </ul>
 
@@ -98,24 +98,22 @@ not so neat. So I tried to come up with a different approach.</p>
 <p></p>
 
 <p>Let&rsquo;s first have a look at the widespread solution:</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #aaaaaa; font-style: italic">#-- Adds an Option to toggle the generation of the API documentation</span>
-<span style="color: #00aaaa">option</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span> <span style="color: #aa5500">&quot;Use Doxygen to create the HTML based API documentation&quot;</span> <span style="color: #aa5500">OFF</span>)
-<span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>)
-  <span style="color: #00aaaa">FIND_PACKAGE</span>(<span style="color: #aa5500">Doxygen</span>)
-  <span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">NOT</span> <span style="color: #aa5500">DOXYGEN_FOUND</span>)
-    <span style="color: #00aaaa">message</span>(<span style="color: #aa5500">FATAL_ERROR</span> <span style="color: #aa5500">&quot;Doxygen is needed to build the documentation&quot;</span>)
-  <span style="color: #00aaaa">ENDIF</span>()
-  <span style="color: #aaaaaa; font-style: italic">#-- Configure the Template Doxyfile for our specific project</span>
-  <span style="color: #00aaaa">configure_file</span>(<span style="color: #aa5500">Doxyfile.in</span> ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span> <span style="color: #aa5500">@ONLY</span> <span style="color: #aa5500">IMMEDIATE</span>)
-  <span style="color: #aaaaaa; font-style: italic">#-- Add a custom target to run Doxygen when ever the project is built</span>
-  <span style="color: #00aaaa">add_custom_target</span> (<span style="color: #aa5500">Docs</span> <span style="color: #aa5500">ALL</span>
-    <span style="color: #aa5500">COMMAND</span> ${<span style="color: #aa0000">DOXYGEN_EXECUTABLE</span>} ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>
-    <span style="color: #aa5500">SOURCES</span> ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>)
-  <span style="color: #aaaaaa; font-style: italic"># IF you do NOT want the documentation to be generated EVERY time you build the project</span>
-  <span style="color: #aaaaaa; font-style: italic"># then leave out the &#39;ALL&#39; keyword from the above command.</span>
-<span style="color: #00aaaa">ENDIF</span>()
-</pre></div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#aaa;font-style:italic">#-- Adds an Option to toggle the generation of the API documentation
+</span><span style="color:#aaa;font-style:italic"></span><span style="color:#0aa">option</span>(<span style="color:#a50">BUILD_DOCUMENTATION</span> <span style="color:#a50">&#34;Use Doxygen to create the HTML based API documentation&#34;</span> <span style="color:#a50">OFF</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span><span style="color:#0aa">IF</span>(<span style="color:#a50">BUILD_DOCUMENTATION</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">FIND_PACKAGE</span>(<span style="color:#a50">Doxygen</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">IF</span>(<span style="color:#a50">NOT</span> <span style="color:#a50">DOXYGEN_FOUND</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>    <span style="color:#0aa">message</span>(<span style="color:#a50">FATAL_ERROR</span> <span style="color:#a50">&#34;Doxygen is needed to build the documentation&#34;</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">ENDIF</span>()<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#aaa;font-style:italic">#-- Configure the Template Doxyfile for our specific project
+</span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0aa">configure_file</span>(<span style="color:#a50">Doxyfile.in</span> ${<span style="color:#a00">PROJECT_BINARY_DIR</span>}<span style="color:#a50">/Doxyfile</span> <span style="color:#a50">@ONLY</span> <span style="color:#a50">IMMEDIATE</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#aaa;font-style:italic">#-- Add a custom target to run Doxygen when ever the project is built
+</span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0aa">add_custom_target</span> (<span style="color:#a50">Docs</span> <span style="color:#a50">ALL</span>
+    <span style="color:#a50">COMMAND</span> ${<span style="color:#a00">DOXYGEN_EXECUTABLE</span>} ${<span style="color:#a00">PROJECT_BINARY_DIR</span>}<span style="color:#a50">/Doxyfile</span>
+    <span style="color:#a50">SOURCES</span> ${<span style="color:#a00">PROJECT_BINARY_DIR</span>}<span style="color:#a50">/Doxyfile</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#aaa;font-style:italic"># IF you do NOT want the documentation to be generated EVERY time you build the project
+</span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#aaa;font-style:italic"># then leave out the &#39;ALL&#39; keyword from the above command.
+</span><span style="color:#aaa;font-style:italic"></span><span style="color:#0aa">ENDIF</span>()</code></pre></div>
 <p>Well, even if the above solution works like a charm, it exposes a flaw that
 makes its adoption very annoying: <strong>Doxygen will be triggered every time we run
 make, even if nothing has changed</strong>. Oh, <em>every time</em> means exactly <em>every
@@ -147,42 +145,40 @@ elegant make doc target, eventually added to default set. After a bit of
 trial-and-error, I ended up with a bunch of lines of code that seems to work as
 we wanted:</li>
 </ol>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #00aaaa">option</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>
-    <span style="color: #aa5500">&quot;Create and install the HTML based API documentation (requires Doxygen)&quot;</span> <span style="color: #aa5500">OFF</span>)
-<span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">BUILD_DOCUMENTATION</span>)
-  <span style="color: #00aaaa">FIND_PACKAGE</span>(<span style="color: #aa5500">Doxygen</span>)
-  <span style="color: #00aaaa">IF</span>(<span style="color: #aa5500">NOT</span> <span style="color: #aa5500">DOXYGEN_FOUND</span>)
-    <span style="color: #00aaaa">MESSAGE</span>(<span style="color: #aa5500">FATAL_ERROR</span> <span style="color: #aa5500">&quot;Doxygen is needed to build the documentation.&quot;</span>)
-  <span style="color: #00aaaa">ENDIF</span>()
-
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxyfile_in</span>          ${<span style="color: #aa0000">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color: #aa5500">/Doxyfile.in</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxyfile</span>             ${<span style="color: #aa0000">PROJECT_BINARY_DIR</span>}<span style="color: #aa5500">/Doxyfile</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_html_index_file</span> ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color: #aa5500">/html/index.html</span>)
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_output_root</span>     ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_input</span>           ${<span style="color: #aa0000">PROJECT_SOURCE_DIR</span>}<span style="color: #aa5500">/src</span>) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-  <span style="color: #00aaaa">SET</span>( <span style="color: #aa5500">doxy_extra_files</span>     ${<span style="color: #aa0000">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color: #aa5500">/mainpage.dox</span>) <span style="color: #aaaaaa; font-style: italic"># Pasted into Doxyfile.in</span>
-
-  <span style="color: #00aaaa">CONFIGURE_FILE</span>( ${<span style="color: #aa0000">doxyfile_in</span>} ${<span style="color: #aa0000">doxyfile</span>} <span style="color: #aa5500">@ONLY</span> )
-
-  <span style="color: #00aaaa">ADD_CUSTOM_COMMAND</span>(
-    <span style="color: #aa5500">OUTPUT</span> ${<span style="color: #aa0000">doxy_html_index_file</span>}
-    <span style="color: #aa5500">COMMAND</span> ${<span style="color: #aa0000">DOXYGEN_EXECUTABLE</span>} ${<span style="color: #aa0000">doxyfile</span>}
-    <span style="color: #aaaaaa; font-style: italic"># The following should be ${doxyfile} only but it</span>
-    <span style="color: #aaaaaa; font-style: italic"># will break the dependency.</span>
-    <span style="color: #aaaaaa; font-style: italic"># The optimal solution would be creating a</span>
-    <span style="color: #aaaaaa; font-style: italic"># custom_command for ${doxyfile} generation</span>
-    <span style="color: #aaaaaa; font-style: italic"># but I still have to figure out how...</span>
-    <span style="color: #aa5500">MAIN_DEPENDENCY</span> ${<span style="color: #aa0000">doxyfile</span>} ${<span style="color: #aa0000">doxyfile_in</span>}
-    <span style="color: #aa5500">DEPENDS</span> <span style="color: #aa5500">project_targets</span> ${<span style="color: #aa0000">doxy_extra_files</span>}
-    <span style="color: #aa5500">COMMENT</span> <span style="color: #aa5500">&quot;Generating HTML documentation&quot;</span>
-  )
-
-  <span style="color: #00aaaa">ADD_CUSTOM_TARGET</span>( <span style="color: #aa5500">doc</span> <span style="color: #aa5500">ALL</span> <span style="color: #aa5500">DEPENDS</span> ${<span style="color: #aa0000">doxy_html_index_file</span>} )
-
-  <span style="color: #00aaaa">INSTALL</span>( <span style="color: #aa5500">DIRECTORY</span> ${<span style="color: #aa0000">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color: #aa5500">/html</span> <span style="color: #aa5500">DESTINATION</span> <span style="color: #aa5500">share/doc</span> )
-<span style="color: #00aaaa">ENDIF</span>()
-</pre></div>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#0aa">option</span>(<span style="color:#a50">BUILD_DOCUMENTATION</span>
+    <span style="color:#a50">&#34;Create and install the HTML based API documentation (requires Doxygen)&#34;</span> <span style="color:#a50">OFF</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span><span style="color:#0aa">IF</span>(<span style="color:#a50">BUILD_DOCUMENTATION</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">FIND_PACKAGE</span>(<span style="color:#a50">Doxygen</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">IF</span>(<span style="color:#a50">NOT</span> <span style="color:#a50">DOXYGEN_FOUND</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>    <span style="color:#0aa">MESSAGE</span>(<span style="color:#a50">FATAL_ERROR</span> <span style="color:#a50">&#34;Doxygen is needed to build the documentation.&#34;</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">ENDIF</span>()<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxyfile_in</span>          ${<span style="color:#a00">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color:#a50">/Doxyfile.in</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxyfile</span>             ${<span style="color:#a00">PROJECT_BINARY_DIR</span>}<span style="color:#a50">/Doxyfile</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxy_html_index_file</span> ${<span style="color:#a00">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color:#a50">/html/index.html</span>)<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxy_output_root</span>     ${<span style="color:#a00">CMAKE_CURRENT_BINARY_DIR</span>}) <span style="color:#aaa;font-style:italic"># Pasted into Doxyfile.in
+</span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxy_input</span>           ${<span style="color:#a00">PROJECT_SOURCE_DIR</span>}<span style="color:#a50">/src</span>) <span style="color:#aaa;font-style:italic"># Pasted into Doxyfile.in
+</span><span style="color:#aaa;font-style:italic"></span>  <span style="color:#0aa">SET</span>( <span style="color:#a50">doxy_extra_files</span>     ${<span style="color:#a00">CMAKE_CURRENT_SOURCE_DIR</span>}<span style="color:#a50">/mainpage.dox</span>) <span style="color:#aaa;font-style:italic"># Pasted into Doxyfile.in
+</span><span style="color:#aaa;font-style:italic"></span><span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">CONFIGURE_FILE</span>( ${<span style="color:#a00">doxyfile_in</span>} ${<span style="color:#a00">doxyfile</span>} <span style="color:#a50">@ONLY</span> )<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">ADD_CUSTOM_COMMAND</span>(
+    <span style="color:#a50">OUTPUT</span> ${<span style="color:#a00">doxy_html_index_file</span>}
+    <span style="color:#a50">COMMAND</span> ${<span style="color:#a00">DOXYGEN_EXECUTABLE</span>} ${<span style="color:#a00">doxyfile</span>}
+    <span style="color:#aaa;font-style:italic"># The following should be ${doxyfile} only but it
+</span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic"># will break the dependency.
+</span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic"># The optimal solution would be creating a
+</span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic"># custom_command for ${doxyfile} generation
+</span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#aaa;font-style:italic"># but I still have to figure out how...
+</span><span style="color:#aaa;font-style:italic"></span>    <span style="color:#a50">MAIN_DEPENDENCY</span> ${<span style="color:#a00">doxyfile</span>} ${<span style="color:#a00">doxyfile_in</span>}
+    <span style="color:#a50">DEPENDS</span> <span style="color:#a50">project_targets</span> ${<span style="color:#a00">doxy_extra_files</span>}
+    <span style="color:#a50">COMMENT</span> <span style="color:#a50">&#34;Generating HTML documentation&#34;</span>
+  )<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">ADD_CUSTOM_TARGET</span>( <span style="color:#a50">doc</span> <span style="color:#a50">ALL</span> <span style="color:#a50">DEPENDS</span> ${<span style="color:#a00">doxy_html_index_file</span>} )<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span>  <span style="color:#0aa">INSTALL</span>( <span style="color:#a50">DIRECTORY</span> ${<span style="color:#a00">CMAKE_CURRENT_BINARY_DIR</span>}<span style="color:#a50">/html</span> <span style="color:#a50">DESTINATION</span> <span style="color:#a50">share/doc</span> )<span style="color:#f00;background-color:#faa">
+</span><span style="color:#f00;background-color:#faa"></span><span style="color:#0aa">ENDIF</span>()</code></pre></div>
 <p>The point is that we still have our <code>doc</code> custom target (added to default
 targets) that is going to be fired every time but the actual build step is
 protected by the custom command that will check for the right dependencies. Just
