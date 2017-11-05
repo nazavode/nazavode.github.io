@@ -237,7 +237,7 @@ retrieves the same value from the *buffer* register.
 
 **We've just doubled the memory bandwidth available for our copy function.**
 
-But what happens when the types of our output arrays an input array are
+But what happens when the types of our output and input arrays are
 compatible? Let's give it a try:
 
 {{< highlight c >}}
@@ -364,8 +364,8 @@ void bar(int * restrict p, int * restrict q, int n)
 void callbar(void)
 {
     extern int d[100];
-    bar(50, d + 50, d); // Valid!
-    bar(50, d + 1 , d); // Undefined behaviour!
+    bar(d + 50, d, 50); // Valid!
+    bar(d + 1 , d, 50); // Undefined behaviour!
 }
 {{< / highlight >}}
 
