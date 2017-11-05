@@ -527,10 +527,10 @@ END SUBROUTINE
 
 ...cannot be called in this way:
 
-{{< highlight fortran >}}
+{{< highlight Fortran >}}
 INTEGER, DIMENSION(100) :: Arr
 
-CALL f(Arr, Arr)  ! <-- UNDEFINED BEHAVIOUR!!!
+CALL f(Arr, Arr)  ! <-- UNDEFINED BEHAVIOUR
 {{< / highlight >}}
 
 The fact that we are passing the *same* reference to both the parameters yields
