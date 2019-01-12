@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Benchmark</title>
+      <link>https://nazavode.github.io/tags/benchmark/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/benchmark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Build System</title>
       <link>https://nazavode.github.io/tags/build-system/</link>
       <pubDate>Sat, 19 Jan 2013 00:00:00 +0000</pubDate>
@@ -75,6 +84,15 @@
     </item>
     
     <item>
+      <title>Cpp</title>
+      <link>https://nazavode.github.io/tags/cpp/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/cpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Doxygen</title>
       <link>https://nazavode.github.io/tags/doxygen/</link>
       <pubDate>Sat, 19 Jan 2013 00:00:00 +0000</pubDate>
@@ -89,6 +107,15 @@
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/fortran/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google</title>
+      <link>https://nazavode.github.io/tags/google/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/google/</guid>
       <description></description>
     </item>
     
@@ -120,6 +147,33 @@
     </item>
     
     <item>
+      <title>Optimization</title>
+      <link>https://nazavode.github.io/tags/optimization/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perf</title>
+      <link>https://nazavode.github.io/tags/perf/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/perf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Profiling</title>
+      <link>https://nazavode.github.io/tags/profiling/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/profiling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Restrict</title>
       <link>https://nazavode.github.io/tags/restrict/</link>
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
@@ -134,6 +188,15 @@
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/standard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Talk</title>
+      <link>https://nazavode.github.io/tags/talk/</link>
+      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/talk/</guid>
       <description></description>
     </item>
     

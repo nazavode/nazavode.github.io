@@ -19,9 +19,7 @@
       <guid>https://nazavode.github.io/blog/idiomatic-cpp/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve just &lt;a href=&#34;http://www.slideshare.net/fficarelli/idiomatic-c&#34;&gt;uploaded&lt;/a&gt; a minimal collection of most wanted and widely accepted idioms and coding conventions
 for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
-emphasis is on performance-friendly techniques.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+emphasis is on performance-friendly techniques.&lt;/p&gt;</description>
     </item>
     
   </channel>

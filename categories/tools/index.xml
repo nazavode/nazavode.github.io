@@ -21,9 +21,7 @@
 portable CMake build system and we are now facing the task to generate a proper
 Doxygen documentation for our anxious customer. The solution, widely adopted,
 seems to be the one and only that can be found while googling and, to me, looks
-not so neat. So I tried to come up with a different approach.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+not so neat. So I tried to come up with a different approach.&lt;/p&gt;</description>
     </item>
     
   </channel>
