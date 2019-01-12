@@ -20,5 +20,5 @@ You can find all the support material including examples and helper scripts
 you happen to find useful. Oh, and the slide deck is
 [here](https://nazavode.github.io/meetupcpp-dec-2018/).
 
-Thanks to all the attendees and thanks to [Marco Arena](https://twitter.com/ilpropheta)
-for the chance to prattle about some fun stuff I enjoy.
+Thanks to all the attendees and to [Marco Arena](https://twitter.com/ilpropheta)
+for the chance to prattle on about some fun stuff I enjoy.
