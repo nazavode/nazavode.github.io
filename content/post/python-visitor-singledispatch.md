@@ -216,9 +216,9 @@ a lot of other cases too, even for abstract base classes:
 The implementation is fairly straightforward: while the actual type dispatching
 is still carried out by the underlying standard `singledispatch`, the
 `argdispatch` decorator produces a closure that picks the custom argument
-instead of the first one found in the callable signature. This is quite powerful
-and its main value is that allows to ignore the `this` argument on bound
-methods, enabling its adoption in class methods, instance methods and abstract
+instead of the first one found in the callable signature. This turned out to be quite powerful
+and its main point is that allows to ignore the `this` argument on bound
+methods, enabling adoption in class methods, instance methods and abstract
 base classes as well.
 
 You can find the `argdispatch` implementation [on GitHub][argdispatch-github].
@@ -243,6 +243,8 @@ as the first dispatch argument, our own argument triggers a **double dispatch**.
 > and *then* dispatch on the second argument (through generic function
 > dispatch).
 
+**Exactly.**
+
 I want to stress again the point that doing *method dispatching* must be
 considered a Python bad practice since it's actually an attempt to negate *duck
 typing*. If you're considering this kind of approach, think about it two, three,
@@ -253,7 +255,7 @@ Despite this, the `singledispatch` decorator is now [standard][singledispatch]
 and it looks like a neat way to cope with some specific situations
 ([trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree) anyone?) therefore
 I'm giving [my decorator][argdispatch-github] a try keeping in mind to avoid
-evil (and useless) scenarios.
+evil.
 
 [factory-pattern]: https://sourcemaking.com/design_patterns/factory_method
 [visitor-pattern]: https://sourcemaking.com/design_patterns/visitor

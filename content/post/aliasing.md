@@ -54,7 +54,7 @@ the problem was me ignoring a quite large slice of the C language.
 So, if you want to dive into this, let's start with a trivial example:
 
 {{< highlight c >}}
-void foo (float * out_vector_a, float *out_vector_b, int *in_vector, int n)
+void foo (float *out_vector_a, float *out_vector_b, int *in_vector, int n)
 {
     for(int i=0; i<n; ++i) {
         out_vector_a[i] = in_vector[i];
@@ -351,7 +351,7 @@ to completely ignore it):
 
 ### Restricted ownership *(there can be only one)*
 
-Let's consider the following function definition:
+Let's consider the following function definitions:
 
 {{< highlight c >}}
 void bar(int * restrict p, int * restrict q, int n)
@@ -376,14 +376,14 @@ In this case we are seeing two different situations:
    through `p` and `d[0] .. d[49]` through `q`. Due to the fact that
    `restrict` ensures unique accesses to *objects* (the underlying `int` elements
    in this case), each array element is going to be accessed through one and only
-   one pointer: this code is perfectly legal leading to a defined behaviour;
+   one pointer: this code is perfectly legal leading to **defined behaviour**;
 2. during the second call, `p` accesses `int` objects in the range
    `d[1] .. d[50]` while `q` in the range `d[0] .. d[49]`: all the `d` array
    elements (except for `d[0]` and `d[50]`) are going to be accessed through
-   both pointers. This call breaks the `restrict` contract leading to undefined
-   behaviour.
+   both pointers. This call breaks the `restrict` contract leading to **undefined
+   behaviour**.
 
-This example highlights the fact that *`restrict` compliance of accesses donesn't
+This example highlights the fact that *`restrict` compliance of accesses doesn't
 care about timing*. For instance, `bar` iterations during the latter call access
 `d` in the sequence:
 
@@ -395,7 +395,7 @@ care about timing*. For instance, `bar` iterations during the latter call access
 The two restricted pointers never access the same element at the same time but,
 despite this, we end up with an undefined behaviour anyway: it's like a *first
 touch ownership claim*, the first pointer that touches an element estabilish
-the kind of *special association* with the object the standard document talks
+the kind of *special association* with the object the standard talks
 about.
 
 *If inside a block an object is going to be accessed at any point in time
@@ -433,12 +433,12 @@ this aspect as well:
 through a restricted pointer, then that pointer becomes the one and only allowed
 to access (both reading and writing) that particular object.**
 
-### Assignments between `restrict` pointers
+### Assignment between `restrict` pointers
 
 The standard is so harsh about `restrict` that even producing a pointer
 alias to a restricted one (inside the same block) is **undefined behaviour**:
 
-{{< highlight c >}}
+{{< highlight c "hl_lines=2" >}}
 int * restrict q;
 int * restrict p = q; // UNDEFINED BEHAVIOUR!!!
 {{< / highlight >}}

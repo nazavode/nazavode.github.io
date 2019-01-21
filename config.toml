@@ -2,12 +2,14 @@ baseurl = "https://nazavode.github.io/"
 title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
-paginate = 5
-# Pygments syntax highlighting (pygments executable must be available)
+
+# Syntax highlighting 
 pygmentsCodefences = true
 pygmentsStyle = "autumn"
-# Disqus support
+
+# Disqus
 disqusShortname = "nazavodeio"
+
 # Theme
 theme = "hyde-x"
 
@@ -19,15 +21,11 @@ theme = "hyde-x"
     # The format shown here is the same one Jekyll/Octopress uses by default.
     post = "/blog/:filename/"
 
-
 [taxonomies]
     # Optional. Use if you want tags and lists.
     category = "categories"
     tag = "tags"
 
-#
-# All parameters below here are optional and can be mixed and matched.
-#
 [params]
     # Hide estimated reading time for posts.
     # Default (if omitted) is false.
@@ -47,10 +45,6 @@ theme = "hyde-x"
     # This also works: "theme-base-08 layout-reverse", or just "layout-reverse".
     theme = "theme-base-sulphur-00"
 
-    # Select a syntax highight.
-    # Check the static/css/highlight directory for options.
-    # highlight = "default"
-
     # Displays under the author name in the sidebar, keep it short.
     # You can use markdown here.
     # tagline = "volatile hacks"
@@ -62,8 +56,7 @@ theme = "hyde-x"
     # Sidebar social links, these must be full URLs.
     github = "https://github.com/nazavode"
     linkedin = "https://it.linkedin.com/in/fficarelli"
-    # googleplus = "https://plus.google.com/+FedericoFicarelli"
     twitter = "https://twitter.com/fficarelli"
 
     # Other social-like sidebar links
-    rss = true  # switch to true to enable RSS icon link
+    rss = true
