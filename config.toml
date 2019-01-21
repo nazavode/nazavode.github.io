@@ -3,11 +3,11 @@ title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
 
-# Syntax highlighting 
+# Syntax highlighting (https://gohugo.io/content-management/syntax-highlighting/)
 pygmentsCodefences = true
-pygmentsStyle = "autumn"
+pygmentsStyle = "monokai"
 
-# Disqus
+# Disqus (https://gohugo.io/content-management/comments/#add-disqus)
 disqusShortname = "nazavodeio"
 
 # Theme
