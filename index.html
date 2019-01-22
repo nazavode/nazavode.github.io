@@ -119,6 +119,81 @@ for the chance to prattle on about some fun stuff I enjoy.</p>
     
     <div class="post">
       <h1 class="post-title">
+        <a href="https://nazavode.github.io/blog/tracboat/">Salvaging 10 years of Trac while moving to GitLab: tooling for a better life</a>
+      </h1>
+      <span class="post-date">Apr 11, 2017 &middot; <a href="https://nazavode.github.io/blog/tracboat/#disqus_thread">Comments</a>
+      
+      <br/>
+      <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/tooling">Tooling</a>
+      </span>
+      
+      <p>Some time ago in my team at work we began considering a complete makeover of our devops
+infrastructure. The platform in use was based on <strong><a href="https://trac.edgewall.org/">Trac</a></strong>, a tool that ten
+years ago proved itself packed with features, looked great and came in the form of an
+open, clear and easily extensible Python code base. Almost <strong>a mandatory choice back
+then</strong>. It served us <em>very</em> well (thanks Trac folks!), even when it had to run on
+underpowered hardware, without maintenance and under heavy loads. Despite its stability
+and practicality, the need for a proper, <em>modern</em> devops platform seamlessly supporting
+continuous integration and deployment pipelines, as well as code review, suddenly came
+out. <strong>The choice went for <a href="https://gitlab.com/">GitLab</a></strong>, a solution that would have given us
+the same degree of freedom (free community edition, open source, easily manageable on
+premise) along all the shiny new features we were looking for.</p>
+
+<p>At that point, <strong>the issue of how to migrate all of the content came out</strong>.</p>
+
+<p>At the time every team used the same Trac instance as a <em>knowledge base</em>, with thousands
+of wiki pages, GBs of attachments and <strong>ten years of bug hunting chronicles</strong>.</p>
+
+<p>The boss was <em>really scared</em>. To be honest, we were all scared at the idea of loosing
+something in the migration process.</p>
+
+<p>Even the remote chance of loosing a single bit of our history was not acceptable and a
+risk we weren&rsquo;t keen facing at the point that leaving everything as it was untouched just
+out of fear was <em>real</em>. In the face of the risk of giving up on the makeover, I decided I
+had to try to do something. The prospect of such a bump in life quality for the whole team
+was enough for me to invest one weekend in crafting some tool that would have left no
+objections on the table and hopefully all of us with a shiny, new devops platform.</p>
+
+<p><strong>I came up with <a href="https://github.com/tracboat/tracboat">Tracboat</a></strong>, a <strong>command line tool</strong> written in Python
+aimed at <strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it
+has been written in a rush, it&rsquo;s slow (no
+<a href="https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects">XML-RPC multicalls</a>),
+with little unit testing and the code base definitely needs some love and refactoring, but
+<em>it works</em>. And <strong>it worked extremely well for our own migration</strong>.</p>
+
+<p>You can do essentially two of things with the tool:</p>
+
+<ol>
+<li><strong>export a Trac instance as a whole in a single <code>json</code> file</strong> including attachments,
+wiki pages and issues (maybe piping it into some compressor, <code>json</code> can grow very fast
+in size);</li>
+<li><strong>import a previously exported instance into a fresh GitLab instance</strong>.</li>
+</ol>
+
+<p>It will take care of <strong>attachments</strong> by uploading them and updating links, <strong>translate
+wiki pages</strong> from Trac format to markdown and <strong>map Trac users to new GitLab accounts</strong>
+(creating them from scratch when needed). By combining those basic operations you can, for
+example, migrate a Trac instance directly into GitLab without having to rely on an
+intermediate local file.</p>
+
+<p>Unfortunately the lack of spare time forced me to set back any further development despite
+the lots of people coming out asking for fixes and new features (yes, a lot of folks are
+still using Trac in 2017), so I decided to move the <a href="https://github.com/nazavode">original repository</a>
+to a <a href="https://github.com/tracboat">brand new organization</a> and accept the help offered by
+the community.</p>
+
+<h2 id="credits">Credits</h2>
+
+<p>The originating idea was taken from <a href="https://github.com/moimael/trac-to-gitlab">trac-to-gitlab</a>
+by <a href="https://github.com/moimael">Maël Lavault</a>.</p>
+
+<p>A lot of work has beek taken over by <a href="https://github.com/glensc">Elan Ruusamäe</a> that is
+now the most active maintainer (thank you!).</p>
+      
+    </div>
+    
+    <div class="post">
+      <h1 class="post-title">
         <a href="https://nazavode.github.io/blog/aliasing/">Aliasing Explained (Part 1)</a>
       </h1>
       <span class="post-date">Mar 26, 2017 &middot; <a href="https://nazavode.github.io/blog/aliasing/#disqus_thread">Comments</a>
@@ -717,131 +792,50 @@ emphasis is on performance-friendly techniques.</p>
       
     </div>
     
-    <div class="post">
-      <h1 class="post-title">
-        <a href="https://nazavode.github.io/blog/cmake-doxygen-improved/">Documentation with Doxygen and CMake: a (slightly) improved approach</a>
-      </h1>
-      <span class="post-date">Jan 19, 2013 &middot; <a href="https://nazavode.github.io/blog/cmake-doxygen-improved/#disqus_thread">Comments</a>
-      
-      <br/>
-      <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/tools">Tools</a>
-      </span>
-      
-      <p>After days of hard work we ended up with our lovely crafted code base, a
-portable CMake build system and we are now facing the task to generate a proper
-Doxygen documentation for our anxious customer. The solution, widely adopted,
-seems to be the one and only that can be found while googling and, to me, looks
-not so neat. So I tried to come up with a different approach.</p>
+    
 
-<p>Let&rsquo;s first have a look at the widespread solution:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e">#-- Adds an Option to toggle the generation of the API documentation
-</span><span style="color:#75715e"></span>option(<span style="color:#e6db74">BUILD_DOCUMENTATION</span> <span style="color:#e6db74">&#34;Use Doxygen to create the HTML based API documentation&#34;</span> <span style="color:#e6db74">OFF</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>IF(<span style="color:#e6db74">BUILD_DOCUMENTATION</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  FIND_PACKAGE(<span style="color:#e6db74">Doxygen</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  IF(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">DOXYGEN_FOUND</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    message(<span style="color:#e6db74">FATAL_ERROR</span> <span style="color:#e6db74">&#34;Doxygen is needed to build the documentation&#34;</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  ENDIF()<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">#-- Configure the Template Doxyfile for our specific project
-</span><span style="color:#75715e"></span>  configure_file(<span style="color:#e6db74">Doxyfile.in</span> <span style="color:#f92672">${</span>PROJECT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Doxyfile</span> <span style="color:#e6db74">@ONLY</span> <span style="color:#e6db74">IMMEDIATE</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">#-- Add a custom target to run Doxygen when ever the project is built
-</span><span style="color:#75715e"></span>  add_custom_target (<span style="color:#e6db74">Docs</span> <span style="color:#e6db74">ALL</span>
-    <span style="color:#e6db74">COMMAND</span> <span style="color:#f92672">${</span>DOXYGEN_EXECUTABLE<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>PROJECT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Doxyfile</span>
-    <span style="color:#e6db74">SOURCES</span> <span style="color:#f92672">${</span>PROJECT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Doxyfile</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e"># IF you do NOT want the documentation to be generated EVERY time you build the project
-</span><span style="color:#75715e"></span>  <span style="color:#75715e"># then leave out the &#39;ALL&#39; keyword from the above command.
-</span><span style="color:#75715e"></span>ENDIF()</code></pre></div>
-<p>Well, even if the above solution works like a charm, it exposes a flaw that
-makes its adoption very annoying: <strong>Doxygen will be triggered every time we run
-make, even if nothing has changed</strong>. Oh, <em>every time</em> means exactly <em>every
-time</em>: each make invocation (make, make install, etc&hellip;) will flood your shell
-with the utterly verbose output from Doxygen even if that step is obviously
-useless. Yes, we have added that <code>ALL</code> flag to <code>ADD_CUSTOM_TARGET</code> but this is
-the only way to have our documentation generated along with the default targets
-(otherwise our <code>BUILD_DOCUMENTATION</code> flag would be ignored except for an
-explicit <code>make doc</code>). This behavior is correct and the point is well highlighted
-in the CMake reference for
-<a href="https://cmake.org/cmake/help/v2.8.10/cmake.html#command:add_custom_target"><code>ADD_CUSTOM_TARGET</code></a>:</p>
-
-<blockquote>
-<p>The target has no output file and is ALWAYS CONSIDERED OUT OF DATE even if the commands
-try to create a file with the name of the target. Use ADD_CUSTOM_COMMAND to generate a
-file with dependencies.</p>
-</blockquote>
-
-<p>So, it seems that we are using the wrong tool. <strong>How can we add a Doxygen target
-with a real dependency checking?</strong> The neat trick lies in the combined use of
-two different commands:</p>
-
-<ol>
-<li><code>ADD_CUSTOM_COMMAND</code> will take care of dependency checking, firing up Doxygen
-if and only if something (which the documentation depends on) has really changed
-since last build;</li>
-<li><code>ADD_CUSTOM_TARGET</code> will allow us to have a convenient and
-elegant make doc target, eventually added to default set. After a bit of
-trial-and-error, I ended up with a bunch of lines of code that seems to work as
-we wanted:</li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">option(<span style="color:#e6db74">BUILD_DOCUMENTATION</span>
-    <span style="color:#e6db74">&#34;Create and install the HTML based API documentation (requires Doxygen)&#34;</span> <span style="color:#e6db74">OFF</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>IF(<span style="color:#e6db74">BUILD_DOCUMENTATION</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  FIND_PACKAGE(<span style="color:#e6db74">Doxygen</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  IF(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">DOXYGEN_FOUND</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    MESSAGE(<span style="color:#e6db74">FATAL_ERROR</span> <span style="color:#e6db74">&#34;Doxygen is needed to build the documentation.&#34;</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  ENDIF()<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  SET( <span style="color:#e6db74">doxyfile_in</span>          <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Doxyfile.in</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  SET( <span style="color:#e6db74">doxyfile</span>             <span style="color:#f92672">${</span>PROJECT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Doxyfile</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  SET( <span style="color:#e6db74">doxy_html_index_file</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/html/index.html</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  SET( <span style="color:#e6db74">doxy_output_root</span>     <span style="color:#f92672">${</span>CMAKE_CURRENT_BINARY_DIR<span style="color:#f92672">}</span>) <span style="color:#75715e"># Pasted into Doxyfile.in
-</span><span style="color:#75715e"></span>  SET( <span style="color:#e6db74">doxy_input</span>           <span style="color:#f92672">${</span>PROJECT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/src</span>) <span style="color:#75715e"># Pasted into Doxyfile.in
-</span><span style="color:#75715e"></span>  SET( <span style="color:#e6db74">doxy_extra_files</span>     <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/mainpage.dox</span>) <span style="color:#75715e"># Pasted into Doxyfile.in
-</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  CONFIGURE_FILE( <span style="color:#f92672">${</span>doxyfile_in<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>doxyfile<span style="color:#f92672">}</span> <span style="color:#e6db74">@ONLY</span> )<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  ADD_CUSTOM_COMMAND(
-    <span style="color:#e6db74">OUTPUT</span> <span style="color:#f92672">${</span>doxy_html_index_file<span style="color:#f92672">}</span>
-    <span style="color:#e6db74">COMMAND</span> <span style="color:#f92672">${</span>DOXYGEN_EXECUTABLE<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>doxyfile<span style="color:#f92672">}</span>
-    <span style="color:#75715e"># The following should be ${doxyfile} only but it
-</span><span style="color:#75715e"></span>    <span style="color:#75715e"># will break the dependency.
-</span><span style="color:#75715e"></span>    <span style="color:#75715e"># The optimal solution would be creating a
-</span><span style="color:#75715e"></span>    <span style="color:#75715e"># custom_command for ${doxyfile} generation
-</span><span style="color:#75715e"></span>    <span style="color:#75715e"># but I still have to figure out how...
-</span><span style="color:#75715e"></span>    <span style="color:#e6db74">MAIN_DEPENDENCY</span> <span style="color:#f92672">${</span>doxyfile<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>doxyfile_in<span style="color:#f92672">}</span>
-    <span style="color:#e6db74">DEPENDS</span> <span style="color:#e6db74">project_targets</span> <span style="color:#f92672">${</span>doxy_extra_files<span style="color:#f92672">}</span>
-    <span style="color:#e6db74">COMMENT</span> <span style="color:#e6db74">&#34;Generating HTML documentation&#34;</span>
-  )<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  ADD_CUSTOM_TARGET( <span style="color:#e6db74">doc</span> <span style="color:#e6db74">ALL</span> <span style="color:#e6db74">DEPENDS</span> <span style="color:#f92672">${</span>doxy_html_index_file<span style="color:#f92672">}</span> )<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>  INSTALL( <span style="color:#e6db74">DIRECTORY</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_BINARY_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/html</span> <span style="color:#e6db74">DESTINATION</span> <span style="color:#e6db74">share/doc</span> )<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>ENDIF()</code></pre></div>
-<p>The point is that we still have our <code>doc</code> custom target (added to default
-targets) that is going to be fired every time but the actual build step is
-protected by the custom command that will check for the right dependencies. Just
-a couple of remarks:</p>
-
-<ul>
-<li>the <code>DEPENDS</code> option on the custom command must list all of the targets, files
-and whatever your documentation depends on;</li>
-<li>the <code>${doxyfile_in}</code> dependency is an overshoot but, as I say in the comment,
-removing it will break the dependency checking. The ideal solution would be
-specifying <code>${doxyfile}</code> only, letting it to trigger a lower-level custom
-command intended to configure and generate <code>${doxyfile_in}</code>. I&rsquo;m still trying to
-find an elegant solution to this little aesthetic flaw.</li>
-</ul>
-
-<hr />
-
-<p>Resources:</p>
-
-<ul>
-<li><a href="http://www.cmake.org/cmake/help/v2.8.10/cmake.html">CMake Reference Manual</a></li>
-<li><a href="http://www.bluequartz.net/projects/EIM_Segmentation/SoftwareDocumentation/html/usewithcmakeproject.html">Use Doxygen with a CMake Based Project</a></li>
-</ul>
-      
-    </div>
+<ul class="pagination">
+    
+    <li class="page-item">
+        <a href="/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li class="page-item disabled">
+    <a href="" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
     
     
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item active"><a class="page-link" href="/">1</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/page/2/">2</a></li>
+    
+    
+    <li class="page-item">
+    <a href="/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+        <a href="/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
 
   </div>
 </div>

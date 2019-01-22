@@ -89,16 +89,17 @@
     <br/>
     <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/tooling">Tooling</a>
     </span>
-    <p>Some time ago at the office we began considering a complete makeover of our devops infrastructure.
-The platform in use was based on <strong><a href="https://trac.edgewall.org/">Trac</a></strong>, a tool that ten years ago proved itself packed
-with features, looked great and came in the form of an open, clear and easily extensible Python code
-base. Almost <strong>a mandatory choice back then</strong>. It served us <em>very</em> well (thanks Trac folks!), even when
-it had to run on underpowered hardware, without maintenance and under heavy loads. Despite its stability
-and practicality, the need for a proper, <em>modern</em> devops platform seamlessly supporting continuous
-integration and deployment pipelines, as well as code review, suddenly came out. <strong>The choice went
-for <a href="https://gitlab.com/">GitLab</a></strong>, a solution that would have given us the same degree of freedom
-(free community edition, open source, easily manageable on premise) along all the shiny new
-features we were looking for.</p>
+    <p>Some time ago in my team at work we began considering a complete makeover of our devops
+infrastructure. The platform in use was based on <strong><a href="https://trac.edgewall.org/">Trac</a></strong>, a tool that ten
+years ago proved itself packed with features, looked great and came in the form of an
+open, clear and easily extensible Python code base. Almost <strong>a mandatory choice back
+then</strong>. It served us <em>very</em> well (thanks Trac folks!), even when it had to run on
+underpowered hardware, without maintenance and under heavy loads. Despite its stability
+and practicality, the need for a proper, <em>modern</em> devops platform seamlessly supporting
+continuous integration and deployment pipelines, as well as code review, suddenly came
+out. <strong>The choice went for <a href="https://gitlab.com/">GitLab</a></strong>, a solution that would have given us
+the same degree of freedom (free community edition, open source, easily manageable on
+premise) along all the shiny new features we were looking for.</p>
 
 <p>At that point, <strong>the issue of how to migrate all of the content came out</strong>.</p>
 
@@ -111,36 +112,36 @@ something in the migration process.</p>
 <p>Even the remote chance of loosing a single bit of our history was not acceptable and a
 risk we weren&rsquo;t keen facing at the point that leaving everything as it was untouched just
 out of fear was <em>real</em>. In the face of the risk of giving up on the makeover, I decided I
-had to try to do something. The prospect of such a bump in life quality for the whole team was
-enough for me to invest one weekend in crafting some tool that would have left no
+had to try to do something. The prospect of such a bump in life quality for the whole team
+was enough for me to invest one weekend in crafting some tool that would have left no
 objections on the table and hopefully all of us with a shiny, new devops platform.</p>
 
-<p><strong>I came up with <a href="https://github.com/tracboat/tracboat">Tracboat</a></strong>, a <strong>command line tool</strong> written in Python aimed at
-<strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it has been written
-in a rush, it&rsquo;s slow
-(no <a href="https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects">XML-RPC multicalls</a>),
-with little unit testing and the code base definitely needs some love and refactoring,
-but <em>it works</em>. And <strong>it worked extremely well for our own migration</strong>.</p>
+<p><strong>I came up with <a href="https://github.com/tracboat/tracboat">Tracboat</a></strong>, a <strong>command line tool</strong> written in Python
+aimed at <strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it
+has been written in a rush, it&rsquo;s slow (no
+<a href="https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects">XML-RPC multicalls</a>),
+with little unit testing and the code base definitely needs some love and refactoring, but
+<em>it works</em>. And <strong>it worked extremely well for our own migration</strong>.</p>
 
 <p>You can do essentially two of things with the tool:</p>
 
 <ol>
-<li><strong>export a Trac instance as a whole in a single <code>json</code> file</strong> (maybe piping it into some
-compressor, <code>json</code> can grow very fast in size);</li>
+<li><strong>export a Trac instance as a whole in a single <code>json</code> file</strong> including attachments,
+wiki pages and issues (maybe piping it into some compressor, <code>json</code> can grow very fast
+in size);</li>
 <li><strong>import a previously exported instance into a fresh GitLab instance</strong>.</li>
 </ol>
 
-<p>It will take care of <strong>attachments</strong> by uploading them and updating links, <strong>translate wiki
-pages</strong> from Trac format to markdown and <strong>map Trac users to new GitLab accounts</strong>
-(creating them from scratch when needed).
-By combining those basic operations you can, for example, migrate a Trac instance
-directly into GitLab without having to rely on a intermediate local file.</p>
+<p>It will take care of <strong>attachments</strong> by uploading them and updating links, <strong>translate
+wiki pages</strong> from Trac format to markdown and <strong>map Trac users to new GitLab accounts</strong>
+(creating them from scratch when needed). By combining those basic operations you can, for
+example, migrate a Trac instance directly into GitLab without having to rely on an
+intermediate local file.</p>
 
-<p>Unfortunately the lack of spare time forced me to set back any further development
-despite the lots of people coming out asking for fixes and new features (yes, a lot of
-folks are still using Trac in 2017), so I decided to move the
-<a href="https://github.com/nazavode">original repository</a> to a
-<a href="https://github.com/tracboat">brand new organization</a> and accept the help offered by
+<p>Unfortunately the lack of spare time forced me to set back any further development despite
+the lots of people coming out asking for fixes and new features (yes, a lot of folks are
+still using Trac in 2017), so I decided to move the <a href="https://github.com/nazavode">original repository</a>
+to a <a href="https://github.com/tracboat">brand new organization</a> and accept the help offered by
 the community.</p>
 
 <h2 id="credits">Credits</h2>
@@ -148,8 +149,8 @@ the community.</p>
 <p>The originating idea was taken from <a href="https://github.com/moimael/trac-to-gitlab">trac-to-gitlab</a>
 by <a href="https://github.com/moimael">Maël Lavault</a>.</p>
 
-<p>A lot of work has beek taken over by <a href="https://github.com/glensc">Elan Ruusamäe</a> that is now
-the most active maintainer (thank you!).</p>
+<p>A lot of work has beek taken over by <a href="https://github.com/glensc">Elan Ruusamäe</a> that is
+now the most active maintainer (thank you!).</p>
   </div>
   <div id="disqus_thread"></div>
 </div>
