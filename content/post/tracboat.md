@@ -4,6 +4,7 @@ description = "Tracboat, a trac-to-gitlab lifeboat"
 categories = ["Dev", "Tooling"]
 tags = ["python", "gitlab", "trac", "migration", "devops"]
 date = "2017-04-11"
+draft = true
 +++
 
 Some time ago at the office we began considering a complete makeover of our devops infrastructure.
