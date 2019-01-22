@@ -2,6 +2,7 @@ baseurl = "https://nazavode.github.io/"
 title = "/dev/null"
 languageCode = "en-us"
 MetaDataFormat = "toml"
+paginate = 5
 
 # Syntax highlighting (https://gohugo.io/content-management/syntax-highlighting/)
 pygmentsCodefences = true
