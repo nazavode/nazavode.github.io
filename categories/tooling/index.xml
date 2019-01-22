@@ -20,7 +20,7 @@
       <description>&lt;p&gt;Some time ago at the office we began considering a complete makeover of our devops infrastructure.
 The platform in use was based on &lt;strong&gt;&lt;a href=&#34;https://trac.edgewall.org/&#34;&gt;Trac&lt;/a&gt;&lt;/strong&gt;, a tool that ten years ago proved itself packed
 with features, looked great and came in the form of an open, clear and easily extensible Python code
-base. Almost &lt;strong&gt;a mandatory choice back then&lt;/strong&gt;. It served us &lt;em&gt;very&lt;/em&gt; well (thanks Trac guys!), even when
+base. Almost &lt;strong&gt;a mandatory choice back then&lt;/strong&gt;. It served us &lt;em&gt;very&lt;/em&gt; well (thanks Trac folks!), even when
 it had to run on underpowered hardware, without maintenance and under heavy loads. Despite its stability
 and practicality, the need for a proper, &lt;em&gt;modern&lt;/em&gt; devops platform seamlessly supporting continuous
 integration and deployment pipelines, as well as code review, suddenly came out. &lt;strong&gt;The choice went

@@ -130,7 +130,7 @@ for the chance to prattle on about some fun stuff I enjoy.</p>
       <p>Some time ago at the office we began considering a complete makeover of our devops infrastructure.
 The platform in use was based on <strong><a href="https://trac.edgewall.org/">Trac</a></strong>, a tool that ten years ago proved itself packed
 with features, looked great and came in the form of an open, clear and easily extensible Python code
-base. Almost <strong>a mandatory choice back then</strong>. It served us <em>very</em> well (thanks Trac guys!), even when
+base. Almost <strong>a mandatory choice back then</strong>. It served us <em>very</em> well (thanks Trac folks!), even when
 it had to run on underpowered hardware, without maintenance and under heavy loads. Despite its stability
 and practicality, the need for a proper, <em>modern</em> devops platform seamlessly supporting continuous
 integration and deployment pipelines, as well as code review, suddenly came out. <strong>The choice went
@@ -149,13 +149,13 @@ something in the migration process.</p>
 <p>Even the remote chance of loosing a single bit of our history was not acceptable and a
 risk we weren&rsquo;t keen facing at the point that leaving everything as it was untouched just
 out of fear was <em>real</em>. In the face of the risk of giving up on the makeover, I decided I
-had to do something. The prospect of such a bump in life quality for the whole team was
+had to try to do something. The prospect of such a bump in life quality for the whole team was
 enough for me to invest one weekend in crafting some tool that would have left no
 objections on the table and hopefully all of us with a shiny, new devops platform.</p>
 
 <p><strong>I came up with <a href="https://github.com/tracboat/tracboat">Tracboat</a></strong>, a <strong>command line tool</strong> written in Python aimed at
-<strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it is has been
-written in a rush, it&rsquo;s slow
+<strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it has been written
+in a rush, it&rsquo;s slow
 (no <a href="https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects">XML-RPC multicalls</a>),
 with little unit testing and the code base definitely needs some love and refactoring,
 but <em>it works</em>. And <strong>it worked extremely well for our own migration</strong>.</p>
