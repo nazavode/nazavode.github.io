@@ -66,7 +66,7 @@ the community.
 The originating idea was taken from [trac-to-gitlab](https://github.com/moimael/trac-to-gitlab)
 by [Maël Lavault](https://github.com/moimael).
 
-A lot of work has beek taken over by [Elan Ruusamäe](https://github.com/glensc) that is
+A lot of work has been taken over by [Elan Ruusamäe](https://github.com/glensc) that is
 now the most active maintainer (thank you!).
 
 [gitlab-home]: https://gitlab.com/
