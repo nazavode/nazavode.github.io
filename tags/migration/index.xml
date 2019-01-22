@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Migration on /dev/null</title>
+    <link>https://nazavode.github.io/tags/migration/</link>
+    <description>Recent content in Migration on /dev/null</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nazavode.github.io/tags/migration/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Salvaging 10 years of Trac while moving to GitLab: tooling for a better life</title>
+      <link>https://nazavode.github.io/blog/tracboat/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/blog/tracboat/</guid>
+      <description>&lt;p&gt;Some time ago at the office we began considering a complete makeover of our devops infrastructure.
+The platform in use was based on &lt;strong&gt;&lt;a href=&#34;https://trac.edgewall.org/&#34;&gt;Trac&lt;/a&gt;&lt;/strong&gt;, a tool that ten years ago proved itself packed
+with features, looked great and came in the form of an open, clear and easily extensible Python code
+base. Almost &lt;strong&gt;a mandatory choice back then&lt;/strong&gt;. It served us &lt;em&gt;very&lt;/em&gt; well (thanks Trac guys!), even when
+it had to run on underpowered hardware, without maintenance and under heavy loads. Despite its stability
+and practicality, the need for a proper, &lt;em&gt;modern&lt;/em&gt; devops platform seamlessly supporting continuous
+integration and deployment pipelines, as well as code review, suddenly came out. &lt;strong&gt;The choice went
+for &lt;a href=&#34;https://gitlab.com/&#34;&gt;GitLab&lt;/a&gt;&lt;/strong&gt;, a solution that would have given us the same degree of freedom
+(free community edition, open source, easily manageable on premise) along all the shiny new
+features we were looking for.&lt;/p&gt;
+
+&lt;p&gt;At that point, &lt;strong&gt;the issue of how to migrate all of the content came out&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
