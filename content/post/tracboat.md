@@ -9,7 +9,7 @@ date = "2017-04-11"
 Some time ago at the office we began considering a complete makeover of our devops infrastructure.
 The platform in use was based on **[Trac][trac-home]**, a tool that ten years ago proved itself packed
 with features, looked great and came in the form of an open, clear and easily extensible Python code
-base. Almost **a mandatory choice back then**. It served us *very* well (thanks Trac guys!), even when
+base. Almost **a mandatory choice back then**. It served us *very* well (thanks Trac folks!), even when
 it had to run on underpowered hardware, without maintenance and under heavy loads. Despite its stability
 and practicality, the need for a proper, *modern* devops platform seamlessly supporting continuous
 integration and deployment pipelines, as well as code review, suddenly came out. **The choice went
@@ -30,13 +30,13 @@ something in the migration process.
 Even the remote chance of loosing a single bit of our history was not acceptable and a
 risk we weren't keen facing at the point that leaving everything as it was untouched just
 out of fear was *real*. In the face of the risk of giving up on the makeover, I decided I
-had to do something. The prospect of such a bump in life quality for the whole team was
+had to try to do something. The prospect of such a bump in life quality for the whole team was
 enough for me to invest one weekend in crafting some tool that would have left no
 objections on the table and hopefully all of us with a shiny, new devops platform.
 
 **I came up with [Tracboat][tracboat-home]**, a **command line tool** written in Python aimed at
-**migrating an entire Trac instance to GitLab**. It's obviously not perfect: it is has been
-written in a rush, it's slow
+**migrating an entire Trac instance to GitLab**. It's obviously not perfect: it has been written
+in a rush, it's slow
 (no [XML-RPC multicalls](https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects)),
 with little unit testing and the code base definitely needs some love and refactoring,
 but *it works*. And **it worked extremely well for our own migration**.
