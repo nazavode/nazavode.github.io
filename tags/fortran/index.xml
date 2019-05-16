@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fortran on /dev/null</title>
+    <title>fortran on /dev/null</title>
     <link>https://nazavode.github.io/tags/fortran/</link>
-    <description>Recent content in Fortran on /dev/null</description>
+    <description>Recent content in fortran on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 26 Mar 2017 00:00:00 +0000</lastBuildDate>

@@ -6,28 +6,10 @@
     <description>Recent content in Categories on /dev/null</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://nazavode.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>C</title>
-      <link>https://nazavode.github.io/categories/c/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/categories/c/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>C&#43;&#43;</title>
-      <link>https://nazavode.github.io/categories/c&#43;&#43;/</link>
-      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/categories/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Dev</title>
@@ -35,15 +17,6 @@
       <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/categories/dev/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Languages</title>
-      <link>https://nazavode.github.io/categories/languages/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/categories/languages/</guid>
       <description></description>
     </item>
     
@@ -62,6 +35,33 @@
       <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/categories/tooling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C</title>
+      <link>https://nazavode.github.io/categories/c/</link>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/categories/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Languages</title>
+      <link>https://nazavode.github.io/categories/languages/</link>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/categories/languages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://nazavode.github.io/categories/c&#43;&#43;/</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/categories/c&#43;&#43;/</guid>
       <description></description>
     </item>
     
