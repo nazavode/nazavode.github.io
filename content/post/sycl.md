@@ -3,8 +3,6 @@ title = "Look ma, no CUDA! Programming GPUs with modern C++ and SYCL"
 date = "2019-05-09"
 categories = ["Dev", "Talk"]
 tags = ["cpp", "sycl", "gpu", "gpgpu", "cuda", "opencl", "trisycl", "hipsycl", "computecpp"]
-
-draft = true
 +++
 
 Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://developer.nvidia.com/cuda-zone) in the context of large scale HPC simulations, the developer experience was *dreadful*. Sure, for the right algorithm and after lots of blood and tears, performances usually turned out excellent. But before production, comes the poor developer. Debugging CUDA kernels was a nightmare, whenever I had to track down a bug I had to fire up a dedicated gaming rig, bought just for that purpose, because debuggers needed *two identical GPUs to work* (when they worked, only if you spelled your prayers right the night before). Compilers segfaulted all the time. PTX code generated was often *incorrect* (just imagine debugging *correct* C++ code that has been wrongly translated by your faulty compiler, on a weird hardware you can't really observe, with poor tooling support). 
