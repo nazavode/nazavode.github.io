@@ -191,8 +191,8 @@ an element wise sum between containers:</p>
 
         <span style="color:#75715e">// Enqueue parallel kernel
 </span><span style="color:#75715e"></span>        cgh.parallel_for<span style="color:#f92672">&lt;</span>kernel_tag<span style="color:#f92672">&gt;</span>(
-            cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>range<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>{size(result)},  <span style="color:#75715e">// 1st paramater: the kernel grid
-</span><span style="color:#75715e"></span>            [<span style="color:#f92672">=</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>id<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> idx) {         <span style="color:#75715e">// 2nd paramater: the actual kernel
+            cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>range<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>{size(result)},  <span style="color:#75715e">// 1st parameter: the kernel grid
+</span><span style="color:#75715e"></span>            [<span style="color:#f92672">=</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>id<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> idx) {         <span style="color:#75715e">// 2nd parameter: the actual kernel
 </span><span style="color:#75715e"></span>                <span style="color:#75715e">// We are in the kernel body:
 </span><span style="color:#75715e"></span>                <span style="color:#75715e">// this is the only code that gets compiled for device(s).
 </span><span style="color:#75715e"></span>                kr[idx] <span style="color:#f92672">=</span> ka[idx] <span style="color:#f92672">+</span> kb[idx];
@@ -294,7 +294,7 @@ just like a CUDA kernel grid. Let&rsquo;s have a look at the <code>parallel_for<
 (ignore <code>kernel_tag</code><sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup> for now):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">    <span style="color:#75715e">// Enqueue parallel kernel
 </span><span style="color:#75715e"></span>    cgh.parallel_for<span style="color:#f92672">&lt;</span>kernel_tag<span style="color:#f92672">&gt;</span>(
-        cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>range<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>{size(result)},  <span style="color:#75715e">// 1st paramater: the kernel grid
+        cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>range<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>{size(result)},  <span style="color:#75715e">// 1st parameter: the kernel grid
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
 </span></code></pre></div>
 <p>With the first parameter we are saying that the kernel grid will have
