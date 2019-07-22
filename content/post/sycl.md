@@ -78,8 +78,9 @@ struct AddKernel {};
 template<typename ContiguousContainer>
 void add(const ContiguousContainer& a, const ContiguousContainer& b,
          ContiguousContainer& result) {
-    using std::data, std::size;
-    using value_type = typename ContiguousContainer::value_type;
+    using std::data,
+          std::size;
+    using value_type = std::remove_cv_t<std::remove_reference_t<decltype(*data(c))>>;
     using kernel_tag = AddKernel<value_type>;
 
     // Queue's destructor will wait for all pending operations to complete
