@@ -5,31 +5,68 @@ categories = ["Dev", "Talk"]
 tags = ["cpp", "sycl", "gpu", "gpgpu", "cuda", "opencl", "trisycl", "hipsycl", "computecpp"]
 +++
 
-Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA) in the context of large scale HPC simulations, the developer experience was *dreadful*. Sure, for the right algorithm and after lots of blood and tears, performances usually turned out excellent. But before production, comes the poor developer. Debugging CUDA kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated gaming rig (bought just for that purpose) because debuggers needed *two identical GPUs to work* (when they actually worked, and that happened only if you spelled your prayers right the night before). Compilers segfaulted all the time. Generated [PTX](https://en.wikipedia.org/wiki/Parallel_Thread_Execution) assembly was often *incorrect* (just imagine debugging *correct* C++ code that has been wrongly translated by your faulty compiler, on a weird hardware you can't really observe, with poor tooling support).
+Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA)
+in the context of large scale HPC simulations, the developer experience was *dreadful*.
+Sure, for the right algorithm and after lots of blood and tears, performances usually
+turned out excellent. But before production, comes the poor developer. Debugging CUDA
+kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated
+gaming rig (bought just for that purpose) because debuggers needed *two identical GPUs to
+work* (when they actually worked, and that happened only if you spelled your prayers right
+the night before). Compilers segfaulted all the time.
+Generated [PTX](https://en.wikipedia.org/wiki/Parallel_Thread_Execution)
+assembly was often *incorrect* (just imagine debugging *correct* C++ code that has been
+wrongly translated by your faulty compiler, on a weird hardware you can't really observe,
+with poor tooling support).
 
-On top of that depressing experience, one of the main CUDA goals was clearly to be an *efficient vendor lock-in tool*. Once you invested effort and money on CUDA, you're stuck with NVidia hardware.
+On top of that depressing experience, one of the main CUDA goals was clearly to be an
+*efficient vendor lock-in tool*. Once you invested effort and money on CUDA, you're stuck
+with NVidia hardware.
 
-Luckily, during the last ten years the GPGPU tooling ecosystem improved *a lot*. Compilers have become stable, debuggers are now usable, we even have [PTX backends](https://llvm.org/docs/CompileCudaWithLLVM.html) in toolchains other than `nvcc`, a plethora of alternative approaches emerged and keep struggling to gain market (I would say that [OpenCL](https://www.khronos.org/opencl/) is the most notable one, among others).
+Luckily, during the last ten years the GPGPU tooling ecosystem improved *a lot*. Compilers
+have become stable, debuggers are now usable, we even have
+[PTX backends](https://llvm.org/docs/CompileCudaWithLLVM.html)
+in toolchains other than `nvcc`, a plethora of alternative approaches emerged and keep
+struggling to gain market (I would say that [OpenCL](https://www.khronos.org/opencl/) is
+the most notable one, among others).
 
-In late 2018, almost ten years after my first encounter with GPGPUs, I came across this *new* (to me) thing called [SYCL](https://www.khronos.org/sycl/). The official description says:
+In late 2018, almost ten years after my first encounter with GPGPUs, I came across this
+*new* (to me) thing called [SYCL](https://www.khronos.org/sycl/).
+The official description says:
 
-> SYCL (pronounced *sickle*) is a royalty-free, cross-platform abstraction layer that builds on the underlying concepts, portability and efficiency of [OpenCL](https://www.khronos.org/opencl/) that enables code for **heterogeneous processors** to be written in a **single-source** style using **completely standard C++**. SYCL single-source programming enables the host and kernel code for an application to be contained in the same source file, in a **type-safe** way and with the simplicity of a **cross-platform asynchronous task graph**.
+> SYCL (pronounced *sickle*) is a royalty-free, cross-platform abstraction layer that
+> builds on the underlying concepts, portability and efficiency of [OpenCL](https://www.khronos.org/opencl/)
+> that enables code for **heterogeneous processors** to be written in a **single-source**
+> style using **completely standard C++**. SYCL single-source programming enables the host
+> and kernel code for an application to be contained in the same source file, in a
+> **type-safe** way and with the simplicity of a **cross-platform asynchronous task
+> graph**.
 
 Sounds interesting, isn't it?
 
-At that time I couldn't exactly figure out its actual adoption in the wild, was it widespread in other markets or simply a niche thing? It was maybe *the next big thing* that no one wanted to actually use in the real world?
+At that time I couldn't exactly figure out its actual adoption in the wild, was it
+widespread in other markets or simply a niche thing? It was maybe *the next big thing*
+that no one wanted to actually use in the real world?
 
 And then this happened:
 
 {{< tweet 1141736086726750209 >}}
 
-Intel announced to the world that their common programming model intended to target the whole heterogeneous system, from GPUs to FPGAs to regular x86 CPUs, is going to be based on SYCL. It looks like they are actively investing an interesting amount of effort on it and they're doing a lot of work to [integrate into upstream LLVM](https://lists.llvm.org/pipermail/cfe-dev/2019-January/060811.html) their own SYCL implementation.
+Intel announced to the world that their common programming model intended to target the
+whole heterogeneous system, from GPUs to FPGAs to regular x86 CPUs, is going to be based
+on SYCL. It looks like they are actively investing an interesting amount of effort on it
+and they're doing a lot of work to
+[integrate into upstream LLVM](https://lists.llvm.org/pipermail/cfe-dev/2019-January/060811.html)
+their own SYCL implementation.
 
-At this point, all the experiments and prototypes I was doing during my daily job assumed a totally different perspective.
+At this point, all the experiments and prototypes I was doing during my daily job assumed
+a totally different perspective.
 
 ## What does SYCL look like?
 
-For those familiar with OpenCL (and CUDA to some extent), SYCL is built on the same concepts: it borrows the same device and execution models straight from OpenCL, which in turn is extremely similar to CUDA. Let's just have a look at a simple kernel that performs an element wise sum between containers:
+For those familiar with OpenCL (and CUDA to some extent), SYCL is built on the same
+concepts: it borrows the same device and execution models straight from OpenCL, which in
+turn is extremely similar to CUDA. Let's just have a look at a simple kernel that performs
+an element wise sum between containers:
 
 ```cpp
 // Kernel type tag
@@ -84,31 +121,43 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
 }
 ```
 
-From this trivial example we can make some interesting observations about the SYCL programming model:
+From this trivial example we can make some interesting observations about the SYCL
+programming model:
 
 #### Modern APIs
 
-Queues are drained, copies are finalized, destructors do their job: all SYCL objects are of [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) types, so we can call it *modern* (I would call it *sane*) with respect to types design.
+Queues are drained, copies are finalized, destructors do their job: all SYCL objects are
+of [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) types, so
+we can call it *modern* (I would call it *sane*) with respect to types design.
 
 #### Just standard C++11
 
-Luckily enough, no weird keyword or syntax is involved, just standard C++11 code [^1]. Note that in the previous example all invocable objects are passed as regular lambdas.
+Luckily enough, no weird keyword or syntax is involved, just standard C++11 code [^1].
+Note that in the previous example all invocable objects are passed as regular lambdas.
 
-[^1]: the SYCL specification is actually based on C++11 but this restriction applies only to the body of the kernel lambda, e.g. the only code that is going to be actually compiled by device backends. In the example I used some C++17 library stuff ([`std::data()`](https://en.cppreference.com/w/cpp/iterator/data) for instance), and it is ok as long as the host frontend supports it.
+[^1]: the SYCL specification is actually based on C++11 but this restriction applies only
+    to the body of the kernel lambda, e.g. the only code that is going to be actually
+    compiled by device backends. In the example I used some C++17 library stuff
+    ([`std::data()`](https://en.cppreference.com/w/cpp/iterator/data) for instance),
+    and it is ok as long as the host frontend supports it.
 
 #### Single source
 
-*Host* and *device* code live in the same source file. It is a SYCL implementation's responsibility to split the C++ source file and forward each chunk of parsed code to the right compilation backend (similarly to what `nvcc` does and as opposed to what OpenCL APIs require) [^2].
+*Host* and *device* code live in the same source file. It is a SYCL implementation's
+responsibility to split the C++ source file and forward each chunk of parsed code to the
+right compilation backend (similarly to what `nvcc` does and as opposed to what OpenCL
+APIs require) [^2].
 
 [^2]: while totally invisible to the user, the standard specification allows 
-    two different workflows for compilation:
-    
-    1. *separate compilation*: a frontend driver splits the C++ source and calls
+      two different workflows for compilation:
+  
+    * *separate compilation*: a frontend driver splits the C++ source and calls
         different device compilers under the hood before linking everything together
         in a fat binary;
-    2. *single source compilation*: the actual compiler frontend parses the input
-        translation unit (remember that we are dealing just with standard C++11 code)
-        and then forwards the lowered representation to all the device backends involved.
+    * *single source compilation*: the actual compiler frontend parses the input
+        translation unit just once (remember that we are dealing just with standard
+        C++11 code) and then forwards the lowered representation to all the device
+        backends involved.
         For example, [hipSYCL](https://github.com/illuhad/hipSYCL) used to rely on
         *separate compilation* using a
         [python script](https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc)
@@ -118,11 +167,22 @@ Luckily enough, no weird keyword or syntax is involved, just standard C++11 code
 
 #### Data transfers are implicit
 
-Unlike CUDA and OpenCL where explicit copies are required by the model, here we just declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces which buffers have to be transferred to and from host containers [^3].
+Unlike CUDA and OpenCL where explicit copies are required by the model, here we just
+declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces which
+buffers have to be transferred to and from host containers [^3].
 
-[^3]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>` acts exactly like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span) in this regard) over contiguous chunks of memory that have to be transferred across different address spaces, make sure that the [`ContiguousContainer`](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer) concept is satisfied: while we wait for C++20 to bring proper concepts in, we can reasonably ensure the *contiguous storage* property just [like `GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
+[^3]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>` acts exactly
+    like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span) in this regard)
+    over contiguous chunks of memory that have to be transferred across different address
+    spaces, make sure that the
+    [`ContiguousContainer`](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer)
+    concept is satisfied: while we wait for C++20 to bring proper concepts in, we can
+    reasonably ensure the *contiguous storage* property just
+    [like `GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
 
-This design principle affects also the execution order of kernels: SYCL command queues are required to be asyncronous and, while the actual execution order is unspecified, *data dependencies* across kernels are guaranteed to be satisfied by the runtime.
+This design principle affects also the execution order of kernels: SYCL command queues are
+required to be asyncronous and, while the actual execution order is unspecified, *data
+dependencies* across kernels are guaranteed to be satisfied by the runtime.
 
 ```cpp
 using cl::sycl::access::mode::read,
@@ -157,24 +217,34 @@ queue.submit([&](cl::sycl::handler& cgh) {
 }
 ```
 
-What the runtime does here is that it builds the *dependency graph* of our kernels based on the *data dependencies* we implicitly declared among them by retrieving *accessors*. In this case the runtime deduces the following dependency DAG (arrow is a *depends on* directed relationship):
+What the runtime does here is that it builds the *dependency graph* of our kernels based
+on the *data dependencies* we implicitly declared among them by retrieving *accessors*. In
+this case the runtime deduces the following dependency DAG (arrow is a *depends on*
+directed relationship):
 
 ![deps](/img/sycl-kernel-dependencies.png)
 
-Given this situation, the runtime *could* execute `Kernel 1` and `Kernel 2` concurrently while the data needed by `Kernel 3` to carry out its work ensures that it is going to be executed only after the completion of its dependencies.
+Given this situation, the runtime *could* execute `Kernel 1` and `Kernel 2` concurrently
+while the data needed by `Kernel 3` to carry out its work ensures that it is going to be
+executed only after the completion of its dependencies.
 
-Even in a trivial example like this where we submit a bunch of kernels, we can achieve maximum overlapping between non-dependent data flows on the DAG implicitly deduced from our *buffer accessors*.
-This looks extremely convenient compared to what happens in  other paradigms where, in real world applications, a large amount of effort must be spent to achieve maximum overlapping between data transfers and kernel executions.
+Even in a trivial example like this where we submit a bunch of kernels, we can achieve
+maximum overlapping between non-dependent data flows on the DAG implicitly deduced from
+our *buffer accessors*. This looks extremely convenient compared to what happens in other
+paradigms where, in real world applications, a large amount of effort must be spent to
+achieve maximum overlapping between data transfers and kernel executions.
 
 #### Kernels are launched over a grid
 
 The *implicit iteration space* over which kernels are executed has shape and extent,
-just like a CUDA kernel grid. Let's have a look at the `parallel_for` [^4] call:
+just like a CUDA kernel grid. Let's have a look at the `parallel_for` call
+(ignore `kernel_tag`[^4] for now):
 
 ```cpp
- 
-  cgh.parallel_for<kernel_tag>(cl::sycl::range<1>{size(result)}, ...);
- 
+    // Enqueue parallel kernel
+    cgh.parallel_for<kernel_tag>(
+        cl::sycl::range<1>{size(result)},  // 1st paramater: the kernel grid
+    // ...
 ```
 
 With the first parameter we are saying that the kernel grid will have
@@ -183,36 +253,74 @@ With the first parameter we are saying that the kernel grid will have
 `cl::sycl::range<1>{n}` parameter we are launching a 1-dimensional vector
 of execution units, one for each of the `n` output elements.
 
-[^4]: the `parallel_for` function is templated with an (empty) type, in this case called `class AddKernel`. This *tag* is used only to give the anonymous callable object generated by the lambda expression a unique, user-defined name on which (possibly) different compilers can agree on. Look at it as workaround to de-anonymize compiler-generated callable objects, something like `extern` lambdas.
+[^4]: the `parallel_for` function is templated with an (empty) type, in this
+    case called `class AddKernel`. This *tag* is used only to give the
+    anonymous callable object generated by the lambda expression a unique,
+    user-defined name on which (possibly) different compilers can agree on.
+    Look at it as workaround to de-anonymize compiler-generated callable
+    objects (or a way to have `extern` lambdas).
+    **Please note that kernels must abide by
+    [ODR](https://en.wikipedia.org/wiki/One_Definition_Rule)!**
 
-The SYCL standard brings so much at the stake, interesting bits like *device selectors* (customizable objects that decide on which actual device a kernel will be executed), error handling and reporting, n-dimensional kernel grids, device allocators, device atomics and *a lot more*, enough to write entire books on the subject. Just stop here for now, you get the general idea.
+The SYCL standard brings so much at the stake, interesting bits like *device selectors*
+(customizable objects that decide on which actual device a kernel will be executed), error
+handling and reporting, n-dimensional kernel grids, device allocators, device atomics and
+*a lot more*, enough to write entire books on the subject. Just stop here for now, you get
+the general idea.
 
 ## Challenges
 
-As clearly [pointed out by Justin Lebar](https://youtu.be/KHa-OSrZPGo) (one of the authors of the clang's PTX backend): *CUDA Is a Low Level Language*. And that is perfectly understandable: the accelerated portion of any application is going to be the hottest one, that kind of hotspot that is usually carefully optimized, likely by hand, iteratively, with the help of micro-benchmarks and packed with tricks and hacks that privilege performance over clarity or maintenance and are obviously tightly related to the actual hardware it targets.
-While SYCL claims to be *portable* and *cross platform*, just look at the amount of extensions are being introduced to support FPGA targets (`cl::sycl::vendor::xilinx::dataflow` for example, [here](https://github.com/triSYCL/triSYCL/blob/6e5565f89338a6a74d7283085da980f0c400c57e/tests/pipeline/single_task_vector_add_drt_dataflow_func_local_pipeline.cpp) in `triSYCL`): this is completely normal since FPGAs are weird beasts, radically different from regular GPGPU architectures and so, in hot, accelerated code this profound difference stands out clearly.
+As clearly [pointed out by Justin Lebar](https://youtu.be/KHa-OSrZPGo) (one of the authors
+of the clang's PTX backend): *CUDA Is a Low Level Language*. And that is perfectly
+understandable: the accelerated portion of any application is going to be the hottest one,
+that kind of hotspot that is usually carefully optimized, likely by hand, iteratively,
+with the help of micro-benchmarks and packed with tricks and hacks that privilege
+performance over clarity or maintenance and are obviously tightly related to the actual
+hardware it targets. While SYCL claims to be *portable* and *cross platform*, just look at
+the amount of extensions are being introduced to support FPGA targets
+(`cl::sycl::vendor::xilinx::dataflow` for example,
+[here](https://github.com/triSYCL/triSYCL/blob/6e5565f89338a6a74d7283085da980f0c400c57e/tests/pipeline/single_task_vector_add_drt_dataflow_func_local_pipeline.cpp)
+in `triSYCL`): this is completely normal since FPGAs are weird beasts, radically different
+from regular GPGPU architectures and so, in hot, accelerated code this profound difference
+stands out clearly.
 
-I think this is going to be a recurring pattern in real world, SYCL-accelerated code bases: a bunch of different SYCL kernels, each one hand-optimized for a class of architectures, a single architecture or even a specific product just like happens in CUDA or OpenCL nowadays. In other words, I would say that SYCL **has not performance portability among its design goals**.
+I think this is going to be a recurring pattern in real world, SYCL-accelerated code
+bases: a bunch of different SYCL kernels, each one hand-optimized for a class of
+architectures, a single architecture or even a specific product just like happens in CUDA
+or OpenCL nowadays. In other words, I would say that SYCL **has not performance
+portability among its design goals**.
 
 Despite this unavoidable shortcoming, SYCL still brings a lot of advantages, for example:
 
-* convenience and developer *sanity*: it is just C++11 code, no language extensions, no weird toolchains;
-* host CPU backends, already available, enable the application to leverage the host processors as well and from CPU backends comes easy debugging and observability;
+* convenience and developer *sanity*: it is just C++11 code, no language extensions, no
+  weird toolchains;
+* host CPU backends, already available, enable the application to leverage the host
+  processors as well and from CPU backends comes easy debugging and observability;
 * a terse and expressive API, miles ahead of the sheer verbosity of OpenCL;
-* no vendor-lock in; even if NVidia could try to gatekeep [SPIR-V](https://www.khronos.org/registry/spir-v/) (the intermediate assembly representation on top of which SYCL is based) support on their platform, when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and go directly for the PTX backend to natively compile SYCL kernels for NVidia hardware.
+* no vendor-lock in; even if NVidia could try to gatekeep [SPIR-V](https://www.khronos.org/registry/spir-v/)
+  (the intermediate assembly representation on top of which SYCL is based) support on
+  their platform, when in presence of CUDA hardware the compiler could just sidestep
+  SPIR-V generation and go directly for the PTX backend to natively compile SYCL kernels
+  for NVidia hardware.
 
-Moreover, several open and closed source implementations are already available, each one with its goals and strenghts:
+Moreover, several open and closed source implementations are already available,
+each one with its goals and strenghts:
 
 * [triSYCL](https://github.com/triSYCL/triSYCL), the reference implementation;
 * [hipSYCL](https://github.com/illuhad/hipSYCL);
 * [ComputeCpp](https://www.codeplay.com/products/computesuite/computecpp);
 * [clang](https://github.com/intel/llvm/tree/sycl), actively developed by Intel and aimed at being reintegrated in upstream LLVM.
 
-To summarize the ecosystem, I will borrow this chart directly from the [hipSYCL](https://github.com/illuhad/hipSYCL) documentation:
+To summarize the ecosystem, I will borrow this chart directly from the
+[hipSYCL](https://github.com/illuhad/hipSYCL) documentation:
 
 ![targets](/img/sycl-targets.png)
 
-In the end, I think that the first, realistic, valuable goal that SYCL can achieve is to estabilish **a standard, common platform for heterogeneous systems programming** on which people coming from different industries and backgrounds can build communities, share code, tooling, build systems and, more importantly, **break out from vendor lock-ins**.
+Wrapping up, I personally think that the first, realistic, valuable goal that SYCL can
+achieve is to estabilish both **a standard platform and a common vocabulary for
+heterogeneous systems programming** on which people coming from different industries and
+backgrounds can build communities, share code, tooling, build systems and, more
+importantly, **break out from vendor lock-ins**.
 
 Of course, the most important question right now is:
 
@@ -220,13 +328,24 @@ Of course, the most important question right now is:
 
 ## Look ma, no CUDA! Programming GPUs with modern C++ @ Italian C++ Meetup
 
-During the [last meetup](https://www.italiancpp.org/event/meetup-maggio2019/) of the [Italian C++ Community](https://twitter.com/italiancpp) in Modena, I gave an introductory talk about the state of the art in GPGPU programming, the paradigms that emerged in the last ten years and what SYCL brings to the table and why we should care. You can find all the support material including examples, build scripts and the slide deck [here](https://github.com/nazavode/meetupcpp-may-2019), feel free to grab anything you happen to find useful. You can even see me prattle on (**sorry, italian only**) [here](https://www.youtube.com/watch?v=c04Y9AUH-xU).
+During the [May 2019 meetup](https://www.italiancpp.org/event/meetup-maggio2019/)
+of the [Italian C++ Community](https://twitter.com/italiancpp)
+in Modena, I gave an introductory talk about the state of the art in GPGPU programming,
+the paradigms that emerged in the last ten years and what SYCL brings to the table and why
+we should care. You can find all the support material including examples, build scripts
+and the slide deck [here](https://github.com/nazavode/meetupcpp-may-2019), feel free to
+grab anything you happen to find useful. You can even see me prattle on (**sorry, italian
+only**) [here](https://www.youtube.com/watch?v=c04Y9AUH-xU).
 
-Thanks to all the attendees and to [Marco Arena](https://twitter.com/ilpropheta) for the chance to show some brand new cool stuff!
+Thanks to all the attendees and to [Marco Arena](https://twitter.com/ilpropheta)
+for the chance to show some brand new cool stuff!
 
 ## Credits
 
-A lot of excellent charts, snippets and pitches have been taken directly from publicly available talks across the net, I've strived really hard to put proper credits but if you notice that something's missing please drop a comment or open an issue on [the repo](https://www.italiancpp.org/event/meetup-maggio2019/).
+A lot of excellent charts, snippets and pitches have been taken directly from publicly
+available talks across the net, I've strived really hard to put proper credits but if you
+notice that something's missing please drop a comment or open an issue on
+[the repo](https://www.italiancpp.org/event/meetup-maggio2019/).
 
 I'm particularly grateful to (in order of appearance during the talk):
 
@@ -239,6 +358,7 @@ I'm particularly grateful to (in order of appearance during the talk):
 
 ## Resources
 
+* [`sycl.tech`](http://sycl.tech/): a comprehensive community platform that collects articles, blog posts, talks and everything related to SYCL that shows up on the web.
 * [Accelerating your C++ on GPU with SYCL by Simon Brand](https://blog.tartanllama.xyz/sycl/) - one of the nicest introductions around.
 * [Programming GPUs with SYCL by Gordon Brown](http://cppedinburgh.uk/slides/201607-sycl.pdf) - a great introduction to the whys and hows of SYCL.
 * [SYCL Developer Guide by Codeplay](https://developer.codeplay.com/products/computecpp/ce/guides/sycl-guide?) - the current lack of learning learning material about SYCL is appalling but this terse developer guide makes the situation a little better.
@@ -251,4 +371,3 @@ I'm particularly grateful to (in order of appearance during the talk):
 * [Compiling CUDA with clang - LLVM 9 documentation](https://llvm.org/docs/CompileCudaWithLLVM.html)
 * [CppCon 2016: CUDA is a low-level language by Justin Lebar](https://youtu.be/KHa-OSrZPGo)
 * [`gpucc`: An Open-Source GPGPU Compiler](https://ai.google/research/pubs/pub45226)
-* [`sycl.tech`](http://sycl.tech/): a comprehensive community platform that collects articles, blog posts, talks and everything related to SYCL that shows up on the web
