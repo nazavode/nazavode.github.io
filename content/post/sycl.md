@@ -1,11 +1,11 @@
 +++
 title = "Look ma, no CUDA! Programming GPUs with modern C++ and SYCL"
-date = "2019-05-09"
+date = "2019-07-21"
 categories = ["Dev", "Talk"]
 tags = ["cpp", "sycl", "gpu", "gpgpu", "cuda", "opencl", "trisycl", "hipsycl", "computecpp"]
 +++
 
-Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA) in the context of large scale HPC simulations, the developer experience was *dreadful*. Sure, for the right algorithm and after lots of blood and tears, performances usually turned out excellent. But before production, comes the poor developer. Debugging CUDA kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated gaming rig (bought just for that purpose) because debuggers needed *two identical GPUs to work* (when they actually worked, and that happened only if you spelled your prayers right the night before). Compilers segfaulted all the time. Generated [PTX](https://en.wikipedia.org/wiki/Parallel_Thread_Execution) assembly was often *incorrect* (just imagine debugging *correct* C++ code that has been wrongly translated by your faulty compiler, on a weird hardware you can't really observe, with poor tooling support). 
+Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA) in the context of large scale HPC simulations, the developer experience was *dreadful*. Sure, for the right algorithm and after lots of blood and tears, performances usually turned out excellent. But before production, comes the poor developer. Debugging CUDA kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated gaming rig (bought just for that purpose) because debuggers needed *two identical GPUs to work* (when they actually worked, and that happened only if you spelled your prayers right the night before). Compilers segfaulted all the time. Generated [PTX](https://en.wikipedia.org/wiki/Parallel_Thread_Execution) assembly was often *incorrect* (just imagine debugging *correct* C++ code that has been wrongly translated by your faulty compiler, on a weird hardware you can't really observe, with poor tooling support).
 
 On top of that depressing experience, one of the main CUDA goals was clearly to be an *efficient vendor lock-in tool*. Once you invested effort and money on CUDA, you're stuck with NVidia hardware.
 
@@ -32,11 +32,18 @@ At this point, all the experiments and prototypes I was doing during my daily jo
 For those familiar with OpenCL (and CUDA to some extent), SYCL is built on the same concepts: it borrows the same device and execution models straight from OpenCL, which in turn is extremely similar to CUDA. Let's just have a look at a simple kernel that performs an element wise sum between containers:
 
 ```cpp
+// Kernel type tag
+// Be sure to define it in an externally accessible
+// namespace (e.g.: no anonymous)
+template <typename>
+struct AddKernel {};
+
 template<typename ContiguousContainer>
 void add(const ContiguousContainer& a, const ContiguousContainer& b,
          ContiguousContainer& result) {
     using std::data, std::size;
     using value_type = typename ContiguousContainer::value_type;
+    using kernel_tag = AddKernel<value_type>;
 
     // Queue's destructor will wait for all pending operations to complete
     cl::sycl::queue queue;
@@ -51,23 +58,28 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
     queue.submit([&](cl::sycl::handler& cgh) {
         // Get proper accessors to existing buffers by specifying
         // read/write intents
+        // (note that A, B and R are captured by reference)
         auto ka = A.get_access<cl::sycl::access::mode::read>(cgh);
         auto kb = B.get_access<cl::sycl::access::mode::read>(cgh);
         auto kr = R.get_access<cl::sycl::access::mode::write>(cgh);
 
         // Enqueue parallel kernel
-        cgh.parallel_for<class AddKernel<value_type>>(cl::sycl::range<1>{size(result)},
-            [=](cl::sycl::id<1> idx) {
+        cgh.parallel_for<kernel_tag>(
+            cl::sycl::range<1>{size(result)},  // 1st paramater: the kernel grid
+            [=](cl::sycl::id<1> idx) {         // 2nd paramater: the actual kernel
+                // We are in the kernel body:
+                // this is the only code that gets compiled for device(s).
                 kr[idx] = ka[idx] + kb[idx];
             }
         );
-        // At this point our kernel has been asynchronously submitted
-        // for execution
     });
-    // End of current scope: queue destructor will block until all
-    // operations (copies and kernel executions) are completed.
-    // We are sure that when the function returns all the computed
-    // values have been transferred into 'result' and are available
+    // At this point our kernel has been asynchronously submitted
+    // for execution
+
+    // End of current scope: before actually returning, the queue destructor
+    // will block until all operations (copies and kernel executions)
+    // are completed. We are sure that when the function returns all the
+    // computed values have been transferred into 'result' and are available
     // host-side.
 }
 ```
@@ -76,23 +88,39 @@ From this trivial example we can make some interesting observations about the SY
 
 #### Modern APIs
 
-Queues are drained, copies are finalized, destructors do their job: all SYCL objects are of RAII types, so we can call it *modern* (I would call it *sane*) with respect to types design.
+Queues are drained, copies are finalized, destructors do their job: all SYCL objects are of [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) types, so we can call it *modern* (I would call it *sane*) with respect to types design.
 
 #### Just standard C++11
 
 Luckily enough, no weird keyword or syntax is involved, just standard C++11 code [^1]. Note that in the previous example all invocable objects are passed as regular lambdas.
 
-[^1]: the SYCL specification is actually based on C++11 but this restriction applies only to the body of the kernel lambda, the only code that is going to be actually compiled by device backends. In the example I used some C++17 library stuff, and it is ok as long as the host frontend supports it.
+[^1]: the SYCL specification is actually based on C++11 but this restriction applies only to the body of the kernel lambda, e.g. the only code that is going to be actually compiled by device backends. In the example I used some C++17 library stuff ([`std::data()`](https://en.cppreference.com/w/cpp/iterator/data) for instance), and it is ok as long as the host frontend supports it.
 
 #### Single source
 
-*Host* and *device* code live in the same source file. It is a SYCL implementation's responsibility to split the C++ source file and forward each chunk of parsed code to the right compilation backend (similarly to what `nvcc` does and as opposed to what OpenCL APIs require). While the standard specification allows both *separate compilation* (different device compilers are called by a driver and then everything is merged) and *single source compilation* (the host frontend drives), for the user the process is absolutely invisible.
+*Host* and *device* code live in the same source file. It is a SYCL implementation's responsibility to split the C++ source file and forward each chunk of parsed code to the right compilation backend (similarly to what `nvcc` does and as opposed to what OpenCL APIs require) [^2].
+
+[^2]: while totally invisible to the user, the standard specification allows 
+    two different workflows for compilation:
+    
+    1. *separate compilation*: a frontend driver splits the C++ source and calls
+        different device compilers under the hood before linking everything together
+        in a fat binary;
+    2. *single source compilation*: the actual compiler frontend parses the input
+        translation unit (remember that we are dealing just with standard C++11 code)
+        and then forwards the lowered representation to all the device backends involved.
+        For example, [hipSYCL](https://github.com/illuhad/hipSYCL) used to rely on
+        *separate compilation* using a
+        [python script](https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc)
+        to carry out all the orchestration work before switching to the
+        *single source compilation* strategy via the
+        [clang plugin interface](https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc-clang).
 
 #### Data transfers are implicit
 
-Unlike CUDA and OpenCL where explicit copies are required by the model, here we just declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces which buffers have to be transferred to and from host containers [^2].
+Unlike CUDA and OpenCL where explicit copies are required by the model, here we just declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces which buffers have to be transferred to and from host containers [^3].
 
-[^2]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>` acts exactly like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span) in this regard) over contiguous chunks of memory that have to be transferred across different address spaces, make sure that the [`ContiguousContainer`](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer) concept is satisfied: while we wait for C++20 to bring proper concepts in, we can reasonably ensure the *contiguous storage* property just [like `GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
+[^3]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>` acts exactly like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span) in this regard) over contiguous chunks of memory that have to be transferred across different address spaces, make sure that the [`ContiguousContainer`](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer) concept is satisfied: while we wait for C++20 to bring proper concepts in, we can reasonably ensure the *contiguous storage* property just [like `GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
 
 This design principle affects also the execution order of kernels: SYCL command queues are required to be asyncronous and, while the actual execution order is unspecified, *data dependencies* across kernels are guaranteed to be satisfied by the runtime.
 
@@ -141,11 +169,11 @@ This looks extremely convenient compared to what happens in  other paradigms whe
 #### Kernels are launched over a grid
 
 The *implicit iteration space* over which kernels are executed has shape and extent,
-just like a CUDA kernel grid. Let's have a look at the `parallel_for` [^3] call:
+just like a CUDA kernel grid. Let's have a look at the `parallel_for` [^4] call:
 
 ```cpp
  
-  cgh.parallel_for<class AddKernel>(cl::sycl::range<1>{size(result)}, ...);
+  cgh.parallel_for<kernel_tag>(cl::sycl::range<1>{size(result)}, ...);
  
 ```
 
@@ -155,7 +183,7 @@ With the first parameter we are saying that the kernel grid will have
 `cl::sycl::range<1>{n}` parameter we are launching a 1-dimensional vector
 of execution units, one for each of the `n` output elements.
 
-[^3]: the `parallel_for` function is templated with an (incomplete) type, in this case called `class AddKernel`. This *tag* is used only to give the anonymous callable object generated by the lambda expression a unique, user-defined name on which (possibly) different compilers can agree on. Look at it as workaround to de-anonymize compiler-generated callable objects, something like `extern` lambdas.
+[^4]: the `parallel_for` function is templated with an (empty) type, in this case called `class AddKernel`. This *tag* is used only to give the anonymous callable object generated by the lambda expression a unique, user-defined name on which (possibly) different compilers can agree on. Look at it as workaround to de-anonymize compiler-generated callable objects, something like `extern` lambdas.
 
 The SYCL standard brings so much at the stake, interesting bits like *device selectors* (customizable objects that decide on which actual device a kernel will be executed), error handling and reporting, n-dimensional kernel grids, device allocators, device atomics and *a lot more*, enough to write entire books on the subject. Just stop here for now, you get the general idea.
 
@@ -223,4 +251,4 @@ I'm particularly grateful to (in order of appearance during the talk):
 * [Compiling CUDA with clang - LLVM 9 documentation](https://llvm.org/docs/CompileCudaWithLLVM.html)
 * [CppCon 2016: CUDA is a low-level language by Justin Lebar](https://youtu.be/KHa-OSrZPGo)
 * [`gpucc`: An Open-Source GPGPU Compiler](https://ai.google/research/pubs/pub45226)
-* *[`sycl.tech`](http://sycl.tech/): a comprehensive community platform that collects articles, blog posts, talks and everything related to SYCL that shows up on the web
+* [`sycl.tech`](http://sycl.tech/): a comprehensive community platform that collects articles, blog posts, talks and everything related to SYCL that shows up on the web
