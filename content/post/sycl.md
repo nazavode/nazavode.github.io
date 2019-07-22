@@ -103,8 +103,8 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
 
         // Enqueue parallel kernel
         cgh.parallel_for<kernel_tag>(
-            cl::sycl::range<1>{size(result)},  // 1st paramater: the kernel grid
-            [=](cl::sycl::id<1> idx) {         // 2nd paramater: the actual kernel
+            cl::sycl::range<1>{size(result)},  // 1st parameter: the kernel grid
+            [=](cl::sycl::id<1> idx) {         // 2nd parameter: the actual kernel
                 // We are in the kernel body:
                 // this is the only code that gets compiled for device(s).
                 kr[idx] = ka[idx] + kb[idx];
@@ -244,7 +244,7 @@ just like a CUDA kernel grid. Let's have a look at the `parallel_for` call
 ```cpp
     // Enqueue parallel kernel
     cgh.parallel_for<kernel_tag>(
-        cl::sycl::range<1>{size(result)},  // 1st paramater: the kernel grid
+        cl::sycl::range<1>{size(result)},  // 1st parameter: the kernel grid
     // ...
 ```
 
