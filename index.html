@@ -173,8 +173,9 @@ an element wise sum between containers:</p>
 <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> ContiguousContainer<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">void</span> add(<span style="color:#66d9ef">const</span> ContiguousContainer<span style="color:#f92672">&amp;</span> a, <span style="color:#66d9ef">const</span> ContiguousContainer<span style="color:#f92672">&amp;</span> b,
          ContiguousContainer<span style="color:#f92672">&amp;</span> result) {
-    <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>data, std<span style="color:#f92672">::</span>size;
-    <span style="color:#66d9ef">using</span> value_type <span style="color:#f92672">=</span> <span style="color:#66d9ef">typename</span> ContiguousContainer<span style="color:#f92672">::</span>value_type;
+    <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>data,
+          std<span style="color:#f92672">::</span>size;
+    <span style="color:#66d9ef">using</span> value_type <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>remove_cv_t<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>remove_reference_t<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">*</span>data(c))<span style="color:#f92672">&gt;&gt;</span>;
     <span style="color:#66d9ef">using</span> kernel_tag <span style="color:#f92672">=</span> AddKernel<span style="color:#f92672">&lt;</span>value_type<span style="color:#f92672">&gt;</span>;
 
     <span style="color:#75715e">// Queue&#39;s destructor will wait for all pending operations to complete
