@@ -3,7 +3,7 @@ title = "Aliasing Explained (Part 2)"
 description = "What is aliasing and why you should care - Continued"
 date = "2017-03-12"
 categories = ["Dev", "Languages", "C"]
-tags = ["c", "standard", "aliasing", "restrict", "iso", "c99", "c11", "c++", "fortran"]
+tags = ["c", "c++", "fortran", "aliasing", "optimization"]
 draft = true
 +++
 

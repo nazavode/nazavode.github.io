@@ -3,7 +3,7 @@ title = "Aliasing Explained (Part 1)"
 description = "What is aliasing and why you should care"
 date = "2017-03-26"
 categories = ["Dev", "Languages", "C"]
-tags = ["c", "standard", "aliasing", "restrict", "iso", "c99", "c11", "c++", "fortran"]
+tags = ["c", "c++", "fortran", "aliasing", "optimization"]
 +++
 
 Since my job involves a lot of HPC stuff and performance-obsessed code, one of
