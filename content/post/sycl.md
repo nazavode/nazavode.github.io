@@ -68,7 +68,8 @@ concepts: it borrows the same device and execution models straight from OpenCL, 
 turn is extremely similar to CUDA. Let's just have a look at a simple kernel that performs
 an element wise sum between containers:
 
-```cpp
+{{< highlight cpp "linenos=table,hl_lines=38-40" >}}
+
 // Kernel type tag
 // Be sure to define it in an externally accessible
 // namespace (e.g.: no anonymous)
@@ -80,7 +81,8 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
          ContiguousContainer& result) {
     using std::data,
           std::size;
-    using value_type = std::remove_cv_t<std::remove_reference_t<decltype(*data(c))>>;
+    using value_type = 
+        std::remove_cv_t<std::remove_reference_t<decltype(*data(c))>>;
     using kernel_tag = AddKernel<value_type>;
 
     // Queue's destructor will wait for all pending operations to complete
@@ -120,7 +122,8 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
     // computed values have been transferred into 'result' and are available
     // host-side.
 }
-```
+
+{{< / highlight >}}
 
 From this trivial example we can make some interesting observations about the SYCL
 programming model:
@@ -186,7 +189,8 @@ This design principle affects also the execution order of kernels: SYCL command 
 required to be asyncronous and, while the actual execution order is unspecified, *data
 dependencies* across kernels are guaranteed to be satisfied by the runtime.
 
-```cpp
+{{< highlight cpp "linenos=table,hl_lines=13-14 20-21 27-28" >}}
+
 using cl::sycl::access::mode::read,
       cl::sycl::access::mode::write,
       cl::sycl::access::mode::read_write;
@@ -217,7 +221,8 @@ queue.submit([&](cl::sycl::handler& cgh) {
     auto inout = C.get_access<read_write>(cgh);
     //...
 }
-```
+
+{{< / highlight >}}
 
 What the runtime does here is that it builds the *dependency graph* of our kernels based
 on the *data dependencies* we implicitly declared among them by retrieving *accessors*. In
