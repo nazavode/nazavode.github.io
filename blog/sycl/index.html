@@ -112,7 +112,7 @@ with NVIDIA hardware.</p>
 have become stable, debuggers are now usable, we even have
 <a href="https://llvm.org/docs/CompileCudaWithLLVM.html">PTX backends</a>
 in toolchains other than <code>nvcc</code>, a plethora of alternative approaches emerged and keep
-struggling to gain market (I would say that <a href="https://www.khronos.org/opencl/">OpenCL</a> is
+pushing to gain market (I would say that <a href="https://www.khronos.org/opencl/">OpenCL</a> is
 the most notable one, among others).</p>
 
 <p>In late 2018, almost ten years after my first encounter with GPGPUs, I came across this
@@ -343,8 +343,8 @@ account back in the early days.</p>
 <li>OpenCL, from which SYCL inherits device and execution models;</li>
 <li><a href="https://www.khronos.org/spir/">SPIR</a>, the intermediate representation
 into which SYCL kernels are usually translated by the compiler. This sort of
-<em>machine-independent assembly language</em> (similar in scope to PTX) designed
-to efficiently represent massively parallel computations is shared by other standards
+<em>machine-independent assembly language</em>, similar in scope to PTX and designed
+to efficiently represent massively parallel computations, is shared by other standards
 like <a href="https://www.khronos.org/vulkan/">Vulkan</a> or <a href="https://www.opengl.org/">OpenGL</a>.</li>
 </ul>
 
@@ -366,18 +366,18 @@ would have been as straightforward, convenient and painless as possible</strong>
 <p>Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for example:</p>
 
 <ul>
-<li>convenience and developer <em>sanity</em>: it is just standard C++ code, no language extensions,
-no weird toolchains, tooling ecosystem readily available;</li>
-<li>host CPU backends are available from day one: they enable the applications to leverage
+<li><strong>convenience and developer <em>sanity</em></strong>: it is just standard C++ code, no
+language extensions, no weird toolchains, tooling ecosystem readily available;</li>
+<li><strong>host CPU backends are available from day one</strong>: they enable the applications to leverage
 <em>both</em> the host CPU and discrete accelerators and, maybe important alike, they provide
 easy debugging, observability and seamless deployment (e.g. you don&rsquo;t have to buy some
 beefy gaming laptop just to be able to develop your stuff);</li>
-<li>a terse, modern and expressive API, miles ahead of the sheer verbosity of OpenCL;</li>
-<li>no vendor-lock in: your code can be run almost everywhere, from CPU-only and
+<li><strong>a terse, modern and expressive API</strong>, miles ahead of the sheer verbosity of OpenCL;</li>
+<li><strong>no vendor-lock in</strong>: your code can be run almost everywhere, from CPU-only and
 accelerated servers to Android phones. Even if NVIDIA could try to gatekeep
 <a href="https://www.khronos.org/registry/spir-v/">SPIR-V</a> support on their own platform,
 when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and
-go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎.</li>
+go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎 <sup class="footnote-ref" id="fnref:5"><a href="#fn:5">5</a></sup>.</li>
 </ul>
 
 <p>Moreover, several open and closed source implementations are already available,
@@ -454,7 +454,7 @@ notice that something&rsquo;s missing please drop a comment or open an issue on
 <li><a href="https://llvm.org/docs/CompileCudaWithLLVM.html">Compiling CUDA with clang - LLVM 9 documentation</a></li>
 <li><a href="https://youtu.be/KHa-OSrZPGo">CppCon 2016: CUDA is a low-level language by Justin Lebar</a></li>
 <li><a href="https://ai.google/research/pubs/pub45226"><code>gpucc</code>: An Open-Source GPGPU Compiler</a></li>
-<li><a href="https://arxiv.org/pdf/1904.05347.pdf">John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels</a></li>
+<li><a href="https://arxiv.org/pdf/1904.05347.pdf">John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels</a> - a very nice article about parametrizing SYCL kernels to achieve good <em>performance portability</em> across architectures.</li>
 </ul>
 <div class="footnotes">
 
@@ -510,6 +510,13 @@ of containers: each kernel template instantiation <em>must be different</em>, in
 other words <strong>be aware that kernels are just regular functions and so
 they must abide by <a href="https://en.wikipedia.org/wiki/One_Definition_Rule">ODR</a>!</strong></p>
  <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+
+<li id="fn:5"><p>in the original <a href="https://ai.google/research/pubs/pub45226"><code>gpucc</code> paper</a>, Google
+  claims that their open source PTX backend (now
+  <a href="https://llvm.org/docs/CompileCudaWithLLVM.html">merged in upstream LLVM</a>)
+  is either on par or outperforms <code>nvcc</code> for all the workloads they took
+  into account.</p>
+ <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
 </ol>
 </div>
 
