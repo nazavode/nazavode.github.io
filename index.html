@@ -164,7 +164,64 @@ a totally different perspective.</p>
 concepts: it borrows the same device and execution models straight from OpenCL, which in
 turn is extremely similar to CUDA. Let&rsquo;s just have a look at a simple kernel that performs
 an element wise sum between containers:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// Kernel type tag
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// Kernel type tag
 </span><span style="color:#75715e">// Be sure to define it in an externally accessible
 </span><span style="color:#75715e">// namespace (e.g.: no anonymous)
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span><span style="color:#f92672">&gt;</span>
@@ -175,7 +232,8 @@ an element wise sum between containers:</p>
          ContiguousContainer<span style="color:#f92672">&amp;</span> result) {
     <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>data,
           std<span style="color:#f92672">::</span>size;
-    <span style="color:#66d9ef">using</span> value_type <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>remove_cv_t<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>remove_reference_t<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">*</span>data(c))<span style="color:#f92672">&gt;&gt;</span>;
+    <span style="color:#66d9ef">using</span> value_type <span style="color:#f92672">=</span> 
+        std<span style="color:#f92672">::</span>remove_cv_t<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>remove_reference_t<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">*</span>data(c))<span style="color:#f92672">&gt;&gt;</span>;
     <span style="color:#66d9ef">using</span> kernel_tag <span style="color:#f92672">=</span> AddKernel<span style="color:#f92672">&lt;</span>value_type<span style="color:#f92672">&gt;</span>;
 
     <span style="color:#75715e">// Queue&#39;s destructor will wait for all pending operations to complete
@@ -200,10 +258,10 @@ an element wise sum between containers:</p>
 </span><span style="color:#75715e"></span>        cgh.parallel_for<span style="color:#f92672">&lt;</span>kernel_tag<span style="color:#f92672">&gt;</span>(
             cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>range<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>{size(result)},  <span style="color:#75715e">// 1st parameter: the kernel grid
 </span><span style="color:#75715e"></span>            [<span style="color:#f92672">=</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>id<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> idx) {         <span style="color:#75715e">// 2nd parameter: the actual kernel
-</span><span style="color:#75715e"></span>                <span style="color:#75715e">// We are in the kernel body:
-</span><span style="color:#75715e"></span>                <span style="color:#75715e">// this is the only code that gets compiled for device(s).
-</span><span style="color:#75715e"></span>                kr[idx] <span style="color:#f92672">=</span> ka[idx] <span style="color:#f92672">+</span> kb[idx];
-            }
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#75715e"></span>                <span style="color:#75715e">// We are in the kernel body:
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#75715e"></span>                <span style="color:#75715e">// this is the only code that gets compiled for device(s).
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="color:#75715e"></span>                kr[idx] <span style="color:#f92672">=</span> ka[idx] <span style="color:#f92672">+</span> kb[idx];
+</span>            }
         );
     });
     <span style="color:#75715e">// At this point our kernel has been asynchronously submitted
@@ -215,7 +273,10 @@ an element wise sum between containers:</p>
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// computed values have been transferred into &#39;result&#39; and are available
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// host-side.
 </span><span style="color:#75715e"></span>}
-</code></pre></div>
+</code></pre></td></tr></table>
+</div>
+</div>
+
 <p>From this trivial example we can make some interesting observations about the SYCL
 programming model:</p>
 
@@ -246,7 +307,42 @@ buffers have to be transferred to and from host containers <sup class="footnote-
 <p>This design principle affects also the execution order of kernels: SYCL command queues are
 required to be asyncronous and, while the actual execution order is unspecified, <em>data
 dependencies</em> across kernels are guaranteed to be satisfied by the runtime.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">using</span> cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>read,
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></span><span style="display:block;width:100%;background-color:#3c3d38"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">using</span> cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>read,
       cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>write,
       cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>read_write;
 
@@ -258,25 +354,28 @@ cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>
 
 <span style="color:#75715e">// Kernel 1
 </span><span style="color:#75715e"></span>queue.submit([<span style="color:#f92672">&amp;</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>handler<span style="color:#f92672">&amp;</span> cgh) {
-    <span style="color:#66d9ef">auto</span> in  <span style="color:#f92672">=</span> A.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#66d9ef">auto</span> out <span style="color:#f92672">=</span> B.get_access<span style="color:#f92672">&lt;</span>write<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#75715e">//...
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> in  <span style="color:#f92672">=</span> A.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> out <span style="color:#f92672">=</span> B.get_access<span style="color:#f92672">&lt;</span>write<span style="color:#f92672">&gt;</span>(cgh);
+</span>    <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>}
 
 <span style="color:#75715e">// Kernel 2
 </span><span style="color:#75715e"></span>queue.submit([<span style="color:#f92672">&amp;</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>handler<span style="color:#f92672">&amp;</span> cgh) {
-    <span style="color:#66d9ef">auto</span> in  <span style="color:#f92672">=</span> A.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#66d9ef">auto</span> out <span style="color:#f92672">=</span> C.get_access<span style="color:#f92672">&lt;</span>write<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#75715e">//...
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> in  <span style="color:#f92672">=</span> A.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> out <span style="color:#f92672">=</span> C.get_access<span style="color:#f92672">&lt;</span>write<span style="color:#f92672">&gt;</span>(cgh);
+</span>    <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>}
 
 <span style="color:#75715e">// Kernel 3
 </span><span style="color:#75715e"></span>queue.submit([<span style="color:#f92672">&amp;</span>](cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>handler<span style="color:#f92672">&amp;</span> cgh) {
-    <span style="color:#66d9ef">auto</span> in    <span style="color:#f92672">=</span> B.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#66d9ef">auto</span> inout <span style="color:#f92672">=</span> C.get_access<span style="color:#f92672">&lt;</span>read_write<span style="color:#f92672">&gt;</span>(cgh);
-    <span style="color:#75715e">//...
+<span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> in    <span style="color:#f92672">=</span> B.get_access<span style="color:#f92672">&lt;</span>read<span style="color:#f92672">&gt;</span>(cgh);
+</span><span style="display:block;width:100%;background-color:#3c3d38">    <span style="color:#66d9ef">auto</span> inout <span style="color:#f92672">=</span> C.get_access<span style="color:#f92672">&lt;</span>read_write<span style="color:#f92672">&gt;</span>(cgh);
+</span>    <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span>}
-</code></pre></div>
+</code></pre></td></tr></table>
+</div>
+</div>
+
 <p>What the runtime does here is that it builds the <em>dependency graph</em> of our kernels based
 on the <em>data dependencies</em> we implicitly declared among them by retrieving <em>accessors</em>. In
 this case the runtime deduces the following dependency DAG (arrow is a <em>depends on</em>
