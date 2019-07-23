@@ -12,20 +12,29 @@
     
     
     <item>
-      <title>computecpp</title>
-      <link>https://nazavode.github.io/tags/computecpp/</link>
+      <title>accelerators</title>
+      <link>https://nazavode.github.io/tags/accelerators/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://nazavode.github.io/tags/computecpp/</guid>
+      <guid>https://nazavode.github.io/tags/accelerators/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>cpp</title>
-      <link>https://nazavode.github.io/tags/cpp/</link>
+      <title>c&#43;&#43;</title>
+      <link>https://nazavode.github.io/tags/c&#43;&#43;/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://nazavode.github.io/tags/cpp/</guid>
+      <guid>https://nazavode.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>compilers</title>
+      <link>https://nazavode.github.io/tags/compilers/</link>
+      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/compilers/</guid>
       <description></description>
     </item>
     
@@ -39,38 +48,20 @@
     </item>
     
     <item>
-      <title>gpgpu</title>
-      <link>https://nazavode.github.io/tags/gpgpu/</link>
-      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/gpgpu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gpu</title>
-      <link>https://nazavode.github.io/tags/gpu/</link>
-      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/gpu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hipsycl</title>
-      <link>https://nazavode.github.io/tags/hipsycl/</link>
-      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/hipsycl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>opencl</title>
       <link>https://nazavode.github.io/tags/opencl/</link>
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/opencl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>spir</title>
+      <link>https://nazavode.github.io/tags/spir/</link>
+      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://nazavode.github.io/tags/spir/</guid>
       <description></description>
     </item>
     
@@ -84,29 +75,11 @@
     </item>
     
     <item>
-      <title>trisycl</title>
-      <link>https://nazavode.github.io/tags/trisycl/</link>
-      <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/trisycl/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>benchmark</title>
       <link>https://nazavode.github.io/tags/benchmark/</link>
       <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/benchmark/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>google</title>
-      <link>https://nazavode.github.io/tags/google/</link>
-      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/google/</guid>
       <description></description>
     </item>
     
@@ -134,15 +107,6 @@
       <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/profiling/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>talk</title>
-      <link>https://nazavode.github.io/tags/talk/</link>
-      <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/talk/</guid>
       <description></description>
     </item>
     
@@ -210,65 +174,11 @@
     </item>
     
     <item>
-      <title>c&#43;&#43;</title>
-      <link>https://nazavode.github.io/tags/c&#43;&#43;/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>c11</title>
-      <link>https://nazavode.github.io/tags/c11/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/c11/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>c99</title>
-      <link>https://nazavode.github.io/tags/c99/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/c99/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>fortran</title>
       <link>https://nazavode.github.io/tags/fortran/</link>
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/tags/fortran/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>iso</title>
-      <link>https://nazavode.github.io/tags/iso/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/iso/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>restrict</title>
-      <link>https://nazavode.github.io/tags/restrict/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/restrict/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>standard</title>
-      <link>https://nazavode.github.io/tags/standard/</link>
-      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nazavode.github.io/tags/standard/</guid>
       <description></description>
     </item>
     
@@ -291,11 +201,11 @@
     </item>
     
     <item>
-      <title>build system</title>
-      <link>https://nazavode.github.io/tags/build-system/</link>
+      <title>build systems</title>
+      <link>https://nazavode.github.io/tags/build-systems/</link>
       <pubDate>Sat, 19 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://nazavode.github.io/tags/build-system/</guid>
+      <guid>https://nazavode.github.io/tags/build-systems/</guid>
       <description></description>
     </item>
     

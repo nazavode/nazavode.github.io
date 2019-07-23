@@ -44,13 +44,19 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/computecpp/</loc>
+    <loc>https://nazavode.github.io/tags/accelerators/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/cpp/</loc>
+    <loc>https://nazavode.github.io/tags/c&#43;&#43;/</loc>
+    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/compilers/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,25 +68,13 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/gpgpu/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/gpu/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/hipsycl/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/tags/opencl/</loc>
+    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nazavode.github.io/tags/spir/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -92,24 +86,12 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/trisycl/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/blog/google-benchmark/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://nazavode.github.io/tags/benchmark/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/google/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -128,12 +110,6 @@
   
   <url>
     <loc>https://nazavode.github.io/tags/profiling/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/talk/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -209,43 +185,7 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/c&#43;&#43;/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/c11/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/c99/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/tags/fortran/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/iso/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/restrict/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/standard/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -295,7 +235,7 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/build-system/</loc>
+    <loc>https://nazavode.github.io/tags/build-systems/</loc>
     <lastmod>2013-01-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

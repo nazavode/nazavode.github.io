@@ -113,7 +113,7 @@ with poor tooling support).</p>
 
 <p>On top of that depressing experience, one of the main CUDA goals was clearly to be an
 <em>efficient vendor lock-in tool</em>. Once you invested effort and money on CUDA, you&rsquo;re stuck
-with NVidia hardware.</p>
+with NVIDIA hardware.</p>
 
 <p>Luckily, during the last ten years the GPGPU tooling ecosystem improved <em>a lot</em>. Compilers
 have become stable, debuggers are now usable, we even have
@@ -335,22 +335,56 @@ stands out clearly.</p>
 <p>I think this is going to be a recurring pattern in real world, SYCL-accelerated code
 bases: a bunch of different SYCL kernels, each one hand-optimized for a class of
 architectures, a single architecture or even a specific product just like happens in CUDA
-or OpenCL nowadays. In other words, I would say that SYCL <strong>has not performance
-portability among its design goals</strong>.</p>
+or OpenCL nowadays. In other words, I would say that SYCL <del><strong>has not performance
+portability among its design goals</strong></del>.</p>
 
-<p>Despite this unavoidable shortcoming, SYCL still brings a lot of advantages, for example:</p>
+<blockquote>
+<p><strong><em>Errata corige</em></strong>: thanks to <a href="http://www.aerialmantis.co.uk/">Gordon Brown</a>,
+who took part in the SYCL design process, I got some insights about this
+topic with respect to the original design goals that have been taken into
+account back in the early days.</p>
+
+<p>Firstly, SYCL is built on top of other lower-level standards:</p>
 
 <ul>
-<li>convenience and developer <em>sanity</em>: it is just C++11 code, no language extensions, no
-weird toolchains;</li>
-<li>host CPU backends, already available, enable the application to leverage the host
-processors as well and from CPU backends comes easy debugging and observability;</li>
-<li>a terse and expressive API, miles ahead of the sheer verbosity of OpenCL;</li>
-<li>no vendor-lock in; even if NVidia could try to gatekeep <a href="https://www.khronos.org/registry/spir-v/">SPIR-V</a>
-(the intermediate assembly representation on top of which SYCL is based) support on
-their platform, when in presence of CUDA hardware the compiler could just sidestep
-SPIR-V generation and go directly for the PTX backend to natively compile SYCL kernels
-for NVidia hardware.</li>
+<li>OpenCL, from which SYCL inherits device and execution models;</li>
+<li><a href="https://www.khronos.org/spir/">SPIR</a>, the intermediate representation
+into which SYCL kernels are usually translated by the compiler. This sort of
+<em>machine-independent assembly language</em> (similar in scope to PTX) designed
+to efficiently represent massively parallel computations is shared by other standards
+like <a href="https://www.khronos.org/vulkan/">Vulkan</a> or <a href="https://www.opengl.org/">OpenGL</a>.</li>
+</ul>
+
+<p>Contrary to what I was assuming, <strong><em>performance portability</em> has been indeed considered
+as a very high priority design goal</strong> but, given that:</p>
+
+<ol>
+<li>the bulk of perfomance portability is delegated to lower level building blocks
+(SYCL and SPIR) that have been designed from scratch for this purpose;</li>
+<li>when so diverse architectures must be taken into account, portability and performance
+are inherently antithetical and a tradeoff is needed;</li>
+</ol>
+
+<p>SYCL designers aknowledged this unavoidable tradeoff and <strong>choose to fill
+this gap making sure that adapting a kernel to a new hardware platform
+would have been as straightforward, convenient and painless as possible</strong>.</p>
+</blockquote>
+
+<p>Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for example:</p>
+
+<ul>
+<li>convenience and developer <em>sanity</em>: it is just standard C++ code, no language extensions,
+no weird toolchains, tooling ecosystem readily available;</li>
+<li>host CPU backends are available from day one: they enable the applications to leverage
+<em>both</em> the host CPU and discrete accelerators and, maybe important alike, they provide
+easy debugging, observability and seamless deployment (e.g. you don&rsquo;t have to buy some
+beefy gaming laptop just to be able to develop your stuff);</li>
+<li>a terse, modern and expressive API, miles ahead of the sheer verbosity of OpenCL;</li>
+<li>no vendor-lock in: your code can be run almost everywhere, from CPU-only and
+accelerated servers to Android phones. Even if NVIDIA could try to gatekeep
+<a href="https://www.khronos.org/registry/spir-v/">SPIR-V</a> support on their own platform,
+when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and
+go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎.</li>
 </ul>
 
 <p>Moreover, several open and closed source implementations are already available,
@@ -360,7 +394,8 @@ each one with its goals and strenghts:</p>
 <li><a href="https://github.com/triSYCL/triSYCL">triSYCL</a>, the reference implementation;</li>
 <li><a href="https://github.com/illuhad/hipSYCL">hipSYCL</a>;</li>
 <li><a href="https://www.codeplay.com/products/computesuite/computecpp">ComputeCpp</a>;</li>
-<li><a href="https://github.com/intel/llvm/tree/sycl">clang</a>, actively developed by Intel and aimed at being reintegrated in upstream LLVM.</li>
+<li><a href="https://github.com/intel/llvm/tree/sycl">clang</a>, actively developed by Intel
+and aimed at being reintegrated in upstream LLVM.</li>
 </ul>
 
 <p>To summarize the ecosystem, I will borrow this chart directly from the
@@ -426,6 +461,7 @@ notice that something&rsquo;s missing please drop a comment or open an issue on
 <li><a href="https://llvm.org/docs/CompileCudaWithLLVM.html">Compiling CUDA with clang - LLVM 9 documentation</a></li>
 <li><a href="https://youtu.be/KHa-OSrZPGo">CppCon 2016: CUDA is a low-level language by Justin Lebar</a></li>
 <li><a href="https://ai.google/research/pubs/pub45226"><code>gpucc</code>: An Open-Source GPGPU Compiler</a></li>
+<li><a href="https://arxiv.org/pdf/1904.05347.pdf">John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels</a></li>
 </ul>
 <div class="footnotes">
 
@@ -466,8 +502,8 @@ spaces, make sure that the
 <a href="https://en.cppreference.com/w/cpp/named_req/ContiguousContainer"><code>ContiguousContainer</code> concept</a>
 is satisfied: while we wait for C++20 to bring proper concepts in, we can
 reasonably ensure the <em>contiguous sequence</em> (e.g.: <em>contiguous storage</em>)
-property just
-<a href="https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426">like <code>GSL</code> does for <code>gsl::span&lt;T&gt;</code></a>).</p>
+property just like
+<a href="https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426"><code>GSL</code> does for <code>gsl::span&lt;T&gt;</code></a>).</p>
  <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
 
 <li id="fn:4"><p>the <code>parallel_for</code> template is instantiated on an (empty) type,
@@ -477,9 +513,9 @@ user-defined name on which (possibly) different compilers can agree on.
 Look at it as workaround to de-anonymize compiler-generated callable
 objects (or a way to have <code>extern</code> lambdas).
 Please note that the tag itself is templatized on the <code>value_type</code>
-of containers: each kernel instantiation <em>must be different</em>, in
-other words <strong>be aware that kernels must abide by
-<a href="https://en.wikipedia.org/wiki/One_Definition_Rule">ODR</a>!</strong></p>
+of containers: each kernel template instantiation <em>must be different</em>, in
+other words <strong>be aware that kernels are just regular functions and so
+they must abide by <a href="https://en.wikipedia.org/wiki/One_Definition_Rule">ODR</a>!</strong></p>
  <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
 </ol>
 </div>
