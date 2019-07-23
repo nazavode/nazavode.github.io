@@ -262,9 +262,9 @@ of execution units, one for each of the `n` output elements.
     Look at it as workaround to de-anonymize compiler-generated callable
     objects (or a way to have `extern` lambdas).
     Please note that the tag itself is templatized on the `value_type`
-    of containers: each kernel instantiation *must be different*, in
-    other words **be aware that kernels must abide by
-    [ODR](https://en.wikipedia.org/wiki/One_Definition_Rule)!**
+    of containers: each kernel template instantiation *must be different*, in
+    other words **be aware that kernels are just regular functions and so
+    they must abide by [ODR](https://en.wikipedia.org/wiki/One_Definition_Rule)!**
 
 The SYCL standard brings so much at the stake, interesting bits like *device selectors*
 (customizable objects that decide on which actual device a kernel will be executed), error
