@@ -2,7 +2,7 @@
 title = "Look ma, no CUDA! Programming GPUs with modern C++ and SYCL"
 date = "2019-07-21"
 categories = ["Dev", "Talk"]
-tags = ["cpp", "sycl", "gpu", "gpgpu", "cuda", "opencl", "trisycl", "hipsycl", "computecpp"]
+tags = ["c++", "sycl", "cuda", "opencl", "spir", "compilers", "accelerators"]
 +++
 
 Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA)
@@ -20,7 +20,7 @@ with poor tooling support).
 
 On top of that depressing experience, one of the main CUDA goals was clearly to be an
 *efficient vendor lock-in tool*. Once you invested effort and money on CUDA, you're stuck
-with NVidia hardware.
+with NVIDIA hardware.
 
 Luckily, during the last ten years the GPGPU tooling ecosystem improved *a lot*. Compilers
 have become stable, debuggers are now usable, we even have
@@ -179,8 +179,8 @@ buffers have to be transferred to and from host containers [^3].
     [`ContiguousContainer` concept](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer)
     is satisfied: while we wait for C++20 to bring proper concepts in, we can
     reasonably ensure the *contiguous sequence* (e.g.: *contiguous storage*)
-    property just
-    [like `GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
+    property just like
+    [`GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
 
 This design principle affects also the execution order of kernels: SYCL command queues are
 required to be asyncronous and, while the actual execution order is unspecified, *data
@@ -291,21 +291,49 @@ stands out clearly.
 I think this is going to be a recurring pattern in real world, SYCL-accelerated code
 bases: a bunch of different SYCL kernels, each one hand-optimized for a class of
 architectures, a single architecture or even a specific product just like happens in CUDA
-or OpenCL nowadays. In other words, I would say that SYCL **has not performance
-portability among its design goals**.
+or OpenCL nowadays. In other words, I would say that SYCL ~~**has not performance
+portability among its design goals**~~.
 
-Despite this unavoidable shortcoming, SYCL still brings a lot of advantages, for example:
+> ***Errata corige***: thanks to [Gordon Brown](http://www.aerialmantis.co.uk/),
+> who took part in the SYCL design process, I got some insights about this
+> topic with respect to the original design goals that have been taken into
+> account back in the early days.
+>
+> Firstly, SYCL is built on top of other lower-level standards:
+>
+> * OpenCL, from which SYCL inherits device and execution models;
+> * [SPIR](https://www.khronos.org/spir/), the intermediate representation
+>   into which SYCL kernels are usually translated by the compiler. This sort of
+>   *machine-independent assembly language* (similar in scope to PTX) designed
+>   to efficiently represent massively parallel computations is shared by other standards
+>   like [Vulkan](https://www.khronos.org/vulkan/) or [OpenGL](https://www.opengl.org/).
+>
+> Contrary to what I was assuming, **_performance portability_ has been indeed considered
+> as a very high priority design goal** but, given that:
+>
+> 1. the bulk of perfomance portability is delegated to lower level building blocks
+>    (SYCL and SPIR) that have been designed from scratch for this purpose;
+> 2. when so diverse architectures must be taken into account, portability and performance
+>    are inherently antithetical and a tradeoff is needed;
+>
+> SYCL designers aknowledged this unavoidable tradeoff and **choose to fill
+> this gap making sure that adapting a kernel to a new hardware platform
+> would have been as straightforward, convenient and painless as possible**.
 
-* convenience and developer *sanity*: it is just C++11 code, no language extensions, no
-  weird toolchains;
-* host CPU backends, already available, enable the application to leverage the host
-  processors as well and from CPU backends comes easy debugging and observability;
-* a terse and expressive API, miles ahead of the sheer verbosity of OpenCL;
-* no vendor-lock in; even if NVidia could try to gatekeep [SPIR-V](https://www.khronos.org/registry/spir-v/)
-  (the intermediate assembly representation on top of which SYCL is based) support on
-  their platform, when in presence of CUDA hardware the compiler could just sidestep
-  SPIR-V generation and go directly for the PTX backend to natively compile SYCL kernels
-  for NVidia hardware.
+Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for example:
+
+* convenience and developer *sanity*: it is just standard C++ code, no language extensions,
+  no weird toolchains, tooling ecosystem readily available;
+* host CPU backends are available from day one: they enable the applications to leverage
+  *both* the host CPU and discrete accelerators and, maybe important alike, they provide
+  easy debugging, observability and seamless deployment (e.g. you don't have to buy some
+  beefy gaming laptop just to be able to develop your stuff);
+* a terse, modern and expressive API, miles ahead of the sheer verbosity of OpenCL;
+* no vendor-lock in: your code can be run almost everywhere, from CPU-only and
+  accelerated servers to Android phones. Even if NVIDIA could try to gatekeep
+  [SPIR-V](https://www.khronos.org/registry/spir-v/) support on their own platform,
+  when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and
+  go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎.
 
 Moreover, several open and closed source implementations are already available,
 each one with its goals and strenghts:
@@ -313,7 +341,8 @@ each one with its goals and strenghts:
 * [triSYCL](https://github.com/triSYCL/triSYCL), the reference implementation;
 * [hipSYCL](https://github.com/illuhad/hipSYCL);
 * [ComputeCpp](https://www.codeplay.com/products/computesuite/computecpp);
-* [clang](https://github.com/intel/llvm/tree/sycl), actively developed by Intel and aimed at being reintegrated in upstream LLVM.
+* [clang](https://github.com/intel/llvm/tree/sycl), actively developed by Intel
+  and aimed at being reintegrated in upstream LLVM.
 
 To summarize the ecosystem, I will borrow this chart directly from the
 [hipSYCL](https://github.com/illuhad/hipSYCL) documentation:
