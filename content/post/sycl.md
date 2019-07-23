@@ -26,7 +26,7 @@ Luckily, during the last ten years the GPGPU tooling ecosystem improved *a lot*.
 have become stable, debuggers are now usable, we even have
 [PTX backends](https://llvm.org/docs/CompileCudaWithLLVM.html)
 in toolchains other than `nvcc`, a plethora of alternative approaches emerged and keep
-struggling to gain market (I would say that [OpenCL](https://www.khronos.org/opencl/) is
+pushing to gain market (I would say that [OpenCL](https://www.khronos.org/opencl/) is
 the most notable one, among others).
 
 In late 2018, almost ten years after my first encounter with GPGPUs, I came across this
@@ -304,8 +304,8 @@ portability among its design goals**~~.
 > * OpenCL, from which SYCL inherits device and execution models;
 > * [SPIR](https://www.khronos.org/spir/), the intermediate representation
 >   into which SYCL kernels are usually translated by the compiler. This sort of
->   *machine-independent assembly language* (similar in scope to PTX) designed
->   to efficiently represent massively parallel computations is shared by other standards
+>   *machine-independent assembly language*, similar in scope to PTX and designed
+>   to efficiently represent massively parallel computations, is shared by other standards
 >   like [Vulkan](https://www.khronos.org/vulkan/) or [OpenGL](https://www.opengl.org/).
 >
 > Contrary to what I was assuming, **_performance portability_ has been indeed considered
@@ -322,18 +322,24 @@ portability among its design goals**~~.
 
 Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for example:
 
-* convenience and developer *sanity*: it is just standard C++ code, no language extensions,
-  no weird toolchains, tooling ecosystem readily available;
-* host CPU backends are available from day one: they enable the applications to leverage
+* **convenience and developer _sanity_**: it is just standard C++ code, no
+  language extensions, no weird toolchains, tooling ecosystem readily available;
+* **host CPU backends are available from day one**: they enable the applications to leverage
   *both* the host CPU and discrete accelerators and, maybe important alike, they provide
   easy debugging, observability and seamless deployment (e.g. you don't have to buy some
   beefy gaming laptop just to be able to develop your stuff);
-* a terse, modern and expressive API, miles ahead of the sheer verbosity of OpenCL;
-* no vendor-lock in: your code can be run almost everywhere, from CPU-only and
+* **a terse, modern and expressive API**, miles ahead of the sheer verbosity of OpenCL;
+* **no vendor-lock in**: your code can be run almost everywhere, from CPU-only and
   accelerated servers to Android phones. Even if NVIDIA could try to gatekeep
   [SPIR-V](https://www.khronos.org/registry/spir-v/) support on their own platform,
   when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and
-  go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎.
+  go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎 [^5].
+
+[^5]: in the original [`gpucc` paper](https://ai.google/research/pubs/pub45226), Google
+      claims that their open source PTX backend (now
+      [merged in upstream LLVM](https://llvm.org/docs/CompileCudaWithLLVM.html))
+      is either on par or outperforms `nvcc` for all the workloads they took
+      into account.
 
 Moreover, several open and closed source implementations are already available,
 each one with its goals and strenghts:
@@ -404,4 +410,4 @@ I'm particularly grateful to (in order of appearance during the talk):
 * [Compiling CUDA with clang - LLVM 9 documentation](https://llvm.org/docs/CompileCudaWithLLVM.html)
 * [CppCon 2016: CUDA is a low-level language by Justin Lebar](https://youtu.be/KHa-OSrZPGo)
 * [`gpucc`: An Open-Source GPGPU Compiler](https://ai.google/research/pubs/pub45226)
-* [John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels](https://arxiv.org/pdf/1904.05347.pdf)
+* [John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels](https://arxiv.org/pdf/1904.05347.pdf) - a very nice article about parametrizing SYCL kernels to achieve good *performance portability* across architectures.
