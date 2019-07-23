@@ -1,4 +1,4 @@
 [submodule "themes/hyde-x"]
 	path = themes/hyde-x
-	url = https://github.com/nazavode/hyde-x
+	url = git@github.com:nazavode/hyde-x.git
 	branch = master
