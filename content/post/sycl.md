@@ -124,7 +124,7 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
 
 Let's quickly see at a very high level the essential blocks needed a SYCL program:
 
-1. tell SYCL where the **host-side input and output memory** you're going 
+1. tell SYCL where the **host-side input and output memory** you're going
         to use for your kernels is by constructing **buffers**;
 2. construct a **command queue**, an object of type `cl::sycl::queue` that is
        going to be your steering wheel for all the execution devices that support
@@ -132,7 +132,13 @@ Let's quickly see at a very high level the essential blocks needed a SYCL progra
 3. **submit** a unit of work in the form of a **callable object** (a lambda
        expression in this case, but everything that satisfies the
        [`Callable` concept](https://en.cppreference.com/w/cpp/named_req/Callable)
-       will do the job) via `cl::sycl::queue::submit()`.
+       will do the job[^callable]) via `cl::sycl::queue::submit()`.
+
+[^callable]: ...everything that satisfies the
+    [`Callable` concept](https://en.cppreference.com/w/cpp/named_req/Callable)
+    *and* accepts an argument of type `cl::sycl::handler&`. The *handler* is
+    your source of information about the execution context you're in
+    (e.g.: on which device you've been actually scheduled).
 
 At this point, *we're done*: the callable object you just submitted is going to
 be executed on *a device* (more on this later). Well, we still need to see what
@@ -141,11 +147,13 @@ is needed to define the proper *unit of work* we just submitted to the
 
 1. define our **data dependencies**: this is achieved by declaring
         **accessors**, objects that tell SYCL about our intents on the
-        *buffers* we previously defined (`cl::sycl::access::mode::read` for read-only, `cl::sycl::access::mode::write` for write-only, etc...);
+        *buffers* we previously defined (`cl::sycl::access::mode::read`
+        for read-only,`cl::sycl::access::mode::write` for write-only);
 2. **invoke the actual kernel** on the selected device via
         `cl::sycl::handler::parallel_for<>()` template method. Just like we saw
         before for the submission to the command queue, the kernel is just an
-        object of [`Callable` type](https://en.cppreference.com/w/cpp/named_req/Callable).
+        object of [`Callable` type](https://en.cppreference.com/w/cpp/named_req/Callable)
+        (more on the arguments later).
 
 ***Now we are really done***.
 
@@ -160,10 +168,10 @@ we can call it *modern* (I would call it *sane*) with respect to types design.
 
 #### Just standard C++11
 
-Luckily enough, no weird keyword or syntax is involved, just standard C++11 code [^1].
+Luckily enough, no weird keyword or syntax is involved, just standard C++11 code [^cxxstd].
 Note that in the previous example all invocable objects are passed as regular lambdas.
 
-[^1]: the SYCL specification is actually based on C++11 but this restriction applies only
+[^cxxstd]: the SYCL specification is actually based on C++11 but this restriction applies only
     to the body of the kernel lambda, e.g. the only code that is going to be actually
     compiled by device backends. In the example I used some C++17 library stuff
     ([`std::data()`](https://en.cppreference.com/w/cpp/iterator/data) for instance),
@@ -174,10 +182,10 @@ Note that in the previous example all invocable objects are passed as regular la
 *Host* and *device* code live in the same source file. It is a SYCL implementation's
 responsibility to split the C++ source file and forward each chunk of parsed code to the
 right compilation backend (similarly to what `nvcc` does and as opposed to what OpenCL
-APIs require) [^2].
+APIs require) [^compilation].
 
-[^2]: while totally invisible to the user, the standard specification allows 
-      two different workflows for compilation:
+[^compilation]: while totally invisible to the user, the standard specification
+    allows two different workflows for compilation:
   
     * *separate compilation*: a frontend driver splits the C++ source and calls
         different device compilers under the hood before linking everything together
@@ -196,13 +204,19 @@ APIs require) [^2].
 #### Data transfers are implicit
 
 Unlike CUDA and OpenCL where explicit copies are required by the model, here we just
-declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces which
-buffers have to be transferred to and from host containers [^3].
+declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime deduces[^explicit-copy] which
+buffers have to be transferred to and from host containers [^contiguous-container].
 
-[^3]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>` acts exactly
-    like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span) in this regard)
-    over contiguous chunks of memory that have to be transferred across different address
-    spaces, make sure that the
+[^explicit-copy]: [Jeff Hammond](https://jeffhammond.github.io/) pointed out
+    that while the *deduction* behaviour is the default, we can actually force
+    explicit data transfers by calling the `cl::sycl::handler::copy()` method
+    like he did
+    [here](https://github.com/ParRes/Kernels/blob/5394bed370b6b50e73062231f9d47ed9bfc31197/Cxx11/nstream-explicit-sycl.cc#L141).
+
+[^contiguous-container]: since we are constructing *non-owning views* (`cl::sycl::buffer<T>`
+    acts exactly like a [`std::span<T>`](https://en.cppreference.com/w/cpp/container/span)
+    in this regard) over contiguous chunks of memory that have to be transferred across
+    different address spaces, make sure that the
     [`ContiguousContainer` concept](https://en.cppreference.com/w/cpp/named_req/ContiguousContainer)
     is satisfied: while we wait for C++20 to bring proper concepts in, we can
     reasonably ensure the *contiguous sequence* (e.g.: *contiguous storage*)
@@ -267,7 +281,7 @@ achieve maximum overlapping between data transfers and kernel executions.
 
 The *implicit iteration space* over which kernels are executed has shape and extent,
 just like a CUDA kernel grid. Let's have a look at the `parallel_for` call
-(ignore `kernel_tag`[^4] for now):
+(ignore `kernel_tag`[^kernel-tag] for now):
 
 ```cpp
     // Enqueue parallel kernel
@@ -282,7 +296,7 @@ With the first parameter we are saying that the kernel grid will have
 `cl::sycl::range<1>{n}` parameter we are launching a 1-dimensional vector
 of execution units, one for each of the `n` output elements.
 
-[^4]: the `parallel_for` template is instantiated on an (empty) type,
+[^kernel-tag]: the `parallel_for` template is instantiated on an (empty) type,
     in this case called `class AddKernel`. This *tag* is used only to give the
     anonymous callable object generated by the lambda expression a unique,
     user-defined name on which (possibly) different compilers can agree on.
@@ -360,13 +374,13 @@ Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for 
   accelerated servers to Android phones. Even if NVIDIA could try to gatekeep
   [SPIR-V](https://www.khronos.org/registry/spir-v/) support on their own platform,
   when in presence of CUDA hardware the compiler could just sidestep SPIR-V generation and
-  go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎 [^5].
+  go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hardware 😎 [^gpucc].
 
-[^5]: in the original [`gpucc` paper](https://ai.google/research/pubs/pub45226), Google
-      claims that their open source PTX backend (now
-      [merged in upstream LLVM](https://llvm.org/docs/CompileCudaWithLLVM.html))
-      is either on par or outperforms `nvcc` for all the workloads they took
-      into account.
+[^gpucc]: in the original [`gpucc` paper](https://ai.google/research/pubs/pub45226),
+    Google claims that their open source PTX backend (now
+    [merged in upstream LLVM](https://llvm.org/docs/CompileCudaWithLLVM.html))
+    is either on par or outperforms `nvcc` for all the workloads they took
+    into account.
 
 Moreover, several open and closed source implementations are already available,
 each one with its goals and strenghts:
@@ -403,9 +417,6 @@ and the slide deck [here](https://github.com/nazavode/meetupcpp-may-2019), feel 
 grab anything you happen to find useful. You can even see me prattle on (**sorry, italian
 only**) [here](https://www.youtube.com/watch?v=c04Y9AUH-xU).
 
-Thanks to all the attendees and to [Marco Arena](https://twitter.com/ilpropheta)
-for the chance to show some brand new cool stuff!
-
 ## Credits
 
 A lot of excellent charts, snippets and pitches have been taken directly from publicly
@@ -413,14 +424,18 @@ available talks across the net, I've strived really hard to put proper credits b
 notice that something's missing please drop a comment or open an issue on
 [the repo](https://www.italiancpp.org/event/meetup-maggio2019/).
 
-I'm particularly grateful to (in order of appearance during the talk):
+I'm particularly grateful to (in order of appearance):
 
 * [Karl Rupp](https://www.karlrupp.net/)
 * [Michael Wong](https://wongmichael.com/about/)
 * [Gordon Brown](http://www.aerialmantis.co.uk/)
 * [Aksel Alpay](https://github.com/illuhad)
+* [Jeff Hammond](https://jeffhammond.github.io/)
+* All the C++ Meetup attendees and to [Marco Arena](https://twitter.com/ilpropheta)
+    for the chance to show some brand new cool stuff!
 
-*Thank you folks for your help in making my slides more clear and understandable*.
+*Thank you folks for your help in making slides and this post more clear and
+understandable*.
 
 ## Resources
 
