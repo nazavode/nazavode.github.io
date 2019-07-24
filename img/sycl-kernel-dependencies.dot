@@ -1,0 +1,7 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,5"
+	node [shape = circle];
+	"Kernel 3" -> "Kernel 1" [ label = "read(B)" ];
+        "Kernel 3" -> "Kernel 2" [ label = "read_write(C)" ];
+}
