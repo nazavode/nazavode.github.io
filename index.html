@@ -216,7 +216,8 @@ an element wise sum between containers:</p>
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// host-side.
 </span><span style="color:#75715e"></span>}
 </code></pre></div>
-<p>Let&rsquo;s quickly see at a very high level the essential blocks needed a SYCL program:</p>
+<p>Let&rsquo;s quickly see at a very high level the essential building blocks needed
+by a SYCL program:</p>
 
 <ol>
 <li>tell SYCL where the <strong>host-side input and output memory</strong> you&rsquo;re going
@@ -273,11 +274,12 @@ APIs require) <sup class="footnote-ref" id="fnref:compilation"><a href="#fn:comp
 <h4 id="data-transfers-are-implicit">Data transfers are implicit</h4>
 
 <p>Unlike CUDA and OpenCL where explicit copies are required by the model, here we just
-declare our read/write intent over <code>cl::sycl::buffer</code> and the SYCL runtime deduces<sup class="footnote-ref" id="fnref:explicit-copy"><a href="#fn:explicit-copy">4</a></sup> which
-buffers have to be transferred to and from host containers <sup class="footnote-ref" id="fnref:contiguous-container"><a href="#fn:contiguous-container">5</a></sup>.</p>
+declare our read/write intent over <code>cl::sycl::buffer</code> and the SYCL runtime
+deduces<sup class="footnote-ref" id="fnref:explicit-copy"><a href="#fn:explicit-copy">4</a></sup> which buffers have to be transferred to and from host
+containers <sup class="footnote-ref" id="fnref:contiguous-container"><a href="#fn:contiguous-container">5</a></sup>.</p>
 
 <p>This design principle affects also the execution order of kernels: SYCL command queues are
-required to be asyncronous and, while the actual execution order is unspecified, <em>data
+required to be asynchronous and, while the actual execution order is unspecified, <em>data
 dependencies</em> across kernels are guaranteed to be satisfied by the runtime.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">using</span> cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>read,
       cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>access<span style="color:#f92672">::</span>mode<span style="color:#f92672">::</span>write,
@@ -393,13 +395,13 @@ like <a href="https://www.khronos.org/vulkan/">Vulkan</a> or <a href="https://ww
 as a very high priority design goal</strong> but, given that:</p>
 
 <ol>
-<li>the bulk of perfomance portability is delegated to lower level building blocks
+<li>the bulk of performance portability is delegated to lower level building blocks
 (OpenCL and SPIR) that have been designed from scratch for this purpose;</li>
 <li>when so diverse architectures must be taken into account, portability and performance
-are inherently antithetical and a tradeoff is needed;</li>
+are inherently antithetical and a trade off is needed;</li>
 </ol>
 
-<p>SYCL designers aknowledged this unavoidable tradeoff and <strong>choose to fill
+<p>SYCL designers acknowledged this unavoidable trade off and <strong>choose to fill
 this gap making sure that adapting a kernel to a new hardware platform
 would have been as straightforward, convenient and painless as possible</strong>.</p>
 </blockquote>
@@ -422,14 +424,17 @@ go directly for the PTX backend to natively compile SYCL kernels for NVIDIA hard
 </ul>
 
 <p>Moreover, several open and closed source implementations are already available,
-each one with its goals and strenghts:</p>
+each one with its goals and strengths:</p>
 
 <ul>
 <li><a href="https://github.com/triSYCL/triSYCL">triSYCL</a>, the reference implementation;</li>
-<li><a href="https://github.com/illuhad/hipSYCL">hipSYCL</a>;</li>
-<li><a href="https://www.codeplay.com/products/computesuite/computecpp">ComputeCpp</a>;</li>
-<li><a href="https://github.com/intel/llvm/tree/sycl">clang</a>, actively developed by Intel
-and aimed at being reintegrated in upstream LLVM.</li>
+<li><a href="https://github.com/illuhad/hipSYCL">hipSYCL</a>, an alternative open source
+implementation originally targeted at <a href="https://rocm.github.io/">AMD ROCm</a>;</li>
+<li><a href="https://www.codeplay.com/products/computesuite/computecpp">ComputeCpp</a>, a commercial
+(the community edition is available free of charge), closed source implementation by
+<a href="https://www.codeplay.com/">Codeplay</a>;</li>
+<li>builtin <a href="https://github.com/intel/llvm/tree/sycl">clang</a> support for SYCL, actively
+developed by Intel and aimed at being reintegrated in upstream LLVM.</li>
 </ul>
 
 <p>To summarize the ecosystem, I will borrow this chart directly from the
@@ -438,7 +443,7 @@ and aimed at being reintegrated in upstream LLVM.</li>
 <p><img src="/img/sycl-targets.png" alt="targets" /></p>
 
 <p>Wrapping up, I personally think that the first, realistic, valuable goal that SYCL can
-achieve is to estabilish both <strong>a standard platform and a common vocabulary for
+achieve is to establish both <strong>a standard platform and a common vocabulary for
 heterogeneous systems programming</strong> on which people coming from different industries and
 backgrounds can build communities, share code, tooling, build systems and, more
 importantly, <strong>break out from vendor lock-ins</strong>.</p>
@@ -455,13 +460,13 @@ in Modena, I gave an introductory talk about the state of the art in GPGPU progr
 the paradigms that emerged in the last ten years and what SYCL brings to the table and why
 we should care. You can find all the support material including examples, build scripts
 and the slide deck <a href="https://github.com/nazavode/meetupcpp-may-2019">here</a>, feel free to
-grab anything you happen to find useful. You can even see me prattle on (<strong>sorry, italian
+grab anything you happen to find useful. You can even see me prattle on (<strong>sorry, Italian
 only</strong>) <a href="https://www.youtube.com/watch?v=c04Y9AUH-xU">here</a>.</p>
 
 <h2 id="credits">Credits</h2>
 
 <p>A lot of excellent charts, snippets and pitches have been taken directly from publicly
-available talks across the net, I&rsquo;ve strived really hard to put proper credits but if you
+available talks across the net, I&rsquo;ve strove really hard to put proper credits but if you
 notice that something&rsquo;s missing please drop a comment or open an issue on
 <a href="https://www.italiancpp.org/event/meetup-maggio2019/">the repo</a>.</p>
 
@@ -491,7 +496,7 @@ understandable</em>.</p>
 <li><a href="https://www.khronos.org/assets/uploads/developers/library/2018-evs/EVS2018_09_Modern_Cpp_for_accelerators_andrew.pdf">Modern C++ for accelerators: a SYCL deep dive by Andrew Richards</a> - an excellent slide deck to be printed and studied.</li>
 <li><a href="https://youtu.be/rfg19iODkhI">2019 EuroLLVM Developers’ Meeting: A. Savonichev (Intel) &ldquo;SYCL compiler: zero-cost abstraction and type safety for heterogeneous computing&rdquo;</a> - a nice insight on how Intel is working on his own SYCL implementation for LLVM; mandatory for compiler nerds.</li>
 <li><a href="https://www.khronos.org/files/sycl/sycl-12-reference-card.pdf">SYCL 1.2.1 API Reference Card</a> - print and hang it on the wall next to the Picasso you just bought at Sotheby&rsquo;s.</li>
-<li><a href="https://www.khronos.org/registry/SYCL/">SYCL Standard Specification</a> - to be a proper standard, you need a proper spec. Not so <em>standardese</em> (a traightforward and educational read, actually) but definitely not a novel.</li>
+<li><a href="https://www.khronos.org/registry/SYCL/">SYCL Standard Specification</a> - to be a proper standard, you need a proper spec. Not so <em>standardese</em> (a straightforward and educational read, actually) but definitely not a novel.</li>
 <li><a href="https://gcc.gnu.org/wiki/Offloading">GCC support for offloading to PTX via OpenACC</a></li>
 <li><a href="https://llvm.org/docs/CompileCudaWithLLVM.html">Compiling CUDA with clang - LLVM 9 documentation</a></li>
 <li><a href="https://youtu.be/KHa-OSrZPGo">CppCon 2016: CUDA is a low-level language by Justin Lebar</a></li>
@@ -529,16 +534,16 @@ translation unit just once (remember that we are dealing just with standard
 C++11 code) and then forwards the lowered representation to all the device
 backends involved.
 For example, <a href="https://github.com/illuhad/hipSYCL">hipSYCL</a> used to rely on
-<em>separate compilation</em> using a
+<em>separate compilation</em> using via a
 <a href="https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc">python script</a>
-to carry out all the orchestration work before switching to the
-<em>single source compilation</em> strategy via the
+to carry out all the orchestration but they recently moved to the
+<em>single source compilation</em> technique leveraging the
 <a href="https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc-clang">clang plugin interface</a>.</li>
 </ul>
  <a class="footnote-return" href="#fnref:compilation"><sup>[return]</sup></a></li>
 
 <li id="fn:explicit-copy"><p><a href="https://jeffhammond.github.io/">Jeff Hammond</a> pointed out
-that while the <em>deduction</em> behaviour is the default, we can actually force
+that while asynchronous is the default, we can actually force
 explicit data transfers by calling the <code>cl::sycl::handler::copy()</code> method
 like he did
 <a href="https://github.com/ParRes/Kernels/blob/5394bed370b6b50e73062231f9d47ed9bfc31197/Cxx11/nstream-explicit-sycl.cc#L141">here</a>.</p>
