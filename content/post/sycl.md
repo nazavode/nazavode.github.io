@@ -68,8 +68,7 @@ concepts: it borrows the same device and execution models straight from OpenCL, 
 turn is extremely similar to CUDA. Let's just have a look at a simple kernel that performs
 an element wise sum between containers:
 
-{{< highlight cpp "linenos=table,hl_lines=38-40" >}}
-
+```cpp
 // Kernel type tag
 // Be sure to define it in an externally accessible
 // namespace (e.g.: no anonymous)
@@ -81,8 +80,7 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
          ContiguousContainer& result) {
     using std::data,
           std::size;
-    using value_type = 
-        std::remove_cv_t<std::remove_reference_t<decltype(*data(c))>>;
+    using value_type = std::remove_cv_t<std::remove_reference_t<decltype(*data(c))>>;
     using kernel_tag = AddKernel<value_type>;
 
     // Queue's destructor will wait for all pending operations to complete
@@ -122,8 +120,34 @@ void add(const ContiguousContainer& a, const ContiguousContainer& b,
     // computed values have been transferred into 'result' and are available
     // host-side.
 }
+```
 
-{{< / highlight >}}
+Let's quickly see at a very high level the essential blocks needed a SYCL program:
+
+1. tell SYCL where the **host-side input and output memory** you're going 
+        to use for your kernels is by constructing **buffers**;
+2. construct a **command queue**, an object of type `cl::sycl::queue` that is
+       going to be your steering wheel for all the execution devices that support
+       kernel execution;
+3. **submit** a unit of work in the form of a **callable object** (a lambda
+       expression in this case, but everything that satisfies the
+       [`Callable` concept](https://en.cppreference.com/w/cpp/named_req/Callable)
+       will do the job) via `cl::sycl::queue::submit()`.
+
+At this point, *we're done*: the callable object you just submitted is going to
+be executed on *a device* (more on this later). Well, we still need to see what
+is needed to define the proper *unit of work* we just submitted to the
+*command queue*:
+
+1. define our **data dependencies**: this is achieved by declaring
+        **accessors**, objects that tell SYCL about our intents on the
+        *buffers* we previously defined (`cl::sycl::access::mode::read` for read-only, `cl::sycl::access::mode::write` for write-only, etc...);
+2. **invoke the actual kernel** on the selected device via
+        `cl::sycl::handler::parallel_for<>()` template method. Just like we saw
+        before for the submission to the command queue, the kernel is just an
+        object of [`Callable` type](https://en.cppreference.com/w/cpp/named_req/Callable).
+
+***Now we are really done***.
 
 From this trivial example we can make some interesting observations about the SYCL
 programming model:
@@ -189,8 +213,7 @@ This design principle affects also the execution order of kernels: SYCL command 
 required to be asyncronous and, while the actual execution order is unspecified, *data
 dependencies* across kernels are guaranteed to be satisfied by the runtime.
 
-{{< highlight cpp "linenos=table,hl_lines=13-14 20-21 27-28" >}}
-
+```cpp
 using cl::sycl::access::mode::read,
       cl::sycl::access::mode::write,
       cl::sycl::access::mode::read_write;
@@ -221,8 +244,7 @@ queue.submit([&](cl::sycl::handler& cgh) {
     auto inout = C.get_access<read_write>(cgh);
     //...
 }
-
-{{< / highlight >}}
+```
 
 What the runtime does here is that it builds the *dependency graph* of our kernels based
 on the *data dependencies* we implicitly declared among them by retrieving *accessors*. In
