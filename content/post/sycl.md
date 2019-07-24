@@ -317,7 +317,7 @@ portability among its design goals**~~.
 > as a very high priority design goal** but, given that:
 >
 > 1. the bulk of perfomance portability is delegated to lower level building blocks
->    (SYCL and SPIR) that have been designed from scratch for this purpose;
+>    (OpenCL and SPIR) that have been designed from scratch for this purpose;
 > 2. when so diverse architectures must be taken into account, portability and performance
 >    are inherently antithetical and a tradeoff is needed;
 >
