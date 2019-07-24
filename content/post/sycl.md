@@ -262,8 +262,9 @@ queue.submit([&](cl::sycl::handler& cgh) {
 
 What the runtime does here is that it builds the *dependency graph* of our kernels based
 on the *data dependencies* we implicitly declared among them by retrieving *accessors*. In
-this case the runtime deduces the following dependency DAG (arrow is a *depends on*
-directed relationship):
+this case the runtime deduces the following dependency
+[DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (arrow is a *depends on*
+relationship):
 
 ![deps](/img/sycl-kernel-dependencies.png)
 
