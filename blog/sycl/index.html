@@ -305,8 +305,9 @@ cl<span style="color:#f92672">::</span>sycl<span style="color:#f92672">::</span>
 </code></pre></div>
 <p>What the runtime does here is that it builds the <em>dependency graph</em> of our kernels based
 on the <em>data dependencies</em> we implicitly declared among them by retrieving <em>accessors</em>. In
-this case the runtime deduces the following dependency DAG (arrow is a <em>depends on</em>
-directed relationship):</p>
+this case the runtime deduces the following dependency
+<a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a> (arrow is a <em>depends on</em>
+relationship):</p>
 
 <p><img src="/img/sycl-kernel-dependencies.png" alt="deps" /></p>
 
