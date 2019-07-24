@@ -206,7 +206,7 @@ APIs require) [^compilation].
 
 Unlike CUDA and OpenCL where explicit copies are required by the model, here we just
 declare our read/write intent over `cl::sycl::buffer` and the SYCL runtime
-deduces[^explicit-copy] which buffers have to be transferred to and from host
+deduces[^explicit-copy] which buffers have to be transferred to and from host 
 containers [^contiguous-container].
 
 [^explicit-copy]: [Jeff Hammond](https://jeffhammond.github.io/) pointed out
@@ -226,7 +226,7 @@ containers [^contiguous-container].
     [`GSL` does for `gsl::span<T>`](https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426)).
 
 This design principle affects also the execution order of kernels: SYCL command queues are
-required to be asynchronous and, while the actual execution order is unspecified, *data
+required to be asyncronous and, while the actual execution order is unspecified, *data
 dependencies* across kernels are guaranteed to be satisfied by the runtime.
 
 ```cpp
@@ -355,12 +355,12 @@ portability among its design goals**~~.
 > Contrary to what I was assuming, **_performance portability_ has been indeed considered
 > as a very high priority design goal** but, given that:
 >
-> 1. the bulk of performance portability is delegated to lower level building blocks
+> 1. the bulk of perfomance portability is delegated to lower level building blocks
 >    (OpenCL and SPIR) that have been designed from scratch for this purpose;
 > 2. when so diverse architectures must be taken into account, portability and performance
->    are inherently antithetical and a trade off is needed;
+>    are inherently antithetical and a tradeoff is needed;
 >
-> SYCL designers acknowledged this unavoidable trade off and **choose to fill
+> SYCL designers aknowledged this unavoidable tradeoff and **choose to fill
 > this gap making sure that adapting a kernel to a new hardware platform
 > would have been as straightforward, convenient and painless as possible**.
 
@@ -386,7 +386,7 @@ Despite this inevitable shortcoming, SYCL still brings a lot of advantages, for 
     into account.
 
 Moreover, several open and closed source implementations are already available,
-each one with its goals and strengths:
+each one with its goals and strenghts:
 
 * [triSYCL](https://github.com/triSYCL/triSYCL), the reference implementation;
 * [hipSYCL](https://github.com/illuhad/hipSYCL), an alternative open source 
@@ -403,7 +403,7 @@ To summarize the ecosystem, I will borrow this chart directly from the
 ![targets](/img/sycl-targets.png)
 
 Wrapping up, I personally think that the first, realistic, valuable goal that SYCL can
-achieve is to establish both **a standard platform and a common vocabulary for
+achieve is to estabilish both **a standard platform and a common vocabulary for
 heterogeneous systems programming** on which people coming from different industries and
 backgrounds can build communities, share code, tooling, build systems and, more
 importantly, **break out from vendor lock-ins**.
@@ -420,13 +420,13 @@ in Modena, I gave an introductory talk about the state of the art in GPGPU progr
 the paradigms that emerged in the last ten years and what SYCL brings to the table and why
 we should care. You can find all the support material including examples, build scripts
 and the slide deck [here](https://github.com/nazavode/meetupcpp-may-2019), feel free to
-grab anything you happen to find useful. You can even see me prattle on (**sorry, Italian
+grab anything you happen to find useful. You can even see me prattle on (**sorry, italian
 only**) [here](https://www.youtube.com/watch?v=c04Y9AUH-xU).
 
 ## Credits
 
 A lot of excellent charts, snippets and pitches have been taken directly from publicly
-available talks across the net, I've strove really hard to put proper credits but if you
+available talks across the net, I've strived really hard to put proper credits but if you
 notice that something's missing please drop a comment or open an issue on
 [the repo](https://www.italiancpp.org/event/meetup-maggio2019/).
 
@@ -453,7 +453,7 @@ understandable*.
 * [Modern C++ for accelerators: a SYCL deep dive by Andrew Richards](https://www.khronos.org/assets/uploads/developers/library/2018-evs/EVS2018_09_Modern_Cpp_for_accelerators_andrew.pdf) - an excellent slide deck to be printed and studied.
 * [2019 EuroLLVM Developers’ Meeting: A. Savonichev (Intel) "SYCL compiler: zero-cost abstraction and type safety for heterogeneous computing"](https://youtu.be/rfg19iODkhI) - a nice insight on how Intel is working on his own SYCL implementation for LLVM; mandatory for compiler nerds.
 * [SYCL 1.2.1 API Reference Card](https://www.khronos.org/files/sycl/sycl-12-reference-card.pdf) - print and hang it on the wall next to the Picasso you just bought at Sotheby's.
-* [SYCL Standard Specification](https://www.khronos.org/registry/SYCL/) - to be a proper standard, you need a proper spec. Not so *standardese* (a straightforward and educational read, actually) but definitely not a novel.
+* [SYCL Standard Specification](https://www.khronos.org/registry/SYCL/) - to be a proper standard, you need a proper spec. Not so *standardese* (a traightforward and educational read, actually) but definitely not a novel.
 * [GCC support for offloading to PTX via OpenACC](https://gcc.gnu.org/wiki/Offloading)
 * [Compiling CUDA with clang - LLVM 9 documentation](https://llvm.org/docs/CompileCudaWithLLVM.html)
 * [CppCon 2016: CUDA is a low-level language by Justin Lebar](https://youtu.be/KHa-OSrZPGo)
