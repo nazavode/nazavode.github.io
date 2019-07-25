@@ -8,9 +8,6 @@ paginate = 5
 pygmentsCodefences = true
 pygmentsStyle = "monokai"
 
-# Disqus (https://gohugo.io/content-management/comments/#add-disqus)
-disqusShortname = "nazavodeio"
-
 # Theme
 theme = "hyde-x"
 
@@ -61,3 +58,11 @@ theme = "hyde-x"
 
     # Other social-like sidebar links
     rss = true
+
+    # utterances is a comment system based on GitHub issues
+    # https://utteranc.es
+    [params.utterances]
+        repo = "nazavode/nazavode.github.io"
+        issueTerm = "title"
+        issueLabel = "feedback"
+        theme = "github-light"
