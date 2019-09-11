@@ -32,11 +32,11 @@ theme = "hyde-x"
     # If false display full article contents in blog index.
     # Otherwise show description and 'read on' link to individual blog post page.
     # Default (if omitted) is true.
-    truncate = false
+    truncate = true
 
     # Used when a given page doesn't set its own.
-    defaultDescription = "Just volatile hacks."
-    defaultKeywords = "hacking,development,software,python,c++,c99,algorithms"
+    defaultDescription = "Volatile hacks."
+    defaultKeywords = "hacking,development,software,python,c++,c99,algorithms,gpgpu,hpc"
 
     # Changes sidebar background and link/accent colours.
     # See below for more colour options.
