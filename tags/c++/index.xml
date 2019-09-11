@@ -17,7 +17,10 @@
       <pubDate>Sun, 21 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/blog/sycl/</guid>
-      <description>Back in 2009 when I began doing real work with GPGPUs and CUDA in the context of large scale HPC simulations, the developer experience was dreadful. Sure, for the right algorithm and after lots of blood and tears, performances usually turned out excellent. But before production, comes the poor developer. Debugging CUDA kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated gaming rig (bought just for that purpose) because debuggers needed two identical GPUs to work (when they actually worked, and that happened only if you spelled your prayers right the night before).</description>
+      <description>&lt;p&gt;Back in 2009 when I began doing real work with GPGPUs and &lt;a href=&#34;https://en.wikipedia.org/wiki/CUDA&#34;&gt;CUDA&lt;/a&gt;
+in the context of large scale HPC simulations, the developer experience was &lt;em&gt;dreadful&lt;/em&gt;.
+Sure, for the right algorithm and after lots of blood and tears, performances usually
+turned out excellent. But before production, comes the poor developer.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -26,7 +29,13 @@
       <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://nazavode.github.io/blog/google-benchmark/</guid>
-      <description>During the last meetup of the Italian C++ Community in Modena, Italy I had the chance to give a talk about profiling C++ code. The whole game boils down to understanding what&amp;rsquo;s going on when you have to cope with very smart optimizing compilers, NUMA architectures and speculative, superscalar CPUs: in this quest for knowledge we are lucky enough to have some extremely useful tools like the holy perf and micro benchmarks, using the excellent Google Benchmark for instance.</description>
+      <description>&lt;p&gt;During the last meetup of the &lt;a href=&#34;https://twitter.com/italiancpp&#34;&gt;Italian C++ Community&lt;/a&gt; in
+Modena, Italy I had the chance to give a talk about profiling C++ code. The whole game
+boils down to &lt;em&gt;understanding&lt;/em&gt; what&amp;rsquo;s going on when you have to cope with &lt;em&gt;very smart&lt;/em&gt;
+optimizing compilers, NUMA architectures and speculative, superscalar CPUs: in this quest
+for knowledge we are lucky enough to have some extremely useful tools like the &lt;em&gt;holy&lt;/em&gt;
+&lt;code&gt;perf&lt;/code&gt; and micro benchmarks, using the excellent
+&lt;a href=&#34;https://github.com/google/benchmark&#34;&gt;Google Benchmark&lt;/a&gt; for instance.&lt;/p&gt;</description>
     </item>
     
     <item>
