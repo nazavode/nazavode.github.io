@@ -1,6 +1,5 @@
 +++
 title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
-description = "Generating Doxygen documentation with CMake with proper targets and dependency checking."
 date = "2013-01-19"
 categories = ["Dev", "Tools"]
 tags = ["cmake", "doxygen", "build systems"]

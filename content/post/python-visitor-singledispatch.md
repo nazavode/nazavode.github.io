@@ -1,6 +1,5 @@
 +++
 title = "The Visitor Pattern in Python"
-description = "Implementing the Visitor pattern in Python augmenting the standard `singledispatch` decorator"
 categories = ["Dev", "Languages"]
 tags = ["python", "design patterns", "visitor", "type dispatching", "singledispatch", "multimethod"]
 date = "2015-12-19"

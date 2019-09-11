@@ -1,6 +1,5 @@
 +++
 title = "Salvaging 10 years of Trac while moving to GitLab: tooling for a better life"
-description = "Tracboat, a trac-to-gitlab lifeboat"
 categories = ["Dev", "Tooling"]
 tags = ["python", "gitlab", "trac", "migration", "devops"]
 date = "2017-04-11"

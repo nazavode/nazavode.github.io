@@ -8,8 +8,9 @@ tags = ["c++", "sycl", "cuda", "opencl", "spir", "compilers", "accelerators"]
 Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA)
 in the context of large scale HPC simulations, the developer experience was *dreadful*.
 Sure, for the right algorithm and after lots of blood and tears, performances usually
-turned out excellent. But before production, comes the poor developer. Debugging CUDA
-kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated
+turned out excellent. But before production, comes the poor developer.
+<!--more-->
+Debugging CUDA kernels was a nightmare: whenever I had to track down a bug I had to fire up a dedicated
 gaming rig (bought just for that purpose) because debuggers needed *two identical GPUs to
 work* (when they actually worked, and that happened only if you spelled your prayers right
 the night before). Compilers segfaulted all the time.

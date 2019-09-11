@@ -1,6 +1,5 @@
 +++
 title = "Aliasing Explained (Part 1)"
-description = "What is aliasing and why you should care"
 date = "2017-03-26"
 categories = ["Dev", "Languages", "C"]
 tags = ["c", "c++", "fortran", "aliasing", "optimization"]

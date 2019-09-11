@@ -13,6 +13,8 @@ for knowledge we are lucky enough to have some extremely useful tools like the *
 `perf` and micro benchmarks, using the excellent
 [Google Benchmark](https://github.com/google/benchmark) for instance.
 
+<!--more-->
+
 **It has been a lot of fun!**
 
 You can find all the support material including examples and helper scripts
