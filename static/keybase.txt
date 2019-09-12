@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/nazavode
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://nazavode.github.io
+  * I am nazavode (https://keybase.io/nazavode) on keybase.
+  * I have a public key ASDiMnruC_AUKso8xRMfwEGzmE0JaoRI0RF7pi1Hpc1qlAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101560731e4782508fe0d633ef6560416627ff781e68911a1a1373e15e219c9023a0a",
+      "host": "keybase.io",
+      "kid": "0120e2327aee0bf0142aca3cc5131fc041b3984d096a8448d1117ba62d47a5cd6a940a",
+      "uid": "9a13f54d3587122cff65e5a8be316519",
+      "username": "nazavode"
+    },
+    "merkle_root": {
+      "ctime": 1568325610,
+      "hash": "e03163c60dc6e6a404fddd7f3fedf25ca6b5281998c44e6f6fb3493605dff8eb0092fae1cf316f68780323d847e7cfd3cced76b0cf03cf09277eb0b436ab43b3",
+      "hash_meta": "c33eeec0aff7b2804e2ba0f53f1960f53d263f06fa2950e8540b4b515d72384f",
+      "seqno": 7049976
+    },
+    "service": {
+      "entropy": "SCnYiFdGjmKNiqy7slxeNbJu",
+      "hostname": "nazavode.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "4.4.1"
+  },
+  "ctime": 1568325623,
+  "expire_in": 504576000,
+  "prev": "1b7081ea3daa0f8145b54078f8f0c89e3aece3a742fb844cb8bb65aa5fd826c1",
+  "seqno": 22,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg4jJ67gvwFCrKPMUTH8BBs5hNCWqESNERe6YtR6XNapQKp3BheWxvYWTESpcCFsQgG3CB6j2qD4FFtUB4+PDInjrs46dC+4RMuLtlql/YJsHEIL+QdqQGqh/oi57EA4uiMBwBXbJIhiAUk32oHYQNYaZoAgHCo3NpZ8RAmegYxMw2Grm+i6hZojJcTzs+6x39PBs7Ww9Y9cMNBmZhQoaj19bfxNDr1BlWDF1wY6sS2oxBv4SZQJr8AOx7D6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIFpQOKZ/t4uuzguDLUgRYLjRV1v+Q3GxWZgWvjah5PxTo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/nazavode
+
+==================================================================
