@@ -12,8 +12,8 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
 [params]
   author = "Federico Ficarelli"
   description = "A bit more than nothing to see here."
-  copyright = "&copy; 2020 Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>). All rights reserved."
-  
+  copyright = "Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>)."
+
   [params.feedback]
         github = "nazavode/nazavode.github.io"
 
