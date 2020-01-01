@@ -1,8 +1,7 @@
 +++
 title = "Look ma, no CUDA! Programming GPUs with modern C++ and SYCL"
 date = "2019-07-21"
-categories = ["Dev", "Talk"]
-tags = ["c++", "sycl", "cuda", "opencl", "spir", "compilers", "accelerators"]
+feedbackGithubIssue = 1
 +++
 
 Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA)
@@ -150,7 +149,7 @@ is needed to define the proper *unit of work* we just submitted to the
 1. define our **data dependencies**: this is achieved by declaring
         **accessors**, objects that tell SYCL about our intents on the
         *buffers* we previously defined (`cl::sycl::access::mode::read`
-        for read-only,`cl::sycl::access::mode::write` for write-only);
+        for read-only, `cl::sycl::access::mode::write` for write-only);
 2. **invoke the actual kernel** on the selected device via
         `cl::sycl::handler::parallel_for<>()` template method. Just like we saw
         before for the submission to the command queue, the kernel is just an

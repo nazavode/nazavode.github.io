@@ -1,8 +1,6 @@
 +++
 title = "Documentation with Doxygen and CMake: a (slightly) improved approach"
 date = "2013-01-19"
-categories = ["Dev", "Tools"]
-tags = ["cmake", "doxygen", "build systems"]
 +++
 
 After days of hard work we ended up with our lovely crafted code base, a

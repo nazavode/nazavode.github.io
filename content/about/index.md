@@ -1,9 +1,6 @@
 +++
-date = "2015-12-17T23:53:53+01:00"
-title = "About"
-
-[menu.main]
-	weight = 1
+title = "About me"
+feedbackDisable = true
 +++
 
 Hi! I am Federico Ficarelli, I work as an HPC software engineer at the

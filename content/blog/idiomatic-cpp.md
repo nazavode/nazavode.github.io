@@ -1,7 +1,5 @@
 +++
 title = "Idiomatic C++"
-categories = ["Dev", "Languages", "C++"]
-tags = ["c++", "guidelines", "idioms"]
 date = "2014-02-20"
 +++
 

@@ -1,7 +1,5 @@
 +++
 title = "Salvaging 10 years of Trac while moving to GitLab: tooling for a better life"
-categories = ["Dev", "Tooling"]
-tags = ["python", "gitlab", "trac", "migration", "devops"]
 date = "2017-04-11"
 +++
 

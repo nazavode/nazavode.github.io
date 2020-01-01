@@ -1,8 +1,6 @@
 +++
 title = "Understanding performance with Google Benchmark @ Italian C++ Meetup"
 date = "2018-12-13"
-categories = ["Dev", "Talk"]
-tags = ["c++", "benchmark", "optimization", "profiling", "perf"]
 +++
 
 During the last meetup of the [Italian C++ Community](https://twitter.com/italiancpp) in

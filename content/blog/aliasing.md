@@ -1,8 +1,6 @@
 +++
 title = "Aliasing Explained (Part 1)"
 date = "2017-03-26"
-categories = ["Dev", "Languages", "C"]
-tags = ["c", "c++", "fortran", "aliasing", "optimization"]
 +++
 
 Since my job involves a lot of HPC stuff and performance-obsessed code, one of

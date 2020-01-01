@@ -1,9 +1,6 @@
 +++
 title = "The Visitor Pattern in Python"
-categories = ["Dev", "Languages"]
-tags = ["python", "design patterns", "visitor", "type dispatching", "singledispatch", "multimethod"]
 date = "2015-12-19"
-
 draft = true
 +++
 
