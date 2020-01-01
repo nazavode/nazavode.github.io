@@ -4,6 +4,7 @@ title = "/dev/null"
 
 theme = "refuse"
 enableEmoji = true
+disableKinds = ["taxonomy", "taxonomyTerm"]
 
 [permalinks]
     post = "/blog/:filename/"
