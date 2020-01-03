@@ -1,143 +1,96 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
+
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link type="text/css" rel="stylesheet" href="https://nazavode.github.io/css/all.min.css" />
+    
+    <title>
+Idiomatic C&#43;&#43; | /dev/null
+</title></head>
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
-  <title>Idiomatic C&#43;&#43; &middot; Federico Ficarelli</title>
-
-  
-  <link rel="stylesheet" href="https://nazavode.github.io/css/poole.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/poole-overrides.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-overrides.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-x.css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans:300,300i|Raleway" rel="stylesheet">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  
-
-  
-  
-  
-  
-
-  <meta name="description" content="Volatile hacks.">
-  <meta name="keywords" content="hacking,development,software,python,c&#43;&#43;,c99,algorithms,gpgpu,hpc">
-  
-
-  
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway', 'Fira Sans', 'Fira Mono']
-      }
-    });
-  </script>
-
-</head>
-<body class="theme-base-sulphur-00">
-<div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      
-      <h1>/dev/null</h1>
-      
-    </div>
-
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item"><a href="https://nazavode.github.io/">Blog</a></li>
-      
-      <li class="sidebar-nav-item"><a href="https://nazavode.github.io/about/">About</a></li>
-      
-    </ul>
-
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item">
-      <a href="https://github.com/nazavode"><i class="fa fa-github-square fa-1x"></i></a>
-      
-      
-      <a href="https://it.linkedin.com/in/fficarelli"><i class="fa fa-linkedin-square fa-1x"></i></a>
-      
-      
-      <a href="https://twitter.com/fficarelli"><i class="fa fa-twitter-square fa-1x"></i></a>
-      
-      <a href="https://nazavode.github.io/index.xml" type="application/rss+xml"><i class="fa fa-rss-square fa-1x"></i></a>
-      </li>
-    </ul>
+<body>
+    <header><nav id="hugo-breadcrumb">
+    <ol>
+        
 
     
 
-    <p class="footnote">
-        Powered by <a href="http://gohugo.io">Hugo</a><br/>
-        &copy; 2019 Federico Ficarelli
-    </p>
-
-  </div>
-</div>
-
-
-<div class="content container">
-  <div class="post">
-    <h1 class="post-title">Idiomatic C&#43;&#43;</h1>
-    <span class="post-date">Feb 20, 2014
     
-    <br/>
-    <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/languages">Languages</a><a class="label" href="https://nazavode.github.io/categories/c&#43;&#43;">C&#43;&#43;</a>
-    </span>
-    <p>I&rsquo;ve just <a href="http://www.slideshare.net/fficarelli/idiomatic-c">uploaded</a> a minimal collection of most wanted and widely accepted idioms and coding conventions
+
+<li>
+    <a href="https://nazavode.github.io/" >~</a>
+</li>
+
+
+<li>
+    <a href="https://nazavode.github.io/blog/" >blog</a>
+</li>
+
+
+<li class="active" >
+    <a href="https://nazavode.github.io/blog/idiomatic-cpp/"  class="active" >idiomatic-cpp</a>
+</li>
+
+    </ol>
+</nav>
+
+</header>
+    <main>
+<article>
+    <h1 id="hugo-single-title">Idiomatic C&#43;&#43;</h1>
+    
+        <time datetime="2014-02-20" pubdate="pubdate"></time>
+        <span id="hugo-single-subtitle">February 20, 2014</span>
+    
+    <div id="hugo-single-content">
+    <p>I've just <a href="http://www.slideshare.net/fficarelli/idiomatic-c">uploaded</a> a minimal collection of most wanted and widely accepted idioms and coding conventions
 for C++ development presented along with examples and comments. The lecture targets performance oriented codes so
 emphasis is on performance-friendly techniques.</p>
-
 <p>Topics covered:</p>
-
 <p><strong>1. Design issues: idioms and best practices</strong></p>
-
 <ul>
 <li>Resource Aquisition Is Initialization (RAII)</li>
 <li>Ownership semantics and smart pointers</li>
 <li>Header files: dependencies and decoupling</li>
 </ul>
-
 <p><strong>2. Objects Construction/Destruction/Copying</strong></p>
-
 <ul>
 <li>Designing constructors</li>
 <li>Rule Of Three</li>
 <li>Transactional programming</li>
 </ul>
-
 <p><strong>3. Namespaces</strong></p>
-
 <ul>
 <li>ADL/Koenig Lookup</li>
 </ul>
-
 <p><strong>4. Static analyzers survey</strong></p>
-
 <p>You can find full presentation materials <a href="http://www.slideshare.net/fficarelli/idiomatic-c">on Slideshare</a> (and <a href="https://speakerdeck.com/nazavode/idiomatic-c-plus-plus">Speaker Deck</a> as well).</p>
-  </div>
-  
-  
-  <script src="https://utteranc.es/client.js"
-        repo="nazavode/nazavode.github.io"
-        issue-term="title"
-        label="feedback"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-  </script>
-  
+    </div>
+</article>
+</main>
+    <footer>
+
+<div id="hugo-feedback">
+    
+        For comments, feedback and absolutely everything related to this post,
+        please consider
+        
+        opening an issue <a href="https://github.com/nazavode/nazavode.github.io/issues">here</a>, thanks!
+        
+    
 </div>
 
 
+<div id="hugo-copyright">
+    &copy; 2020 Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>). All rights reserved.
+</div>
 
 
-
+</footer>
 </body>
-</html>
 
+</html>

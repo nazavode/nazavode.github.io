@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
@@ -8,32 +8,7 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/accelerators/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/c&#43;&#43;/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/compilers/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/cuda/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/dev/</loc>
+    <loc>https://nazavode.github.io/blog/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -43,78 +18,8 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/opencl/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/post/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/spir/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/sycl/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/talk/</loc>
-    <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/benchmark/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/optimization/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/perf/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/profiling/</loc>
-    <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/blog/google-benchmark/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/devops/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/gitlab/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/migration/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/python/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -123,48 +28,8 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/categories/tooling/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/trac/</loc>
-    <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/aliasing/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/blog/aliasing/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/c/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/c/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/fortran/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/languages/</loc>
-    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/about/</loc>
-    <lastmod>2015-12-17T23:53:53+01:00</lastmod>
   </url>
   
   <url>
@@ -173,33 +38,8 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/categories/c&#43;&#43;/</loc>
-    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/guidelines/</loc>
-    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://nazavode.github.io/blog/idiomatic-cpp/</loc>
     <lastmod>2014-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/idioms/</loc>
-    <lastmod>2014-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/build-systems/</loc>
-    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/tags/cmake/</loc>
-    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -208,13 +48,7 @@
   </url>
   
   <url>
-    <loc>https://nazavode.github.io/tags/doxygen/</loc>
-    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/categories/tools/</loc>
-    <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+    <loc>https://nazavode.github.io/about/</loc>
   </url>
   
 </urlset>

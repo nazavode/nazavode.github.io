@@ -1,94 +1,52 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="en-us">
+
 <head>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link type="text/css" rel="stylesheet" href="https://nazavode.github.io/css/all.min.css" />
+    
+    <title>
+Salvaging 10 years of Trac while moving to GitLab: tooling for a better life | /dev/null
+</title></head>
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-
-  <title>Salvaging 10 years of Trac while moving to GitLab: tooling for a better life &middot; Federico Ficarelli</title>
-
-  
-  <link rel="stylesheet" href="https://nazavode.github.io/css/poole.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/poole-overrides.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-overrides.css">
-  <link rel="stylesheet" href="https://nazavode.github.io/css/hyde-x.css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans:300,300i|Raleway" rel="stylesheet">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  
-
-  
-  
-  
-  
-
-  <meta name="description" content="Volatile hacks.">
-  <meta name="keywords" content="hacking,development,software,python,c&#43;&#43;,c99,algorithms,gpgpu,hpc">
-  
-
-  
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ['Raleway', 'Fira Sans', 'Fira Mono']
-      }
-    });
-  </script>
-
-</head>
-<body class="theme-base-sulphur-00">
-<div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      
-      <h1>/dev/null</h1>
-      
-    </div>
-
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item"><a href="https://nazavode.github.io/">Blog</a></li>
-      
-      <li class="sidebar-nav-item"><a href="https://nazavode.github.io/about/">About</a></li>
-      
-    </ul>
-
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item">
-      <a href="https://github.com/nazavode"><i class="fa fa-github-square fa-1x"></i></a>
-      
-      
-      <a href="https://it.linkedin.com/in/fficarelli"><i class="fa fa-linkedin-square fa-1x"></i></a>
-      
-      
-      <a href="https://twitter.com/fficarelli"><i class="fa fa-twitter-square fa-1x"></i></a>
-      
-      <a href="https://nazavode.github.io/index.xml" type="application/rss+xml"><i class="fa fa-rss-square fa-1x"></i></a>
-      </li>
-    </ul>
+<body>
+    <header><nav id="hugo-breadcrumb">
+    <ol>
+        
 
     
 
-    <p class="footnote">
-        Powered by <a href="http://gohugo.io">Hugo</a><br/>
-        &copy; 2019 Federico Ficarelli
-    </p>
-
-  </div>
-</div>
-
-
-<div class="content container">
-  <div class="post">
-    <h1 class="post-title">Salvaging 10 years of Trac while moving to GitLab: tooling for a better life</h1>
-    <span class="post-date">Apr 11, 2017
     
-    <br/>
-    <a class="label" href="https://nazavode.github.io/categories/dev">Dev</a><a class="label" href="https://nazavode.github.io/categories/tooling">Tooling</a>
-    </span>
+
+<li>
+    <a href="https://nazavode.github.io/" >~</a>
+</li>
+
+
+<li>
+    <a href="https://nazavode.github.io/blog/" >blog</a>
+</li>
+
+
+<li class="active" >
+    <a href="https://nazavode.github.io/blog/tracboat/"  class="active" >tracboat</a>
+</li>
+
+    </ol>
+</nav>
+
+</header>
+    <main>
+<article>
+    <h1 id="hugo-single-title">Salvaging 10 years of Trac while moving to GitLab: tooling for a better life</h1>
+    
+        <time datetime="2017-04-11" pubdate="pubdate"></time>
+        <span id="hugo-single-subtitle">April 11, 2017</span>
+    
+    <div id="hugo-single-content">
     <p>Some time ago in my team at work we began considering a complete makeover of our devops
 infrastructure. The platform in use was based on <strong><a href="https://trac.edgewall.org/">Trac</a></strong>, a tool that ten
 years ago proved itself packed with features, looked great and came in the form of an
@@ -100,75 +58,67 @@ continuous integration and deployment pipelines, as well as code review, suddenl
 out. <strong>The choice went for <a href="https://gitlab.com/">GitLab</a></strong>, a solution that would have given us
 the same degree of freedom (free community edition, open source, easily manageable on
 premise) along all the shiny new features we were looking for.</p>
-
 <p>At that point, <strong>the issue of how to migrate all of the content came out</strong>.</p>
-
 <p>At the time every team used the same Trac instance as a <em>knowledge base</em>, with thousands
 of wiki pages, GBs of attachments and <strong>ten years of bug hunting chronicles</strong>.</p>
-
 <p>The boss was <em>really scared</em>. To be honest, we were all scared at the idea of loosing
 something in the migration process.</p>
-
 <p>Even the remote chance of loosing a single bit of our history was not acceptable and a
-risk we weren&rsquo;t keen facing at the point that leaving everything as it was untouched just
+risk we weren't keen facing at the point that leaving everything as it was untouched just
 out of fear was <em>real</em>. In the face of the risk of giving up on the makeover, I decided I
 had to try to do something. The prospect of such a bump in life quality for the whole team
 was enough for me to invest one weekend in crafting some tool that would have left no
 objections on the table and hopefully all of us with a shiny, new devops platform.</p>
-
 <p><strong>I came up with <a href="https://github.com/tracboat/tracboat">Tracboat</a></strong>, a <strong>command line tool</strong> written in Python
-aimed at <strong>migrating an entire Trac instance to GitLab</strong>. It&rsquo;s obviously not perfect: it
-has been written in a rush, it&rsquo;s slow (no
+aimed at <strong>migrating an entire Trac instance to GitLab</strong>. It's obviously not perfect: it
+has been written in a rush, it's slow (no
 <a href="https://docs.python.org/3/library/xmlrpc.client.html#multicall-objects">XML-RPC multicalls</a>),
 with little unit testing and the code base definitely needs some love and refactoring, but
 <em>it works</em>. And <strong>it worked extremely well for our own migration</strong>.</p>
-
 <p>You can do essentially two of things with the tool:</p>
-
 <ol>
 <li><strong>export a Trac instance as a whole in a single <code>json</code> file</strong> including attachments,
 wiki pages and issues (maybe piping it into some compressor, <code>json</code> can grow very fast
 in size);</li>
 <li><strong>import a previously exported instance into a fresh GitLab instance</strong>.</li>
 </ol>
-
 <p>It will take care of <strong>attachments</strong> by uploading them and updating links, <strong>translate
 wiki pages</strong> from Trac format to markdown and <strong>map Trac users to new GitLab accounts</strong>
 (creating them from scratch when needed). By combining those basic operations you can, for
 example, migrate a Trac instance directly into GitLab without having to rely on an
 intermediate local file.</p>
-
 <p>Unfortunately the lack of spare time forced me to set back any further development despite
 the lots of people coming out asking for fixes and new features (yes, a lot of folks are
 still using Trac in 2017), so I decided to move the <a href="https://github.com/nazavode">original repository</a>
 to a <a href="https://github.com/tracboat">brand new organization</a> and accept the help offered by
 the community.</p>
-
 <h2 id="credits">Credits</h2>
-
 <p>The originating idea was taken from <a href="https://github.com/moimael/trac-to-gitlab">trac-to-gitlab</a>
 by <a href="https://github.com/moimael">Maël Lavault</a>.</p>
-
 <p>A lot of work has been taken over by <a href="https://github.com/glensc">Elan Ruusamäe</a> that is
 now the most active maintainer (thank you!).</p>
-  </div>
-  
-  
-  <script src="https://utteranc.es/client.js"
-        repo="nazavode/nazavode.github.io"
-        issue-term="title"
-        label="feedback"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-  </script>
-  
+    </div>
+</article>
+</main>
+    <footer>
+
+<div id="hugo-feedback">
+    
+        For comments, feedback and absolutely everything related to this post,
+        please consider
+        
+        opening an issue <a href="https://github.com/nazavode/nazavode.github.io/issues">here</a>, thanks!
+        
+    
 </div>
 
 
+<div id="hugo-copyright">
+    &copy; 2020 Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>). All rights reserved.
+</div>
 
 
-
+</footer>
 </body>
-</html>
 
+</html>
