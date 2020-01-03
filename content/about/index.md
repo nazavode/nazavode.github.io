@@ -1,6 +1,6 @@
 +++
 title = "About me"
-feedbackDisable = true
+feedback = false
 +++
 
 Hi! I am Federico Ficarelli, I work as an HPC software engineer at the
