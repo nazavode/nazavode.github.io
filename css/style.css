@@ -17,21 +17,18 @@ html {
 body {
     /* Beware of legibility, 80-90 chars considered sweet spot */
     max-width: 80ch;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
     /* Fonts selection taken from here: https://github.com/mvasilkov/systematize */
     font-family: -apple-system, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', sans-serif;
     color: rgba(0, 0, 0, 0.8);
     text-rendering: optimizeLegibility;
 }
 
-header {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-}
-
 footer {
-    margin-top: 6rem;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
 }
 
 a {
@@ -62,7 +59,7 @@ code,
 pre {
     /* Fonts selection taken from here: https://github.com/mvasilkov/systematize */
     font-family: 'SFMono-Regular', 'SF Mono', 'Ubuntu Mono', Consolas, 'DejaVu Sans Mono', Menlo, monospace;
-    font-size: 1em;
+    font-size: 0.95em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -161,13 +158,14 @@ img {
 /* Hugo 'list' template (layouts/_default/list.html) */
 
 #hugo-list-item-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.5;
     color: rgba(0, 0, 0, 1);
 }
 
 #hugo-list-item-subtitle {
+    display: block;
     font-size: .875rem;
     color: rgba(119, 119, 119, 1);
 }
@@ -182,23 +180,11 @@ img {
     color: rgba(0, 0, 0, 1);
 }
 
-@media (min-width: 575px) {
-    #hugo-single-title {
-        font-size: 4em;
-    }
-}
-
 #hugo-single-subtitle {
     font-size: 0.9em;
     display: block;
     margin-bottom: 2rem;
     color: rgba(119, 119, 119, 1);
-}
-
-@media (min-width: 575px) {
-    #hugo-single-subtitle {
-        font-size: 1em;
-    }
 }
 
 #hugo-single-content {
@@ -244,4 +230,40 @@ div.highlight code {
 
 #hugo-404 a {
     color: rgba(0, 0, 0, 0.8);
+}
+
+/* Big viewport breakpoint */
+
+@media (min-width: 575px) {
+
+    header {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    footer {
+        margin-top: 6rem;
+        margin-bottom: 4rem;
+    }
+
+    code,
+    pre {
+        font-size: 1em;
+    }
+
+    #hugo-single-title {
+        font-size: 4em;
+    }
+
+    #hugo-single-subtitle {
+        font-size: 1em;
+    }
+
+    #hugo-list-item-title {
+        font-size: 1.5rem;
+    }
+    
+    #hugo-list-item-subtitle {
+        display: inline;
+    }
 }
