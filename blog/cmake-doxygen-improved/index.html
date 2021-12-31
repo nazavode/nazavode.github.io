@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
-    <link type="text/css" rel="stylesheet" href="https://nazavode.github.io/css/all.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://451.sh/css/all.min.css" />
     
     <title>
 Documentation with Doxygen and CMake: a (slightly) improved approach | /dev/null
@@ -22,17 +22,17 @@ Documentation with Doxygen and CMake: a (slightly) improved approach | /dev/null
     
 
 <li>
-    <a href="https://nazavode.github.io/" >~</a>
+    <a href="https://451.sh/" >~</a>
 </li>
 
 
 <li>
-    <a href="https://nazavode.github.io/blog/" >blog</a>
+    <a href="https://451.sh/blog/" >blog</a>
 </li>
 
 
 <li class="active" >
-    <a href="https://nazavode.github.io/blog/cmake-doxygen-improved/"  class="active" >cmake-doxygen-improved</a>
+    <a href="https://451.sh/blog/cmake-doxygen-improved/"  class="active" >cmake-doxygen-improved</a>
 </li>
 
     </ol>
@@ -52,8 +52,8 @@ portable CMake build system and we are now facing the task to generate a proper
 Doxygen documentation for our anxious customer. The solution, widely adopted,
 seems to be the one and only that can be found while googling and, to me, looks
 not so neat. So I tried to come up with a different approach.</p>
-<p>Let's first have a look at the widespread solution:</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#408080;font-style:italic">#-- Adds an Option to toggle the generation of the API documentation
+<p>Let&rsquo;s first have a look at the widespread solution:</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#408080;font-style:italic">#-- Adds an Option to toggle the generation of the API documentation
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000">option</span>(<span style="color:#ba2121">BUILD_DOCUMENTATION</span> <span style="color:#ba2121">&#34;Use Doxygen to create the HTML based API documentation&#34;</span> <span style="color:#ba2121">OFF</span>)<span style="">
 </span><span style=""></span><span style="color:#008000">IF</span>(<span style="color:#ba2121">BUILD_DOCUMENTATION</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">FIND_PACKAGE</span>(<span style="color:#ba2121">Doxygen</span>)<span style="">
@@ -97,14 +97,14 @@ elegant make doc target, eventually added to default set. After a bit of
 trial-and-error, I ended up with a bunch of lines of code that seems to work as
 we wanted:</li>
 </ol>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#008000">option</span>(<span style="color:#ba2121">BUILD_DOCUMENTATION</span>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#008000">option</span>(<span style="color:#ba2121">BUILD_DOCUMENTATION</span>
     <span style="color:#ba2121">&#34;Create and install the HTML based API documentation (requires Doxygen)&#34;</span> <span style="color:#ba2121">OFF</span>)<span style="">
 </span><span style=""></span><span style="color:#008000">IF</span>(<span style="color:#ba2121">BUILD_DOCUMENTATION</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">FIND_PACKAGE</span>(<span style="color:#ba2121">Doxygen</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">IF</span>(<span style="color:#ba2121">NOT</span> <span style="color:#ba2121">DOXYGEN_FOUND</span>)<span style="">
 </span><span style=""></span>    <span style="color:#008000">MESSAGE</span>(<span style="color:#ba2121">FATAL_ERROR</span> <span style="color:#ba2121">&#34;Doxygen is needed to build the documentation.&#34;</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">ENDIF</span>()<span style="">
-</span><span style=""></span><span style="">
+</span><span style="">
 </span><span style=""></span>  <span style="color:#008000">SET</span>( <span style="color:#ba2121">doxyfile_in</span>          <span style="color:#666">${</span><span style="color:#19177c">CMAKE_CURRENT_SOURCE_DIR</span><span style="color:#666">}</span><span style="color:#ba2121">/Doxyfile.in</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">SET</span>( <span style="color:#ba2121">doxyfile</span>             <span style="color:#666">${</span><span style="color:#19177c">PROJECT_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#ba2121">/Doxyfile</span>)<span style="">
 </span><span style=""></span>  <span style="color:#008000">SET</span>( <span style="color:#ba2121">doxy_html_index_file</span> <span style="color:#666">${</span><span style="color:#19177c">CMAKE_CURRENT_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#ba2121">/html/index.html</span>)<span style="">
@@ -113,7 +113,7 @@ we wanted:</li>
 </span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000">SET</span>( <span style="color:#ba2121">doxy_extra_files</span>     <span style="color:#666">${</span><span style="color:#19177c">CMAKE_CURRENT_SOURCE_DIR</span><span style="color:#666">}</span><span style="color:#ba2121">/mainpage.dox</span>) <span style="color:#408080;font-style:italic"># Pasted into Doxyfile.in
 </span><span style="color:#408080;font-style:italic"></span><span style="">
 </span><span style=""></span>  <span style="color:#008000">CONFIGURE_FILE</span>( <span style="color:#666">${</span><span style="color:#19177c">doxyfile_in</span><span style="color:#666">}</span> <span style="color:#666">${</span><span style="color:#19177c">doxyfile</span><span style="color:#666">}</span> <span style="color:#ba2121">@ONLY</span> )<span style="">
-</span><span style=""></span><span style="">
+</span><span style="">
 </span><span style=""></span>  <span style="color:#008000">ADD_CUSTOM_COMMAND</span>(
     <span style="color:#ba2121">OUTPUT</span> <span style="color:#666">${</span><span style="color:#19177c">doxy_html_index_file</span><span style="color:#666">}</span>
     <span style="color:#ba2121">COMMAND</span> <span style="color:#666">${</span><span style="color:#19177c">DOXYGEN_EXECUTABLE</span><span style="color:#666">}</span> <span style="color:#666">${</span><span style="color:#19177c">doxyfile</span><span style="color:#666">}</span>
@@ -126,9 +126,9 @@ we wanted:</li>
     <span style="color:#ba2121">DEPENDS</span> <span style="color:#ba2121">project_targets</span> <span style="color:#666">${</span><span style="color:#19177c">doxy_extra_files</span><span style="color:#666">}</span>
     <span style="color:#ba2121">COMMENT</span> <span style="color:#ba2121">&#34;Generating HTML documentation&#34;</span>
   )<span style="">
-</span><span style=""></span><span style="">
+</span><span style="">
 </span><span style=""></span>  <span style="color:#008000">ADD_CUSTOM_TARGET</span>( <span style="color:#ba2121">doc</span> <span style="color:#ba2121">ALL</span> <span style="color:#ba2121">DEPENDS</span> <span style="color:#666">${</span><span style="color:#19177c">doxy_html_index_file</span><span style="color:#666">}</span> )<span style="">
-</span><span style=""></span><span style="">
+</span><span style="">
 </span><span style=""></span>  <span style="color:#008000">INSTALL</span>( <span style="color:#ba2121">DIRECTORY</span> <span style="color:#666">${</span><span style="color:#19177c">CMAKE_CURRENT_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#ba2121">/html</span> <span style="color:#ba2121">DESTINATION</span> <span style="color:#ba2121">share/doc</span> )<span style="">
 </span><span style=""></span><span style="color:#008000">ENDIF</span>()<span style="">
 </span></code></pre></div><p>The point is that we still have our <code>doc</code> custom target (added to default
@@ -141,7 +141,7 @@ and whatever your documentation depends on;</li>
 <li>the <code>${doxyfile_in}</code> dependency is an overshoot but, as I say in the comment,
 removing it will break the dependency checking. The ideal solution would be
 specifying <code>${doxyfile}</code> only, letting it to trigger a lower-level custom
-command intended to configure and generate <code>${doxyfile_in}</code>. I'm still trying to
+command intended to configure and generate <code>${doxyfile_in}</code>. I&rsquo;m still trying to
 find an elegant solution to this little aesthetic flaw.</li>
 </ul>
 <hr>
@@ -167,7 +167,7 @@ find an elegant solution to this little aesthetic flaw.</li>
 
 
 <div id="hugo-copyright">
-    &copy; 2020 Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>). All rights reserved.
+    &copy; 2021 Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>). All rights reserved.
 </div>
 
 

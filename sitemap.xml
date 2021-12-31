@@ -1,54 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://nazavode.github.io/</loc>
+    <loc>https://451.sh/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/sycl/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/sycl/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/google-benchmark/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/google-benchmark/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/tracboat/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/tracboat/</loc>
     <lastmod>2017-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/aliasing/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/aliasing/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/first/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/first/</loc>
     <lastmod>2015-12-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/idiomatic-cpp/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/idiomatic-cpp/</loc>
     <lastmod>2014-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/blog/cmake-doxygen-improved/</loc>
+  </url><url>
+    <loc>https://451.sh/blog/cmake-doxygen-improved/</loc>
     <lastmod>2013-01-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://451.sh/about/</loc>
   </url>
-  
-  <url>
-    <loc>https://nazavode.github.io/about/</loc>
-  </url>
-  
 </urlset>
