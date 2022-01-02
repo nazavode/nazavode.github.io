@@ -1,6 +1,7 @@
 +++
 title = "Salvaging 10 years of Trac while moving to GitLab: tooling for a better life"
 date = "2017-04-11"
+aliases = [ "/blog/tracboat/" ]
 +++
 
 Some time ago in my team at work we began considering a complete makeover of our devops

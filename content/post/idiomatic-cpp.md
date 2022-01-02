@@ -1,6 +1,7 @@
 +++
 title = "Idiomatic C++"
 date = "2014-02-20"
+aliases = [ "/blog/idiomatic-cpp/" ]
 +++
 
 I've just [uploaded][slideshare] a minimal collection of most wanted and widely accepted idioms and coding conventions

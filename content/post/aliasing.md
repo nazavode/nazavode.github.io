@@ -1,6 +1,7 @@
 +++
 title = "Aliasing Explained (Part 1)"
 date = "2017-03-26"
+aliases = [ "/blog/aliasing/" ]
 +++
 
 Since my job involves a lot of HPC stuff and performance-obsessed code, one of

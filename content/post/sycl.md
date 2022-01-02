@@ -2,6 +2,7 @@
 title = "Look ma, no CUDA! Programming GPUs with modern C++ and SYCL"
 date = "2019-07-21"
 feedbackGithubIssue = 1
+aliases = [ "/blog/sycl/" ]
 +++
 
 Back in 2009 when I began doing real work with GPGPUs and [CUDA](https://en.wikipedia.org/wiki/CUDA)

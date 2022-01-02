@@ -1,6 +1,7 @@
 +++
 title = "Move on"
 date = "2015-12-17"
+aliases = [ "/blog/first/" ]
 +++
 
 Just moved my [old blog](https://devnone.wordpress.com) to the combo that mixes
