@@ -1,6 +1,6 @@
 baseurl = "https://451.sh/"
 languageCode = "en-us"
-title = "/dev/null"
+title = "~"
 
 theme = "refuse"
 enableEmoji = true
@@ -11,8 +11,7 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
 
 [params]
   author = "Federico Ficarelli"
-  description = "A bit more than nothing to see here."
-  copyright = "Federico Ficarelli (<a href='https://keybase.io/nazavode'>@nazavode</a>)."
+  description = "A time to break down, and a time to build up."
 
   [params.feedback]
         github = "nazavode/nazavode.github.io"
