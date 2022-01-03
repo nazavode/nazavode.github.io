@@ -50,7 +50,7 @@ that no one wanted to actually use in the real world?
 
 And then this happened:
 
-{{< tweet 1141736086726750209 >}}
+{{< tweet user="thekhronosgroup" id="1141736086726750209" >}}
 
 Intel announced to the world that their common programming model intended to target the
 whole heterogeneous system, from GPUs to FPGAs to regular x86 CPUs, is going to be based
