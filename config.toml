@@ -19,6 +19,11 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
 [markup]
     [markup.highlight]
         style = "pygments"
+    # TODO workaround for link lists, remove when
+    # a proper layout is available:
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
 
 [menu]
     [[menu.main]]
@@ -26,6 +31,10 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
         url = "/post/"
         weight = 1
     [[menu.main]]
+        name = "misc"
+        url = "/misc/"
+        weight = 2
+    [[menu.main]]
         name = "about"
         url = "/about/"
-        weight = 100
+        weight = 3
