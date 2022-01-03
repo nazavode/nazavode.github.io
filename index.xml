@@ -115,5 +115,14 @@ Get in touch glifi.05sneaker@icloud.com
 (this is a burner address, I will get back to you from the real one)</description>
     </item>
     
+    <item>
+      <title>Misc</title>
+      <link>https://451.sh/misc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://451.sh/misc/</guid>
+      <description>SGI Standard Template Library Programmer&#39;s Guide This is a snapshot of the original programmer&#39;s guide for the C++ STL developed and shipped by Silicon Graphics until its definitive end in 2009. It&#39;s still an extremely valuable resource: it covers all the foundamental concepts of generic programming as conceived back then by Stepanov and how they have been applied in the real world. Since www.sgi.com isn&#39;t available anymore, I&#39;ve just grabbed one of the many mirrors around and hosted it here unmodified.</description>
+    </item>
+    
   </channel>
 </rss>
