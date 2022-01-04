@@ -19,11 +19,6 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
 [markup]
     [markup.highlight]
         style = "pygments"
-    # TODO workaround for link lists, remove when
-    # a proper layout is available:
-    [markup.goldmark]
-        [markup.goldmark.renderer]
-            unsafe = true
 
 [menu]
     [[menu.main]]
