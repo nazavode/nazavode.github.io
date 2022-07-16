@@ -2,35 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://451.sh/post/sycl/</loc>
+    <loc>https://fcr.cc/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/</loc>
+    <loc>https://fcr.cc/post/sycl/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/</loc>
+    <loc>https://fcr.cc/post/</loc>
     <lastmod>2019-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/google-benchmark/</loc>
+    <loc>https://fcr.cc/post/google-benchmark/</loc>
     <lastmod>2018-12-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/tracboat/</loc>
+    <loc>https://fcr.cc/post/tracboat/</loc>
     <lastmod>2017-04-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/aliasing/</loc>
+    <loc>https://fcr.cc/post/aliasing/</loc>
     <lastmod>2017-03-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/first/</loc>
+    <loc>https://fcr.cc/post/first/</loc>
     <lastmod>2015-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/idiomatic-cpp/</loc>
+    <loc>https://fcr.cc/post/idiomatic-cpp/</loc>
     <lastmod>2014-02-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/post/cmake-doxygen-improved/</loc>
+    <loc>https://fcr.cc/post/cmake-doxygen-improved/</loc>
     <lastmod>2013-01-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://451.sh/about/</loc>
+    <loc>https://fcr.cc/about/</loc>
   </url><url>
-    <loc>https://451.sh/misc/</loc>
+    <loc>https://fcr.cc/misc/</loc>
   </url>
 </urlset>

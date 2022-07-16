@@ -24,17 +24,17 @@ Look ma, no CUDA! Programming GPUs with modern C&#43;&#43; and SYCL | ~
     
 
 <li>
-    <a href="https://451.sh/" >~</a>
+    <a href="https://fcr.cc/" >~</a>
 </li>
 
 
 <li>
-    <a href="https://451.sh/post/" >post</a>
+    <a href="https://fcr.cc/post/" >post</a>
 </li>
 
 
 <li class="active" >
-    <a href="https://451.sh/post/sycl/"  class="active" >sycl</a>
+    <a href="https://fcr.cc/post/sycl/"  class="active" >sycl</a>
 </li>
 
     </ol>
@@ -103,58 +103,58 @@ a totally different perspective.</p>
 concepts: it borrows the same device and execution models straight from OpenCL, which in
 turn is extremely similar to CUDA. Let&rsquo;s just have a look at a simple kernel that performs
 an element wise sum between containers:</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Kernel type tag
-</span><span style="color:#408080;font-style:italic">// Be sure to define it in an externally accessible
-</span><span style="color:#408080;font-style:italic">// namespace (e.g.: no anonymous)
-</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">typename</span><span style="color:#666">&gt;</span>
-<span style="color:#008000;font-weight:bold">struct</span> <span style="color:#00f;font-weight:bold">AddKernel</span> {};
-
-<span style="color:#008000;font-weight:bold">template</span><span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">typename</span> ContiguousContainer<span style="color:#666">&gt;</span>
-<span style="color:#b00040">void</span> add(<span style="color:#008000;font-weight:bold">const</span> ContiguousContainer<span style="color:#666">&amp;</span> a, <span style="color:#008000;font-weight:bold">const</span> ContiguousContainer<span style="color:#666">&amp;</span> b,
-         ContiguousContainer<span style="color:#666">&amp;</span> result) {
-    <span style="color:#008000;font-weight:bold">using</span> std<span style="color:#666">::</span>data,
-          std<span style="color:#666">::</span>size;
-    <span style="color:#008000;font-weight:bold">using</span> value_type <span style="color:#666">=</span> std<span style="color:#666">::</span>remove_cv_t<span style="color:#666">&lt;</span>std<span style="color:#666">::</span>remove_reference_t<span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">decltype</span>(<span style="color:#666">*</span>data(c))<span style="color:#666">&gt;&gt;</span>;
-    <span style="color:#008000;font-weight:bold">using</span> kernel_tag <span style="color:#666">=</span> AddKernel<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span>;
-
-    <span style="color:#408080;font-style:italic">// Queue&#39;s destructor will wait for all pending operations to complete
-</span><span style="color:#408080;font-style:italic"></span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>queue queue;
-
-    <span style="color:#408080;font-style:italic">// Create buffers (views on a, b and result contiguous storage)
-</span><span style="color:#408080;font-style:italic"></span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> A{data(a), size(result)};
-    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> B{data(b), size(result)};
-    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> R{data(result), size(result)};
-
-    <span style="color:#408080;font-style:italic">// The command group describes all setup operations needed
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// to execute the kernel on the selected device
-</span><span style="color:#408080;font-style:italic"></span>    queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
-        <span style="color:#408080;font-style:italic">// Get proper accessors to existing buffers by specifying
-</span><span style="color:#408080;font-style:italic"></span>        <span style="color:#408080;font-style:italic">// read/write intents
-</span><span style="color:#408080;font-style:italic"></span>        <span style="color:#408080;font-style:italic">// (note that A, B and R are captured by reference)
-</span><span style="color:#408080;font-style:italic"></span>        <span style="color:#008000;font-weight:bold">auto</span> ka <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read<span style="color:#666">&gt;</span>(cgh);
-        <span style="color:#008000;font-weight:bold">auto</span> kb <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read<span style="color:#666">&gt;</span>(cgh);
-        <span style="color:#008000;font-weight:bold">auto</span> kr <span style="color:#666">=</span> R.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>write<span style="color:#666">&gt;</span>(cgh);
-
-        <span style="color:#408080;font-style:italic">// Enqueue parallel kernel
-</span><span style="color:#408080;font-style:italic"></span>        cgh.parallel_for<span style="color:#666">&lt;</span>kernel_tag<span style="color:#666">&gt;</span>(
-            cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>range<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span>{size(result)},  <span style="color:#408080;font-style:italic">// 1st parameter: the kernel grid
-</span><span style="color:#408080;font-style:italic"></span>            [<span style="color:#666">=</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>id<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span> idx) {         <span style="color:#408080;font-style:italic">// 2nd parameter: the actual kernel
-</span><span style="color:#408080;font-style:italic"></span>                <span style="color:#408080;font-style:italic">// We are in the kernel body:
-</span><span style="color:#408080;font-style:italic"></span>                <span style="color:#408080;font-style:italic">// this is the only code that gets compiled for device(s).
-</span><span style="color:#408080;font-style:italic"></span>                kr[idx] <span style="color:#666">=</span> ka[idx] <span style="color:#666">+</span> kb[idx];
-            }
-        );
-    });
-    <span style="color:#408080;font-style:italic">// At this point our kernel has been asynchronously submitted
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// for execution
-</span><span style="color:#408080;font-style:italic"></span>
-    <span style="color:#408080;font-style:italic">// End of current scope: before actually returning, the queue destructor
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// will block until all operations (copies and kernel executions)
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// are completed. We are sure that when the function returns all the
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// computed values have been transferred into &#39;result&#39; and are available
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// host-side.
-</span><span style="color:#408080;font-style:italic"></span>}
-</code></pre></div><p>Let&rsquo;s quickly see at a very high level the essential building blocks needed
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// Kernel type tag
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// Be sure to define it in an externally accessible
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// namespace (e.g.: no anonymous)
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">template</span> <span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">typename</span><span style="color:#666">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">struct</span> <span style="color:#00f;font-weight:bold">AddKernel</span> {};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">template</span><span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">typename</span> ContiguousContainer<span style="color:#666">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#b00040">void</span> add(<span style="color:#008000;font-weight:bold">const</span> ContiguousContainer<span style="color:#666">&amp;</span> a, <span style="color:#008000;font-weight:bold">const</span> ContiguousContainer<span style="color:#666">&amp;</span> b,
+</span></span><span style="display:flex;"><span>         ContiguousContainer<span style="color:#666">&amp;</span> result) {
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">using</span> std<span style="color:#666">::</span>data,
+</span></span><span style="display:flex;"><span>          std<span style="color:#666">::</span>size;
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">using</span> value_type <span style="color:#666">=</span> std<span style="color:#666">::</span>remove_cv_t<span style="color:#666">&lt;</span>std<span style="color:#666">::</span>remove_reference_t<span style="color:#666">&lt;</span><span style="color:#008000;font-weight:bold">decltype</span>(<span style="color:#666">*</span>data(c))<span style="color:#666">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">using</span> kernel_tag <span style="color:#666">=</span> AddKernel<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// Queue&#39;s destructor will wait for all pending operations to complete
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>queue queue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// Create buffers (views on a, b and result contiguous storage)
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> A{data(a), size(result)};
+</span></span><span style="display:flex;"><span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> B{data(b), size(result)};
+</span></span><span style="display:flex;"><span>    cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>value_type<span style="color:#666">&gt;</span> R{data(result), size(result)};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// The command group describes all setup operations needed
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// to execute the kernel on the selected device
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
+</span></span><span style="display:flex;"><span>        <span style="color:#408080;font-style:italic">// Get proper accessors to existing buffers by specifying
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>        <span style="color:#408080;font-style:italic">// read/write intents
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>        <span style="color:#408080;font-style:italic">// (note that A, B and R are captured by reference)
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>        <span style="color:#008000;font-weight:bold">auto</span> ka <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">auto</span> kb <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">auto</span> kr <span style="color:#666">=</span> R.get_access<span style="color:#666">&lt;</span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>write<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#408080;font-style:italic">// Enqueue parallel kernel
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>        cgh.parallel_for<span style="color:#666">&lt;</span>kernel_tag<span style="color:#666">&gt;</span>(
+</span></span><span style="display:flex;"><span>            cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>range<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span>{size(result)},  <span style="color:#408080;font-style:italic">// 1st parameter: the kernel grid
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>            [<span style="color:#666">=</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>id<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span> idx) {         <span style="color:#408080;font-style:italic">// 2nd parameter: the actual kernel
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>                <span style="color:#408080;font-style:italic">// We are in the kernel body:
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>                <span style="color:#408080;font-style:italic">// this is the only code that gets compiled for device(s).
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>                kr[idx] <span style="color:#666">=</span> ka[idx] <span style="color:#666">+</span> kb[idx];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// At this point our kernel has been asynchronously submitted
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// for execution
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// End of current scope: before actually returning, the queue destructor
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// will block until all operations (copies and kernel executions)
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// are completed. We are sure that when the function returns all the
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// computed values have been transferred into &#39;result&#39; and are available
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// host-side.
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>}
+</span></span></code></pre></div><p>Let&rsquo;s quickly see at a very high level the essential building blocks needed
 by a SYCL program:</p>
 <ol>
 <li>tell SYCL where the <strong>host-side input and output memory</strong> your kernels
@@ -205,37 +205,37 @@ containers <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-note
 <p>This design principle affects also the execution order of kernels: SYCL command queues are
 required to be asynchronous and, while the actual execution order is unspecified, <em>data
 dependencies</em> across kernels are guaranteed to be satisfied by the runtime.</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#008000;font-weight:bold">using</span> cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read,
-      cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>write,
-      cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read_write;
-
-cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> A{<span style="color:#408080;font-style:italic">/*...*/</span>};
-cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> B{<span style="color:#408080;font-style:italic">/*...*/</span>};
-cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> C{<span style="color:#408080;font-style:italic">/*...*/</span>};
-
-cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>queue queue;
-
-<span style="color:#408080;font-style:italic">// Kernel 1
-</span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
-    <span style="color:#008000;font-weight:bold">auto</span> in  <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#008000;font-weight:bold">auto</span> out <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>write<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#408080;font-style:italic">//...
-</span><span style="color:#408080;font-style:italic"></span>}
-
-<span style="color:#408080;font-style:italic">// Kernel 2
-</span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
-    <span style="color:#008000;font-weight:bold">auto</span> in  <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#008000;font-weight:bold">auto</span> out <span style="color:#666">=</span> C.get_access<span style="color:#666">&lt;</span>write<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#408080;font-style:italic">//...
-</span><span style="color:#408080;font-style:italic"></span>}
-
-<span style="color:#408080;font-style:italic">// Kernel 3
-</span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
-    <span style="color:#008000;font-weight:bold">auto</span> in    <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#008000;font-weight:bold">auto</span> inout <span style="color:#666">=</span> C.get_access<span style="color:#666">&lt;</span>read_write<span style="color:#666">&gt;</span>(cgh);
-    <span style="color:#408080;font-style:italic">//...
-</span><span style="color:#408080;font-style:italic"></span>}
-</code></pre></div><p>What the runtime does here is that it builds the <em>dependency graph</em> of our kernels based
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">using</span> cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read,
+</span></span><span style="display:flex;"><span>      cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>write,
+</span></span><span style="display:flex;"><span>      cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>access<span style="color:#666">::</span>mode<span style="color:#666">::</span>read_write;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> A{<span style="color:#408080;font-style:italic">/*...*/</span>};
+</span></span><span style="display:flex;"><span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> B{<span style="color:#408080;font-style:italic">/*...*/</span>};
+</span></span><span style="display:flex;"><span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>buffer<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> C{<span style="color:#408080;font-style:italic">/*...*/</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>queue queue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// Kernel 1
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> in  <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> out <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>write<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// Kernel 2
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> in  <span style="color:#666">=</span> A.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> out <span style="color:#666">=</span> C.get_access<span style="color:#666">&lt;</span>write<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic">// Kernel 3
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>queue.submit([<span style="color:#666">&amp;</span>](cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>handler<span style="color:#666">&amp;</span> cgh) {
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> in    <span style="color:#666">=</span> B.get_access<span style="color:#666">&lt;</span>read<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">auto</span> inout <span style="color:#666">=</span> C.get_access<span style="color:#666">&lt;</span>read_write<span style="color:#666">&gt;</span>(cgh);
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>}
+</span></span></code></pre></div><p>What the runtime does here is that it builds the <em>dependency graph</em> of our kernels based
 on the <em>data dependencies</em> we implicitly declared among them by retrieving <em>accessors</em>. In
 this case the runtime deduces the following dependency
 <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a> (arrow is a <em>depends on</em>
@@ -253,11 +253,11 @@ achieve maximum overlapping between data transfers and kernel executions.</p>
 <p>The <em>implicit iteration space</em> over which kernels are executed has shape and extent,
 just like a CUDA kernel grid. Let&rsquo;s have a look at the <code>parallel_for</code> call
 (ignore <code>kernel_tag</code><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> for now):</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">    <span style="color:#408080;font-style:italic">// Enqueue parallel kernel
-</span><span style="color:#408080;font-style:italic"></span>    cgh.parallel_for<span style="color:#666">&lt;</span>kernel_tag<span style="color:#666">&gt;</span>(
-        cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>range<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span>{size(result)},  <span style="color:#408080;font-style:italic">// 1st parameter: the kernel grid
-</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// ...
-</span></code></pre></div><p>With the first parameter we are saying that the kernel grid will have
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic">// Enqueue parallel kernel
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    cgh.parallel_for<span style="color:#666">&lt;</span>kernel_tag<span style="color:#666">&gt;</span>(
+</span></span><span style="display:flex;"><span>        cl<span style="color:#666">::</span>sycl<span style="color:#666">::</span>range<span style="color:#666">&lt;</span><span style="color:#666">1</span><span style="color:#666">&gt;</span>{size(result)},  <span style="color:#408080;font-style:italic">// 1st parameter: the kernel grid
+</span></span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"></span>    <span style="color:#408080;font-style:italic">// ...
+</span></span></span></code></pre></div><p>With the first parameter we are saying that the kernel grid will have
 <strong>one dimension</strong> (the non-type template parameter) with extent
 <code>== size(result)</code>. In the same way as other paradigms work, with the
 <code>cl::sycl::range&lt;1&gt;{n}</code> parameter we are launching a 1-dimensional vector
@@ -392,24 +392,24 @@ understandable</em>.</p>
 <li><a href="https://ai.google/research/pubs/pub45226"><code>gpucc</code>: An Open-Source GPGPU Compiler</a></li>
 <li><a href="https://arxiv.org/pdf/1904.05347.pdf">John Lawson et al., Cross-Platform Performance Portability Using Highly Parametrized SYCL Kernels</a> - a very nice article about parametrizing SYCL kernels to achieve good <em>performance portability</em> across architectures.</li>
 </ul>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>&hellip;everything that satisfies the
 <a href="https://en.cppreference.com/w/cpp/named_req/Callable"><code>Callable</code> concept</a>
 <em>and</em> accepts an argument of type <code>cl::sycl::handler&amp;</code>. The <em>handler</em> is
 your source of information about the execution context you&rsquo;re in
 (e.g.: on which device you&rsquo;ve been actually scheduled).&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p>the SYCL specification is actually based on C++11 but this restriction applies only
 to the body of the kernel lambda, e.g. the only code that is going to be actually
 compiled by device backends. In the example I used some C++17 library stuff
 (<a href="https://en.cppreference.com/w/cpp/iterator/data"><code>std::data()</code></a> for instance),
 and it is ok as long as the host frontend supports it.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:3" role="doc-endnote">
+<li id="fn:3">
 <p>while totally invisible to the user, the standard specification
 allows two different workflows for compilation:</p>
 <ul>
@@ -428,14 +428,14 @@ to carry out all the orchestration but they recently moved to the
 <a href="https://github.com/illuhad/hipSYCL/blob/master/bin/syclcc-clang">clang plugin interface</a>.</li>
 </ul>
 &#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></li>
-<li id="fn:4" role="doc-endnote">
+<li id="fn:4">
 <p><a href="https://jeffhammond.github.io/">Jeff Hammond</a> pointed out
 that while asynchronous is the default, we can actually force
 explicit data transfers by calling the <code>cl::sycl::handler::copy()</code> method
 like he did
 <a href="https://github.com/ParRes/Kernels/blob/5394bed370b6b50e73062231f9d47ed9bfc31197/Cxx11/nstream-explicit-sycl.cc#L141">here</a>.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:5" role="doc-endnote">
+<li id="fn:5">
 <p>since we are constructing <em>non-owning views</em> (<code>cl::sycl::buffer&lt;T&gt;</code>
 acts exactly like a <a href="https://en.cppreference.com/w/cpp/container/span"><code>std::span&lt;T&gt;</code></a>
 in this regard) over contiguous chunks of memory that have to be transferred across
@@ -446,7 +446,7 @@ reasonably ensure the <em>contiguous sequence</em> (e.g.: <em>contiguous storage
 property just like
 <a href="https://github.com/microsoft/GSL/blob/1212beae777dba02c230ece8c0c0ec12790047ea/include/gsl/span#L419-L426"><code>GSL</code> does for <code>gsl::span&lt;T&gt;</code></a>).&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:6" role="doc-endnote">
+<li id="fn:6">
 <p>the <code>parallel_for</code> template is instantiated on an (empty) type,
 in this case called <code>class AddKernel</code>. This <em>tag</em> is used only to give the
 anonymous callable object generated by the lambda expression a unique,
@@ -458,7 +458,7 @@ of containers: each kernel template instantiation <em>must be different</em>, in
 other words <strong>be aware that kernels are just regular functions and so
 they must abide by <a href="https://en.wikipedia.org/wiki/One_Definition_Rule">ODR</a>!</strong>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:7" role="doc-endnote">
+<li id="fn:7">
 <p>in the original <a href="https://ai.google/research/pubs/pub45226"><code>gpucc</code> paper</a>,
 Google claims that their open source PTX backend (now
 <a href="https://llvm.org/docs/CompileCudaWithLLVM.html">merged in upstream LLVM</a>)
@@ -466,7 +466,7 @@ is either on par or outperforms <code>nvcc</code> for all the workloads they too
 into account.&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
     </div>
 </article>
 </main>
